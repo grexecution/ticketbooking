@@ -1,4 +1,4 @@
-# Course Dashboard
+# Ticket Booking
 ### Installation instructions
 #### Copy and set database credentials
 ```bash
@@ -17,11 +17,7 @@ php artisan migrate
 php artisan key:generate
 php artisan storage:link
 ```
-#### To run Laravel's local development server:
+#### To run project locally:
 ```bash
 php artisan serve
-```
-#### Dashboard cron:
-```bash
-php /home/ploi/dashboard.thegreg.io/artisan schedule:run
 ```
