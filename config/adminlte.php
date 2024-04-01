@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>theGreg</b>.io',
-    'logo_img' => '/img/dergreg-logo_navbar.png',
+    'logo' => '<b>Ticket</b>Booking',
+    'logo_img' => '/img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -321,22 +321,22 @@ return [
 //        ['header' => 'account_settings'],
         [
             'text' => 'Dashboard',
-            'url'  => 'dashboard',
+            'url'  => 'admin/dashboard',
 //            'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Events',
-            'url'  => 'events',
+            'url'  => 'admin/events',
 //            'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'Finance',
-            'url'  => 'finance',
+            'url'  => 'admin/finance',
 //            'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'Settings',
-            'url'  => 'settings',
+            'url'  => 'admin/settings',
 //            'icon' => 'fas fa-fw fa-lock',
         ],
 //        [

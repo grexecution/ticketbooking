@@ -5,22 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add custom CSS for layout modifications */
+        .navbar-brand {
+            margin-right: auto; /* Push 'Ticket booking' to the left */
+        }
+
+        .ticket-icon {
+            width: 30px; /* Adjust width as needed */
+            margin-right: 10px; /* Add spacing between image and text */
+        }
+
+        .ticket-text {
+            font-size: 14px; /* Adjust font size as needed */
+        }
+
+        .search-container {
+            text-align: center; /* Center the content */
+        }
+
+        .search-form {
+            display: inline-block; /* Ensure form is inline */
+        }
+
+        .nav-menu {
+            margin-left: auto; /* Push 'All Events' to the right */
+        }
+
+        .navbar {
+            padding-left: 15%; /* Add left indent */
+            padding-right: 15%; /* Add right indent */
+        }
+    </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Ticket booking</a>
-    <span>Just sell tickets</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('site.events') }}">All Events</a>
-            </li>
-        </ul>
+    <div class="container">
+        <div class="navbar-brand">
+            <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
+            <div>
+                Ticket booking <br>
+                <span class="ticket-text">Just sell tickets</span>
+            </div>
+        </div>
+        <div class="search-container">
+            <form class="form-inline my-2 my-lg-0 search-form"> <!-- Center the search input -->
+                <input class="form-control mr-sm-2" type="search" placeholder="Search for events..." aria-label="Search">
+            </form>
+        </div>
+        <div class="nav-menu">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('site.events') }}">All Events</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
