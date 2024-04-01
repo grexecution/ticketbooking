@@ -1,0 +1,107 @@
+@media (min-width: 768px) {
+    body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+        transition: margin-left .3s ease-in-out;
+        margin-left: 300px;
+        min-height: 110px;
+    }
+    .navbar-expand .navbar-nav {
+        display: none;
+    }
+}
+
+.main-sidebar, .main-sidebar::before {
+    transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+    width: 300px;
+}
+
+.sidebar {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.user-panel img {
+    height: auto;
+    width: 4.5rem;
+}
+
+.navbar {
+    padding: 1rem 0.5rem;
+}
+
+.brand-link {
+    background-color: #232324;
+    color: white!important;
+    font-size: 1rem;
+    min-height: 110px;
+}
+
+.rounded {
+    border-radius: 0.5rem !important;
+}
+
+.brand-link .brand-image {
+    float: none;
+    line-height: .8;
+    max-height: 60px;
+    margin-left: 0rem;
+    margin-right: 0rem;
+}
+
+.main-sidebar {
+    background-color: #101010;
+}
+
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #979797;
+    color: #fff;
+    font-size: 20px;
+}
+
+.nav-link {
+    font-size: 20px!important;
+}
+
+.sidebar-help {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.alert, .card {
+    border-radius: 0.75rem;
+}
+
+.nav-pills .nav-link, .btn {
+    border-radius: 0.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .main-sidebar, .main-sidebar::before {
+        width: 250px;
+    }
+    .sidebar-open .main-sidebar, .sidebar-open .main-sidebar::before {
+        width: 300px;
+    }
+}
+
+@media (min-width: 426px) {
+    body > div.wrapper > nav > ul {
+        display: none;
+    }
+}
+
+/** Change password styles **/
+
+.custom-no-hover:hover,
+.custom-no-hover:active {
+    background-color: transparent !important;
+    color: #fff !important;
+}
+
+.custom-no-focus:focus {
+    outline: none;
+    box-shadow: none;
+    background-color: transparent !important;
+    color: #fff !important;
+}

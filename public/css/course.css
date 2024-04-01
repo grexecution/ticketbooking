@@ -1,0 +1,49 @@
+.course-card img {
+    padding: 20pt;
+}
+
+.course-card h5 {
+    font-weight: bold;
+    padding-bottom: 10pt;
+}
+
+.course-card .course-price {
+    font-weight: bold;
+}
+
+.course-card .course-label {
+    position: absolute;
+    top: 30pt;
+    right: 40px;
+    background: #39BAB4;
+    padding: 5px 15px;
+    border-radius: 0.5rem;
+    color: #ffffff;
+}
+
+.course-card-dark img {
+    padding: 20pt;
+}
+
+.course-card-dark h5 {
+    font-weight: bold;
+    padding-bottom: 10pt;
+}
+
+.course-card-dark {
+    background: #000;
+    color: #fff;
+}
+
+.course-card-dark a {
+    color: #fff;
+}
+
+.course-card-dark .course-label {
+    position: absolute;
+    top: 30pt;
+    right: 40px;
+    background: #39BAB4;
+    padding: 5px 15px;
+    border-radius: 0.5rem;
+}
