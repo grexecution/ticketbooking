@@ -13,7 +13,7 @@ chmod 755 /var/www/html /var/www/html/public \
 #### Run initial commands:
 ```bash
 composer install
-php artisan migrate
+php artisan migrate --seed
 php artisan key:generate
 php artisan storage:link
 ```
