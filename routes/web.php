@@ -30,7 +30,7 @@ Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
 
-Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('home');
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('admin/events', [EventController::class, 'index'])->name('events');
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');

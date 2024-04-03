@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\User\Role;
+use App\Models\User\User;
+use App\Services\RoleService;
 use Hash;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserAdminSeeder extends Seeder
@@ -14,10 +15,26 @@ class UserAdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = new User();
-        $user->email = 'admin@admin.com';
-        $user->password = Hash::make('admin');
-        $user->name = 'Admin';
-        $user->save();
+        // Create super admin
+        $user = User::query()->create([
+            'name'           => 'Super Admin',
+            'email'          => 'super@admin.com',
+            'first_name'     => 'Super',
+            'last_name'      => 'Admin',
+            'password'       => Hash::make('admin'),
+        ]);
+        $role = Role::query()->where('label', RoleService::ROLE_LABEL_SUPER_ADMIN)->firstOrFail();
+        $user->roles()->sync($role->id);
+
+        // Create admin
+        $user = User::query()->create([
+            'name'           => 'Admin',
+            'email'          => 'admin@admin.com',
+            'first_name'     => 'Admin',
+            'last_name'      => '',
+            'password'       => Hash::make('admin'),
+        ]);
+        $role = Role::query()->where('label', RoleService::ROLE_LABEL_ADMIN)->firstOrFail();
+        $user->roles()->sync($role->id);
     }
 }

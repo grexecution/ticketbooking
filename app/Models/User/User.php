@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\IdeHelperUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,16 +24,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'encrypted_password',
-        'wp_id',
-        'wp_token',
-        'currency',
         'first_name',
         'last_name',
-        'wp_data',
-        'product_ids',
+        'email',
+        'password',
     ];
 
     /**
@@ -53,5 +49,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function permissions() : HasMany
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function roles() : BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
 
 }

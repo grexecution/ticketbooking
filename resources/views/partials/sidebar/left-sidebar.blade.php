@@ -31,7 +31,38 @@
                     data-accordion="false"
                 @endif>
 {{--                 Configured sidebar links--}}
-                @each('partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
+{{--                @each('partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')--}}
+
+                <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu">
+                    @can('dashboard_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('event_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}" href="{{ route('events') }}">
+                                <p>Events</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('finance_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'finance') ? 'active' : '' }}" href="{{ route('finance') }}">
+                                <p>Finance</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('setting_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'settings') ? 'active' : '' }}" href="{{ route('settings') }}">
+                                <p>Settings</p>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
             </ul>
         </nav>
 
