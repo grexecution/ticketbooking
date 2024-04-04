@@ -5,42 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Add custom CSS for layout modifications */
-        .navbar-brand {
-            margin-right: auto; /* Push 'Ticket booking' to the left */
-        }
-
-        .ticket-icon {
-            width: 30px; /* Adjust width as needed */
-            margin-right: 10px; /* Add spacing between image and text */
-        }
-
-        .ticket-text {
-            font-size: 14px; /* Adjust font size as needed */
-        }
-
-        .search-container {
-            text-align: center; /* Center the content */
-        }
-
-        .search-form {
-            display: inline-block; /* Ensure form is inline */
-        }
-
-        .nav-menu {
-            margin-left: auto; /* Push 'All Events' to the right */
-        }
-
-        .navbar {
-            padding-left: 15%; /* Add left indent */
-            padding-right: 15%; /* Add right indent */
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    @stack('styles')
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <div class="navbar-brand">
             <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
@@ -64,7 +35,7 @@
     </div>
 </nav>
 
-<div class="container mt-4">
+
     @yield('content')
 </div>
 
