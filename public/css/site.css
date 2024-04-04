@@ -33,7 +33,7 @@
     background-image: url('../img/banner.png');
     background-size: cover;
     background-position: center;
-    height: 578px; /* Adjust based on image size */
+    height: 578px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,7 +75,7 @@
     border-radius: 5px;
 }
 .event-favorite i {
-    color: #fff; /* Change icon color to white */
+    color: #fff;
 }
 .category-label {
     position: absolute;
@@ -106,3 +106,4 @@
     font-size: 16px;
     cursor: pointer;
 }
+

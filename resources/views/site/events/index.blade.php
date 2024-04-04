@@ -42,7 +42,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5>Lakeside Camping at Pawna</h5>
+                            <a href="{{ route('site.event', 1) }}">
+                                <h5>Lakeside Camping at Pawna</h5>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
@@ -82,7 +84,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5>Lakeside Camping at Pawna</h5>
+                            <a href="{{ route('site.event', 1) }}">
+                                <h5>Lakeside Camping at Pawna</h5>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
@@ -124,7 +128,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5>Lakeside Camping at Pawna</h5>
+                            <a href="{{ route('site.event', 1) }}">
+                                <h5>Lakeside Camping at Pawna</h5>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
@@ -164,7 +170,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h5>Lakeside Camping at Pawna</h5>
+                            <a href="{{ route('site.event', 1) }}">
+                                <h5>Lakeside Camping at Pawna</h5>
+                            </a>
                         </div>
                     </div>
                     <div class="row">

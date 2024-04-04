@@ -3,12 +3,163 @@
 @section('title', 'Show Event')
 
 @section('content')
-    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ $event?->name ?? '' }}</h5>
-            <p class="card-text">{{ $event?->description ?? '' }}</p>
-            <!-- Add more details about the event -->
+{{--    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>--}}
+    <div class="container">
+        <div class="row mt-5 mb-5">
+            <!-- Event Banner -->
+            <div class="col-lg-8">
+                <div class="event-banner">
+                    <!-- Title -->
+                    <div class="row">
+                        <div class="col">
+                            <h1>Flo & Wisch - Gefühlsecht</h1>
+                        </div>
+                    </div>
+                    <!-- Description -->
+                    <div class="row">
+                        <div class="col">
+                            <p>This year, the directors will open the festival themselves with a real cabaret hit! When Flo and Wisch perform their most popular numbers from ten years, there won't be a dry eye in the room. Experience a punch-packed and hit-filled evening with a guaranteed sense of humor!</p>
+                        </div>
+                    </div>
+                    <!-- Event Details -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="event-detail">
+                                <i class="fas fa-calendar-alt"></i> Saturday, 13.04.2024 | 19:00
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-map-marker-alt"></i> Orpheum Vienna
+                            </div>
+                            <div class="event-detail">
+                                <i class="fas fa-euro-sign"></i> from €28.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Event Image -->
+            <div class="col-lg-4">
+                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">
+            </div>
+        </div>
+
+        <!-- Seats and Pricing -->
+        <div class="row mt-4">
+            <!-- Pricing Blocks -->
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="{{ asset('img/seat_A.png') }}" alt="Small Image" class="img-fluid">
+                        <div class="pricing-info">
+                            <div>Category A</div>
+                            <div>€ 28,00</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ asset('img/seat_B.png') }}" alt="Small Image" class="img-fluid">
+                        <div class="pricing-info">
+                            <div>Category B</div>
+                            <div>€ 38,00</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ asset('img/seat_C.png') }}" alt="Small Image" class="img-fluid">
+                        <div class="pricing-info">
+                            <div>Category C</div>
+                            <div>€ 38,00</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ asset('img/seat_D.png') }}" alt="Small Image" class="img-fluid">
+                        <div class="pricing-info">
+                            <div>Category D</div>
+                            <div>€ 8,00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seat Layout -->
+        <div class="row mt-4 mb-5">
+            <div class="col">
+                <div class="text-center mb-2">STAGE</div>
+                <div class="seat-layout">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        @for($k = 0; $k < 10; $k++)
+                            <div class="col seat-header">{{chr(65 + $k)}}</div>
+                        @endfor
+                    </div>
+                    @for($i = 0; $i < 10; $i++)
+                        <div class="row">
+                            <div class="col-1">{{$i + 1}}</div>
+                            @for($j = 0; $j < 10; $j++)
+                                <div class="col seat">
+                                    <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1">
+                                </div>
+                            @endfor
+                        </div>
+                    @endfor
+                </div>
+            </div>
         </div>
     </div>
+
+{{--    <div class="card">--}}
+{{--        <div class="card-body">--}}
+{{--            <h5 class="card-title">{{ $event?->name ?? '' }}</h5>--}}
+{{--            <p class="card-text">{{ $event?->description ?? '' }}</p>--}}
+{{--            <!-- Add more details about the event -->--}}
+{{--        </div>--}}
+{{--    </div>--}}
+@endsection
+
+@section('styles')
+    <style>
+        .event-banner {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .event-detail {
+            margin-bottom: 10px;
+        }
+
+        .pricing-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .seat-layout {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .seat {
+            width: 41px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            margin: 2px;
+            position: relative;
+        }
+
+        .seat img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .seat-header {
+            background-color: #e9ecef;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 @endsection
