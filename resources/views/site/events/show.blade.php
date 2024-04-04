@@ -96,11 +96,36 @@
                             <div class="col-1">{{$i + 1}}</div>
                             @for($j = 0; $j < 10; $j++)
                                 <div class="col seat">
-                                    <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1">
+                                    <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1" onclick="openPopup('Row {{ $i + 1 }} - Seat {{ chr(65 + $j) }}', '€ 39,90')">
                                 </div>
                             @endfor
                         </div>
                     @endfor
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupModalLabel">Your Places</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group" id="ticketList">
+                        <!-- Add rows for selected tickets here -->
+                        <li class="list-group-item d-flex justify-content-between align-items-center">Row 1 - Seat 1<span class="badge badge-primary badge-pill">€ 39,90</span><span class="remove-icon" onclick="removeTicket(this)">Remove</span></li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <div>Total</div>
+                    <div>€ 45,90</div>
+                    <button type="button" class="btn btn-warning" onclick="checkout()">To the checkout</button>
                 </div>
             </div>
         </div>
@@ -163,3 +188,30 @@
         }
     </style>
 @endsection
+
+@push('scripts')
+    <script>
+        function openPopup(ticketInfo, price) {
+            // Populate ticket information
+            var ticketItem = `
+                <li class="list-group-item d-flex justify-content-between align-items-center">${ticketInfo}<span class="badge badge-primary badge-pill">${price}</span><span class="remove-icon" onclick="removeTicket(this)">Remove</span></li>
+            `;
+            // Append ticket item to the ticket list
+            document.getElementById('ticketList').innerHTML += ticketItem;
+            // Show the popup modal
+            $('#popupModal').modal('show');
+        }
+
+        // Function to remove a ticket row
+        function removeTicket(element) {
+            element.parentNode.remove();
+        }
+
+        // Function to handle checkout
+        function checkout() {
+            // Perform checkout operation here
+            // For example, redirect to checkout page
+            // window.location.href = '/checkout';
+        }
+    </script>
+@endpush
