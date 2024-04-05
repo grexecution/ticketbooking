@@ -41,30 +41,25 @@
         <div class="d-flex justify-content-between align-items-center w-100">
             <!-- Left Block -->
             <div class="col-md-6">
-                <h3 style="display: inline; margin-right: 1rem;">@yield('title_header')</h3>
-                @if(request()->route()->getName() === 'website')
-                    @if(auth()->user()->site->is_active)
-                        <button type="button" class="btn btn-success">
-                            <span class="fas fa-check"></span> Online
-                        </button>
-                    @elseif(auth()->user()->site->is_suspended)
-                        <button type="button" class="btn btn-primary bg-white border border-secondary shadow-sm" onclick="window.location.href='{{ route('website.resume') }}'">
-                            Re-activate <i class="fas fa-arrow-alt-circle-up"></i>
-                        </button>
-                    @endif
-                @endif
+{{--                <h3 style="display: inline; margin-right: 1rem;">@yield('title_header')</h3>--}}
+                <a href="{{ url()->previous() }}" class="btn btn-default">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
                 <p class="mb-0">@yield('desc_header')</p>
             </div>
 
             <!-- Right Block -->
 {{--            <div class="col-md-6 text-right">--}}
-{{--                <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">--}}
-{{--                    <p class="mb-0">Ready to take your website live?</p>--}}
-{{--                    <button class="btn btn-primary bg-white border border-secondary shadow-sm " data-toggle="modal" data-target="#requestAccessModal">--}}
-{{--                        Go live!--}}
-{{--                        <i class="fas fa-arrow-right ml-2"></i>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
+                <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">
+                    <div class="user-info">
+                        <div class="user-details">
+                            <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                            <br>
+                            <span class="position">{{ auth()->user()->position ?? 'Administrator' }}</span>
+                        </div>
+                        <img src="{{ asset('img/avatar_demo.png') }}" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                </div>
 {{--            </div>--}}
         </div>
     </div>
