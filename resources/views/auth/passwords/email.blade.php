@@ -18,8 +18,7 @@
         </div>
     @endif
 
-{{--    <form action="{{ $password_email_url }}" method="post">--}}
-    <form action="{{ route('account.wpResetPassword') }}" method="post">
+    <form action="{{ $password_email_url }}" method="post">
         @csrf
 
         {{-- Email field --}}
