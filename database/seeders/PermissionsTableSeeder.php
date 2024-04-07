@@ -19,6 +19,7 @@ class PermissionsTableSeeder extends Seeder
         'event_access', 'event_create', 'event_edit', 'event_show', 'event_delete',
         'finance_access',
         'setting_access',
+        'tenant_access',
     ];
 
     public function run() : void

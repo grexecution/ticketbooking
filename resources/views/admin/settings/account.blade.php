@@ -40,16 +40,16 @@
                                     <!-- First Row -->
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label for="tenantName">Tenant Name</label>
-                                            <input type="text" class="form-control" name="tenant_name" id="tenantName" placeholder="Enter First Name" value="{{ old('tenant_name', $user?->tenant?->name) }}">
-                                            @error('tenant_name')
+                                            <label for="name">Tenant Name</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Tenant Name" value="{{ old('name', $user?->tenant?->name) }}">
+                                            @error('name')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label for="companyName">Company Name</label>
-                                            <input type="text" class="form-control" name="company_name" id="companyName" placeholder="Enter Company Name" value="{{ old('company_name', $user?->tenant?->company) }}">
-                                            @error('company_name')
+                                            <label for="company">Company Name</label>
+                                            <input type="text" class="form-control" name="company" id="company" placeholder="Enter Company Name" value="{{ old('company', $user?->tenant?->company) }}">
+                                            @error('company')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>

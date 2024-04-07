@@ -41,6 +41,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('tenant_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'tenants') ? 'active' : '' }}" href="{{ route('tenants.index') }}">
+                                <p>Tenants</p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('event_access')
                         <li class="nav-item">
                             <a class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}" href="{{ route('events') }}">

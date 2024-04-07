@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User\Permission;
 use App\Models\User\Role;
 use App\Services\RoleService;
-use Illuminate\Database\Seeder; 
+use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
 {
@@ -44,6 +44,7 @@ class RolesTableSeeder extends Seeder
                 'user_access', 'user_create', 'user_edit', 'user_show', 'user_delete',
                 'finance_access',
                 'setting_access',
+                'tenant_access',
             ],
             RoleService::ROLE_LABEL_ADMIN => [
                 'event_access', 'event_create', 'event_edit', 'event_show', 'event_delete',
