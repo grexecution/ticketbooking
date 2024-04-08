@@ -12,7 +12,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/course.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/finance.css') }}">
 @stop
 
 @section('js')

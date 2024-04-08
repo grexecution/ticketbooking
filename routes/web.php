@@ -32,10 +32,13 @@ Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
 
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
-Route::get('admin/events', [EventController::class, 'index'])->name('events');
+
+Route::resource('admin/events', EventController::class);
+
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');
 Route::post('admin/settings/updateAccount', [SettingsController::class, 'updateAccount'])->name('settings.updateAccount');

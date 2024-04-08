@@ -49,10 +49,45 @@
                         </li>
                     @endcan
                     @can('event_access')
-                        <li class="nav-item">
-                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}" href="{{ route('events') }}">
-                                <p>Events</p>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}">
+                                <p>
+                                    Events
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Events</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'venues') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Venues</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'subscriptions') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Subscriptions</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'discounts') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Discounts</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'vouchers') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Vouchers</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     @endcan
                     @can('finance_access')
