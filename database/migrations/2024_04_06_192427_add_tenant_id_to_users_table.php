@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreign('tenant_id')
                 ->references('id')
-                ->on('users')
+                ->on('tenants')
                 ->onDelete('cascade');
         });
     }
@@ -27,6 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_tenant_id_foreign');
             $table->dropColumn('tenant_id');
         });
     }

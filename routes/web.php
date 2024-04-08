@@ -33,6 +33,7 @@ Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::cla
 
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
+Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 Route::get('admin/events', [EventController::class, 'index'])->name('events');
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');

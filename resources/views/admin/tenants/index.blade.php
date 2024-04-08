@@ -64,7 +64,11 @@
                                             <i class="fas fa-trash"></i>
                                         </a>
                                         <!-- Admin Login Button -->
-                                        <button type="button" class="btn btn-dark ml-2">Admin Login</button>
+                                        <form method="post" action="{{ route('tenants.adminLogin') }}" class="d-inline-block">
+                                            @csrf
+                                            <input type="hidden" name="tenant_id" value="{{ $tenant->id }}">
+                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

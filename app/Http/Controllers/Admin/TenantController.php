@@ -7,7 +7,10 @@ use App\Http\Requests\Tenants\IndexTenantRequest;
 use App\Http\Requests\Tenants\StoreTenantRequest;
 use App\Http\Requests\Tenants\UpdateTenantRequest;
 use App\Models\Tenant;
+use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,5 +77,20 @@ class TenantController extends Controller
     {
         Tenant::query()->findOrFail($id)->delete();
         return redirect()->route('tenants.index')->with('success', 'Operation successful!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function adminLogin(Request $request) : RedirectResponse
+    {
+        if ($adminUser = User::where('tenant_id', $request->tenant_id)->first()) {
+            Auth::logout();
+            Auth::login($adminUser);
+            return redirect()->route('events')->with('success', 'Operation successful!');
+
+        } else {
+            return back()->with('error', 'Admin login failed.');
+        }
     }
 }
