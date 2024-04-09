@@ -449,7 +449,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div
-                                                class="needsclick dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                                class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
                                                 id="sponsors_media">
                                             </div>
                                         </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
+use App\Http\Controllers\Admin\VenueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,17 +28,18 @@ Auth::routes();
 //    }
 //    return redirect('/dashboard');
 //});
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
-
-Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 
 Route::resource('admin/events', EventController::class);
+Route::resource('admin/venues', VenueController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');

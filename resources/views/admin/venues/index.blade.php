@@ -1,13 +1,13 @@
 @extends('page')
 
-@section('title', 'Events')
-@section('title_header', 'Events')
+@section('title', 'Venues')
+@section('title_header', 'Venues')
 
 @section('content')
     <div class="container pt-3">
         @include('messages')
 
-        <!-- Search and Add Event Section -->
+        <!-- Search and Add Venue Section -->
         <div class="container-fluid bg-white py-3">
             <div class="row m-3">
                 <div class="col-md-8">
@@ -15,87 +15,66 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Event name" value="{{ request()->get('search') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <!-- Search select input -->
-                                <select class="custom-select mb-2" name="status">
-                                    <option value="">Select status</option>
-                                    <option value="category1">Status 1</option>
-                                    <option value="category2">Status 2</option>
-                                    <option value="category3">Status 3</option>
-                                </select>
+                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Venue name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
                                 <button class="btn btn-warning text-white btn-block" type="submit">Search</button>
                             </div>
                         </div>
-                        @error('search')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
                     </form>
-
+                    @error('search')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-2 text-right">
-                    <a href="{{ route('events.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Event</a>
+                    <a href="{{ route('venues.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Venue</a>
                 </div>
             </div>
 
-            <!-- Event Table -->
+            <!-- Venue Table -->
             <div class="row mt-5 mx-3">
                 <div class="col">
                     <table class="table table-full-width">
                         <thead>
                         <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Bookings</th>
-                            <th>Status</th>
+                            <th>Venue</th>
+                            <th>Address</th>
+                            <th>Events</th>
                             <th class="text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr class="">
                             <td>
-                                <img src="{{ asset('img/event_demo.png') }}" alt="Event img" />
-                                <span>This is an event title for a test event</span>
+                                <img src="{{ asset('img/event_demo.png') }}" alt="Venue img" />
+                                <span>Orpheum Vienna</span>
                             </td>
                             <td>
                                 <div>
-                                    Sunday, June 30, 2024
+                                    Steigenteschgasse 94B,
                                 </div>
                                 <div>
-                                    Start: 8:00 p.m
+                                    1220 Vienna
                                 </div>
                             </td>
                             <td>
-                                <div>166 / 200</div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
+                                <div>1</div>
                             </td>
-                            <td>live</td>
                             <td class="text-right">
-                                <!-- View Event Button -->
-                                <a href="{{ route('site.event', 1) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
-                                    <i class="fas fa-link"></i>
-                                </a>
-                                <!-- Edit Event Button -->
-                                <a href="{{ route('events.create') }}" type="button" class="btn btn-warning text-white mx-2">
+                                <!-- Edit Venue Button -->
+                                <a href="{{ route('venues.create') }}" type="button" class="btn btn-warning text-white mx-2">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <!-- Delete Event Button -->
+                                <!-- Delete Venue Button -->
                                 <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
-{{--                        @if($events->count())--}}
-{{--                            @foreach($events as $event)--}}
+{{--                        @if($venues->count())--}}
+{{--                            @foreach($venues as $event)--}}
 {{--                                <tr class="">--}}
 {{--                                    <td>{{ $event->name }}</td>--}}
 {{--                                    <td>2</td>--}}
@@ -103,12 +82,12 @@
 {{--                                    <td>20</td>--}}
 {{--                                    <td>€ 365,90</td>--}}
 {{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Event Button -->--}}
+{{--                                        <!-- Edit Venue Button -->--}}
 {{--                                        <a href="{{ route('tenants.edit', $event->id) }}" type="button"--}}
 {{--                                           class="btn btn-warning text-white mx-2">--}}
 {{--                                            <i class="fas fa-edit"></i>--}}
 {{--                                        </a>--}}
-{{--                                        <!-- Delete Event Button -->--}}
+{{--                                        <!-- Delete Venue Button -->--}}
 {{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
 {{--                                           data-record-id="{{ $event->id }}" data-toggle="modal"--}}
 {{--                                           data-target="#confirmModal">--}}
@@ -161,7 +140,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/venues.css') }}">
 @stop
 
 @section('js')
