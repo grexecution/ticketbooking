@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -42,6 +43,7 @@ Route::resource('admin/tenants', TenantController::class)->except('show', 'destr
 Route::resource('admin/events', EventController::class);
 Route::resource('admin/venues', VenueController::class);
 Route::resource('admin/subscriptions', SubscriptionController::class);
+Route::resource('admin/discounts', DiscountController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');
