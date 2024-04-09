@@ -285,7 +285,7 @@
                                             <div class="col-md-3">
                                                 <label for="event_date">Date</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control datepicker" id="event_date" name="event_date">
+                                                    <input type="text" class="form-control date" id="event_date" name="event_date">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                                     </div>
@@ -311,7 +311,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="ticket_price">Ticket Price</label>
-                                                <span class="float-right">Gross</span>
+                                                <span class="float-right text-muted">Gross</span>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">€</span>
@@ -518,16 +518,6 @@
                 $('#selectDiscount').trigger('change'); // Trigger change event for Select2
             });
 
-            let $select2 = $('.select2');
-            $select2.select2();
-            $select2.on('select2:select', function (e) {
-                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
-                var element = e.params.data.element;
-                var $element = $(element);
-                $(this).append($element);
-                $(this).trigger("change");
-            })
-
             let dropzoneSponsors = new Dropzone("#sponsors_media", {
                 url: 'admin/media/upload',
                 maxFilesize: 50, // MB
@@ -576,7 +566,7 @@
                 }
             });
 
-            let dropzoneLogi = new Dropzone("#event_logo", {
+            let dropzoneLogo = new Dropzone("#event_logo", {
                 url: 'admin/media/upload',
                 maxFilesize: 50, // MB
                 maxFiles: 1,

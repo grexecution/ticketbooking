@@ -12,6 +12,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet">
     <!-- Select2 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <!-- Datetimepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
@@ -145,9 +147,58 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
     <script>
         $(document).ready(function() {
+            // Date inputs
+            $('.date').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: 'uk',
+                icons: {
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right'
+                }
+            })
 
+            // Date with time inputs
+            $('.datetime').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm:ss',
+                locale: 'uk',
+                sideBySide: true,
+                icons: {
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right'
+                }
+            })
+
+            // Time inputs
+            $('.timepicker').datetimepicker({
+                format: 'HH:mm:ss',
+                icons: {
+                    up: 'fas fa-chevron-up',
+                    down: 'fas fa-chevron-down',
+                    previous: 'fas fa-chevron-left',
+                    next: 'fas fa-chevron-right'
+                }
+            })
+
+            // General Select2 plugin settings
+            let $select2 = $('.select2');
+            $select2.select2();
+            $select2.on('select2:select', function (e) {
+                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
+                var element = e.params.data.element;
+                var $element = $(element);
+                $(this).append($element);
+                $(this).trigger("change");
+            })
         });
     </script>
 

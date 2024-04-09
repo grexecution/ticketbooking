@@ -76,13 +76,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'discounts') ? 'active' : '' }}">
+                                    <a href="{{ route('discounts.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'discounts') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Discounts</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'vouchers') ? 'active' : '' }}">
+                                    <a href="{{ route('vouchers.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'vouchers') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Vouchers</p>
                                     </a>

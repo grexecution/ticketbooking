@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\VenueController;
+use App\Http\Controllers\Admin\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,17 +25,12 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Route::get('/', function () {
-//    if (!auth()->check()) {
-//        return redirect()->route('login');
-//    }
-//    return redirect('/dashboard');
-//});
-Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
+
+// Admin
+Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
@@ -44,6 +40,7 @@ Route::resource('admin/events', EventController::class);
 Route::resource('admin/venues', VenueController::class);
 Route::resource('admin/subscriptions', SubscriptionController::class);
 Route::resource('admin/discounts', DiscountController::class);
+Route::resource('admin/vouchers', VoucherController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');
