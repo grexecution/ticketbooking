@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\VenueController;
@@ -40,6 +41,7 @@ Route::resource('admin/tenants', TenantController::class)->except('show', 'destr
 
 Route::resource('admin/events', EventController::class);
 Route::resource('admin/venues', VenueController::class);
+Route::resource('admin/subscriptions', SubscriptionController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');

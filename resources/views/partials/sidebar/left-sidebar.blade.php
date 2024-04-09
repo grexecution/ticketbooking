@@ -70,7 +70,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('events.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'subscriptions') ? 'active' : '' }}">
+                                    <a href="{{ route('subscriptions.index') }}" class="nav-link {{ str_contains(request()->route()->getName(), 'subscriptions') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Subscriptions</p>
                                     </a>
