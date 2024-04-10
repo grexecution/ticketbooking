@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::get('/2fa', [TwoFactorController::class, 'show'])->name('2fa');
+Route::get('/2fa/resendCode', [TwoFactorController::class, 'resendCode'])->name('2fa.resendCode');
+Route::post('/2fa', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');

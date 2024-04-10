@@ -1,7 +1,7 @@
 <x-mail::message>
-# Backup Request
+# 2FA Verification
 
-Email: {{ $email }}
+One time code: {{ $code }}
 
 {{ config('app.name') }}
 </x-mail::message>

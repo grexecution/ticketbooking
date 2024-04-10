@@ -17,7 +17,7 @@ class SupportController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', '2fa']);
     }
 
     public function supportRequest(Request $request): RedirectResponse

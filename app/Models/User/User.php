@@ -30,6 +30,9 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'google2fa_enable',
+        'google2fa_secret',
+        'google2fa_authenticated',
     ];
 
     /**

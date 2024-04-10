@@ -22,6 +22,8 @@ class UserAdminSeeder extends Seeder
             'first_name'     => 'Super',
             'last_name'      => 'Admin',
             'password'       => Hash::make('admin'),
+            'google2fa_enable' => true,
+            'google2fa_secret' => \Google2FA::generateSecretKey(),
         ]);
         $role = Role::query()->where('label', RoleService::ROLE_LABEL_SUPER_ADMIN)->firstOrFail();
         $user->roles()->sync($role->id);
@@ -33,6 +35,8 @@ class UserAdminSeeder extends Seeder
             'first_name'     => 'Admin',
             'last_name'      => '',
             'password'       => Hash::make('admin'),
+            'google2fa_enable' => true,
+            'google2fa_secret' => \Google2FA::generateSecretKey(),
         ]);
         $role = Role::query()->where('label', RoleService::ROLE_LABEL_ADMIN)->firstOrFail();
         $user->roles()->sync($role->id);

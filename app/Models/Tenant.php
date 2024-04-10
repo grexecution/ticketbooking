@@ -6,6 +6,9 @@ use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin IdeHelperTenant
+ */
 class Tenant extends Model
 {
     protected $fillable = [
