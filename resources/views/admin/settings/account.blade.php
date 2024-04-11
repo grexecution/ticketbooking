@@ -40,8 +40,10 @@
                                 </div>
                                 <div class="card-body">
                                     <!-- Form with 3 Rows -->
-                                    <form id="updateAccount" action="{{ route('settings.updateAccount') }}" method="post">
+                                    <form id="updateTenant" action="{{ route('settings.updateTenant') }}" method="post">
+                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant->id }}">
                                         @csrf
+
                                         <!-- First Row -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -63,12 +65,17 @@
                                         <!-- Dividing Line -->
                                         <hr>
 
-                                        <!-- Third Row -->
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-3">
                                                 <label for="fileInput">Tenant Logo</label>
-                                                <input type="file" class="form-control-file" id="fileInput">
+                                                <div
+                                                    class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                                    id="logo">
+                                                </div>
                                             </div>
+                                            @error('logo')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
                                         <!-- Footer with Buttons -->
@@ -156,8 +163,10 @@
                                 <div class="card-body">
                                     <h4>Payment connection via Stripe</h4>
                                     <!-- Form with 3 Rows -->
-                                    <form id="updateAccount" action="{{ route('settings.updateAccount') }}" method="post">
+                                    <form id="updateAccount" action="{{ route('settings.updateFinance') }}" method="post">
+                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant->id }}">
                                         @csrf
+
                                         <!-- First Row -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -178,7 +187,7 @@
 
                                         <!-- Second Row -->
                                         <div class="form-group">
-                                            <a href="#" target="_blank" class="btn btn-dark">
+                                            <a href="#" class="btn btn-dark">
                                                 <i class="fas fa-plug ml-2"></i>
                                                 Check connection
                                             </a>
@@ -254,9 +263,73 @@
 @stop
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+
     <script>
-        function resetForm() {
-            document.getElementById("updateAccount").reset();
-        }
+        Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"
+
+        $(document).ready(function() {
+            function resetForm() {
+                document.getElementById("updateAccount").reset();
+            }
+
+            let dropzoneLogo = new Dropzone("#logo", {
+                url: '{{ route('media.upload_file') }}',
+                maxFilesize: 50, // MB
+                maxFiles: 1,
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                params: {
+                    size: 50
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                success: function (file, response) {
+                    $('#updateTenant').append('<input type="hidden" name="logo" value="' + response.name + '">')
+                    $('#updateTenant').append('<input type="hidden" name="logo_origin_names[' + response.name + ']" value="' + response.original_name + '">')
+                    $('#updateTenant').append('<input type="hidden" name="logo_sizes[' + response.name + ']" value="' + response.size + '">')
+                },
+                removedfile: function (file) {
+                    file.previewElement.remove()
+                    if (file.status !== 'error') {
+                        $('#updateTenant').find('input[name="logo"]').remove()
+                        this.options.maxFiles = this.options.maxFiles + 1
+                    }
+                },
+                init: function () {
+                    @php
+                        $media = auth()->user()->tenant?->getFirstMedia('logo') ?? null;
+                    @endphp
+
+                    @if($media)
+                        let file = {!! json_encode($media) !!}
+                        this.options.addedfile.call(this, file)
+                        {{--this.options.thumbnail.call(this, file, '{{ $media->getFullUrl() }}')--}}
+                        this.options.thumbnail.call(this, file, '{{ $media->getFullUrl('thumb') }}')
+                        file.previewElement.classList.add('dz-complete')
+                        $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
+                        $('#updateTenant').append('<input type="hidden" name="logo" value="' + file.name + '">')
+                        this.options.maxFiles = this.options.maxFiles - 1
+                    @endif
+                },
+                error: function (file, response) {
+                    if ($.type(response) === 'string') {
+                        let message = response // dropzone sends it's own error messages in string
+                    } else {
+                        let message = response.errors.file
+                    }
+                    file.previewElement.classList.add('dz-error')
+                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                    _results = []
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        node = _ref[_i]
+                        _results.push(node.textContent = message)
+                    }
+
+                    return _results
+                }
+            });
+        });
     </script>
 @stop

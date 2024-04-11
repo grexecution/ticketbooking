@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
@@ -48,6 +49,11 @@ Route::resource('admin/vouchers', VoucherController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');
+Route::post('admin/settings/updateTenant', [SettingsController::class, 'updateTenant'])->name('settings.updateTenant');
 Route::post('admin/settings/updateAccount', [SettingsController::class, 'updateAccount'])->name('settings.updateAccount');
+Route::post('admin/settings/updateFinance', [SettingsController::class, 'updateFinance'])->name('settings.updateFinance');
 Route::post('admin/settings/updatePassword', [SettingsController::class, 'updatePassword'])->name('settings.updatePassword');
 Route::post('admin/support', [SupportController::class, 'supportRequest'])->name('support');
+
+// Media
+Route::post('media/file', [MediaController::class, 'uploadFile'])->name('media.upload_file');

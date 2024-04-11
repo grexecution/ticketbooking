@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\IndexTenantRequest;
 use App\Http\Requests\Tenants\StoreTenantRequest;
-use App\Http\Requests\Tenants\UpdateTenantRequest;
+use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
 use App\Models\Tenant;
 use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
@@ -64,7 +64,7 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantRequest $request, string $id) : RedirectResponse
+    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
     {
         Tenant::query()->findOrFail($id)->update($request->validated());
         return redirect()->route('tenants.index')->with('success', 'Operation successful!');

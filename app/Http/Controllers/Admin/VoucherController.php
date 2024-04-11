@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreTenantRequest;
-use App\Http\Requests\Tenants\UpdateTenantRequest;
+use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,7 +66,7 @@ class VoucherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantRequest $request, string $id) : RedirectResponse
+    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
     {
 //        Tenant::query()->findOrFail($id)->update($request->validated());
 //        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');

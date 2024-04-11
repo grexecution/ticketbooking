@@ -20,4 +20,13 @@
             </div>
         </div>
     </div>
+@elseif($errors->any())
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissible fade show alert-hide">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-exclamation-triangle"></i> Operation failed!</h5>
+            </div>
+        </div>
+    </div>
 @endif

@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/storage/tmp/*
 /storage/*.key
 /vendor
 .env
@@ -22,3 +23,4 @@ yarn-error.log
 /.phpstorm.meta.php
 _ide_helper.php
 _ide_helper_models.php
+changelog.txt
