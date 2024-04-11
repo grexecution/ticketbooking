@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\IndexTenantRequest;
 use App\Http\Requests\Tenants\StoreTenantRequest;
@@ -47,7 +48,10 @@ class TenantController extends Controller
      */
     public function store(StoreTenantRequest $request) : RedirectResponse
     {
-        Tenant::query()->create($request->validated());
+        $toCreate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        $tenant = Tenant::query()->create($toCreate);
+        MediaHelper::handleMedia($tenant, 'logo', $request->logo);
+
         return redirect()->route('tenants.index')->with('success', 'Operation successful!');
     }
 
@@ -64,9 +68,12 @@ class TenantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
+    public function update(UpdateTenantBySuperAdminRequest $request, Tenant $tenant) : RedirectResponse
     {
-        Tenant::query()->findOrFail($id)->update($request->validated());
+        $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        MediaHelper::handleMedia($tenant, 'logo', $request->logo);
+        $tenant->update($toUpdate);
+
         return redirect()->route('tenants.index')->with('success', 'Operation successful!');
     }
 

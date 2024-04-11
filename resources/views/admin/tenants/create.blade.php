@@ -31,9 +31,12 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="logo">Tenant Logo</label>
-                                <input type="file" name="logo" class="form-control-file" id="logo">
+                                <div
+                                    class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                    id="logo">
+                                </div>
                                 @error('logo')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -106,7 +109,56 @@
 @stop
 
 @section('js')
-    <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
+    <script>
+        Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"
+
+        $(document).ready(function() {
+            let dropzoneLogo = new Dropzone("#logo", {
+                url: '{{ route('media.upload_file') }}',
+                maxFilesize: 50, // MB
+                maxFiles: 1,
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                params: {
+                    size: 50
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                success: function (file, response) {
+                    $('#create_tenant').append('<input type="hidden" name="logo" value="' + response.name + '">')
+                    $('#create_tenant').append('<input type="hidden" name="logo_origin_names[' + response.name + ']" value="' + response.original_name + '">')
+                    $('#create_tenant').append('<input type="hidden" name="logo_sizes[' + response.name + ']" value="' + response.size + '">')
+                },
+                removedfile: function (file) {
+                    file.previewElement.remove()
+                    if (file.status !== 'error') {
+                        $('#create_tenant').find('input[name="logo"]').remove()
+                        this.options.maxFiles = this.options.maxFiles + 1
+                    }
+                },
+                init: function () {
+                    //
+                },
+                error: function (file, response) {
+                    if ($.type(response) === 'string') {
+                        let message = response // dropzone sends it's own error messages in string
+                    } else {
+                        let message = response.errors.file
+                    }
+                    file.previewElement.classList.add('dz-error')
+                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                    _results = []
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        node = _ref[_i]
+                        _results.push(node.textContent = message)
+                    }
+
+                    return _results
+                }
+            });
+        });
     </script>
 @stop
