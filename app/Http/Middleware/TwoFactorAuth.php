@@ -15,6 +15,12 @@ class TwoFactorAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Check if there's a session variable indicating to skip 2FA (added by superuser)
+        if ($request->session()->has('skip2fa')) {
+            return $next($request);
+        }
+
+        // If 2FA is enabled need to enter one time code from email
         if (auth()->user() && $request->user()->google2fa_enable && !$request->user()->google2fa_authenticated) {
             return redirect()->route('2fa');
         }

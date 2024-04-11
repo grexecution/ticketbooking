@@ -65,4 +65,20 @@ class LoginController extends Controller
 
         return redirect()->route('dashboard');
     }
+
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        // Remove the session variable to prevent skipping 2FA for subsequent requests
+        $request->session()->forget('skip2fa');
+
+        return redirect()->route('login');
+    }
+
 }

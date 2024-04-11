@@ -84,10 +84,12 @@ class TenantController extends Controller
      */
     public function adminLogin(Request $request) : RedirectResponse
     {
+        /** @var User $adminUser */
         if ($adminUser = User::where('tenant_id', $request->tenant_id)->first()) {
+            $request->session()->put('skip2fa', true);
             Auth::logout();
             Auth::login($adminUser);
-            return redirect()->route('events')->with('success', 'Operation successful!');
+            return redirect()->route('events.index')->with('success', 'Operation successful!');
 
         } else {
             return back()->with('error', 'Admin login failed.');
