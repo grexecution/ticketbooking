@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\IdeHelperUser;
 use App\Models\Tenant;
+use App\Services\RoleService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -54,6 +55,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * @return bool
+     */
+    public function isSuperUser() : bool
+    {
+        return $this->roles->filter(function (Role $role) {
+            return $role->label === RoleService::ROLE_LABEL_SUPER_ADMIN;
+        })->isNotEmpty();
+    }
 
     public function permissions() : HasMany
     {

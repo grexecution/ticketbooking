@@ -53,7 +53,7 @@
                 <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">
                     <div class="user-info">
                         <div class="user-details">
-                            <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                            <span class="d-none d-md-inline">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span>
                             <br>
                             <span class="position">{{ auth()->user()->position ?? 'Administrator' }}</span>
                         </div>

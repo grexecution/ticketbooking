@@ -6,45 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use Auth;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 
 class SettingsController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware(['auth', '2fa']);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index() : Renderable
     {
         $user = Auth::user();
-
         return view('admin.settings.account', compact('user'));
     }
 
-    public function updateAccount(UpdateAccountRequest $request)
+    public function updateAccount(UpdateAccountRequest $request) : RedirectResponse
     {
-        auth()->user()->update($request->validated());
-
-        return redirect()->route('account')->with('success', 'Operation successful!');
+        $request->user()->update($request->validated());
+        return redirect()->route('settings')->with('success', 'Operation successful!');
     }
 
-    public function updatePassword(UpdatePasswordRequest $request)
+    public function updatePassword(UpdatePasswordRequest $request) : RedirectResponse
     {
         $user = auth()->user();
         $user->password = $request->newPassword;
         $user->save();
-
-        return redirect()->route('account')->with('success', 'Operation successful!');
+        return redirect()->route('settings')->with('success', 'Operation successful!');
     }
 
 }
