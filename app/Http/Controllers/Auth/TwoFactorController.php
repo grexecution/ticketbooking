@@ -18,6 +18,16 @@ class TwoFactorController extends Controller
 {
     use RedirectsUsers;
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function show(Request $request)
     {
         if (auth()->user()->google2fa_authenticated) {

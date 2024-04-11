@@ -15,11 +15,11 @@ class TwoFactorAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()->google2fa_authenticated) {
-            // If User is Authenticated through 2FA then proceed
-            return $next($request);
+        if (auth()->user() && $request->user()->google2fa_enable && !$request->user()->google2fa_authenticated) {
+            return redirect()->route('2fa');
         }
 
-        return redirect()->route('2fa');
+        // If User is Authenticated through 2FA then proceed
+        return $next($request);
     }
 }
