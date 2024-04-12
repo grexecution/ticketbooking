@@ -40,16 +40,20 @@ class RolesTableSeeder extends Seeder
                 'dashboard_access',
                 'user_access',
                 'permission_access',
-                'role_access', 'role_edit', 'role_show',
-                'user_access', 'user_create', 'user_edit', 'user_show', 'user_delete',
+                'role_access',
+                'user_access',
                 'finance_access',
                 'setting_access',
                 'tenant_access',
             ],
             RoleService::ROLE_LABEL_ADMIN => [
-                'event_access', 'event_create', 'event_edit', 'event_show', 'event_delete',
+                'event_access',
                 'finance_access',
                 'setting_access',
+                'venue_access',
+                'subscription_access',
+                'discount_access',
+                'voucher_access',
             ],
         };
     }

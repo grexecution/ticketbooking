@@ -11,8 +11,11 @@
                 <h5 class="card-title m-0">New Venue</h5>
             </div>
             <div class="card-body">
-                <form id="create_venue" name="create_venue" action="{{ route('venues.store') }}" method="post" enctype="multipart/form-data">
+                <form id="create_venue" name="create_venue" action="{{ route('venues.update', $venue->id) }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id", value="{{ $venue->id }}"/>
                     @csrf
+                    @method('PUT')
+
                     <div class="row">
                         <div class="col-md-3">
                             <div
@@ -27,14 +30,14 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Venue Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Venue Name" value="{{ old('name') }}">
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Venue Name" value="{{ old('name', $venue->name) }}">
                                     @error('name')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="address">Venue Address</label>
-                                    <input type="text" class="form-control" name="address" id="name" placeholder="Enter Venue Address" value="{{ old('address') }}">
+                                    <input type="text" class="form-control" name="address" id="name" placeholder="Enter Venue Address" value="{{ old('address', $venue->address) }}">
                                     @error('address')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -43,21 +46,21 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="zipcode">Zipcode</label>
-                                    <input type="text" class="form-control" name="zipcode" id="name" placeholder="Enter Zipcode" value="{{ old('zipcode') }}">
+                                    <input type="text" class="form-control" name="zipcode" id="name" placeholder="Enter Zipcode" value="{{ old('zipcode', $venue->zipcode) }}">
                                     @error('zipcode')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="city">Address</label>
-                                    <input type="text" class="form-control" name="city" id="name" placeholder="Enter Address" value="{{ old('city') }}">
+                                    <input type="text" class="form-control" name="city" id="name" placeholder="Enter Address" value="{{ old('city', $venue->city) }}">
                                     @error('city')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="country">Country</label>
-                                    <input type="text" class="form-control" name="country" id="name" placeholder="Enter Country" value="{{ old('country') }}">
+                                    <input type="text" class="form-control" name="country" id="name" placeholder="Enter Country" value="{{ old('country', $venue->country) }}">
                                     @error('country')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -66,21 +69,21 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" name="email" id="name" placeholder="Enter Email" value="{{ old('email') }}">
+                                    <input type="text" class="form-control" name="email" id="name" placeholder="Enter Email" value="{{ old('email', $venue->email) }}">
                                     @error('email')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" name="phone" id="name" placeholder="Enter Phone" value="{{ old('phone') }}">
+                                    <input type="text" class="form-control" name="phone" id="name" placeholder="Enter Phone" value="{{ old('phone', $venue->phone) }}">
                                     @error('phone')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="website">Website</label>
-                                    <input type="text" class="form-control" name="website" id="name" placeholder="Enter Website" value="{{ old('website') }}">
+                                    <input type="text" class="form-control" name="website" id="name" placeholder="Enter Website" value="{{ old('website', $venue->website) }}">
                                     @error('website')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -92,7 +95,7 @@
                     <div class="row mt-4">
                         <div class="form-group col-md-12">
                             <label for="description">Description text</label>
-                            <textarea name="description" class="form-control" rows="6" placeholder="Enter Description text"></textarea>
+                            <textarea name="description" class="form-control" rows="6" placeholder="Enter Description text">{{ old('description', $venue->description) }}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -201,10 +204,19 @@
                 }
             },
             init: function () {
-                // Auto-dismiss notifications after 5 seconds (5000 milliseconds)
-                setTimeout(function() {
-                    $('.alert-hide').alert('close');
-                }, 5000);
+                @php
+                    $media = $venue?->getFirstMedia('logo') ?? null;
+                @endphp
+
+                @if($media)
+                let file = {!! json_encode($media) !!}
+                this.options.addedfile.call(this, file)
+                this.options.thumbnail.call(this, file, '{{ $venue->logo_thumb_edit_url }}')
+                file.previewElement.classList.add('dz-complete')
+                $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
+                $('#create_venue').append('<input type="hidden" name="logo" value="' + file.name + '">')
+                this.options.maxFiles = this.options.maxFiles - 1
+                @endif
             },
             error: function (file, response) {
                 if ($.type(response) === 'string') {

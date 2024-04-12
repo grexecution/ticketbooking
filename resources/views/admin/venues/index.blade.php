@@ -11,7 +11,7 @@
         <div class="container-fluid bg-white py-3">
             <div class="row m-3">
                 <div class="col-md-8">
-                    <form action="{{ route('tenants.index') }}" method="GET">
+                    <form action="{{ route('venues.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -46,68 +46,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="">
-                            <td>
-                                <img src="{{ asset('img/event_demo.png') }}" alt="Venue img" />
-                                <span>Orpheum Vienna</span>
-                            </td>
-                            <td>
-                                <div>
-                                    Steigenteschgasse 94B,
-                                </div>
-                                <div>
-                                    1220 Vienna
-                                </div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- Edit Venue Button -->
-                                <a href="{{ route('venues.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Venue Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-{{--                        @if($venues->count())--}}
-{{--                            @foreach($venues as $event)--}}
-{{--                                <tr class="">--}}
-{{--                                    <td>{{ $event->name }}</td>--}}
-{{--                                    <td>2</td>--}}
-{{--                                    <td>5</td>--}}
-{{--                                    <td>20</td>--}}
-{{--                                    <td>€ 365,90</td>--}}
-{{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Venue Button -->--}}
-{{--                                        <a href="{{ route('tenants.edit', $event->id) }}" type="button"--}}
-{{--                                           class="btn btn-warning text-white mx-2">--}}
-{{--                                            <i class="fas fa-edit"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Delete Venue Button -->--}}
-{{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
-{{--                                           data-record-id="{{ $event->id }}" data-toggle="modal"--}}
-{{--                                           data-target="#confirmModal">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Admin Login Button -->--}}
-{{--                                        <form method="post" action="{{ route('tenants.adminLogin') }}"--}}
-{{--                                              class="d-inline-block">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="tenant_id" value="{{ $event->id }}">--}}
-{{--                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                        @else--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <td colspan="6">Records not found</td>--}}
-{{--                            </tr>--}}
-{{--                        @endif--}}
+                        @if($venues->count())
+                            @foreach($venues as $venue)
+                                <tr>
+                                    <td>
+                                        @if($venue->logo_thumb_index_url)
+                                            <img src="{{ asset($venue->logo_thumb_index_url) }}" alt="Venue img" />
+                                        @endif
+                                        <span>{{ $venue->name }}</span>
+                                    </td>
+                                    <td>
+                                        <div>{{ implode(', ', [$venue->address, $venue->zipcode, $venue->country]) }}</div>
+                                    </td>
+                                    <td>
+                                        <div>1</div>
+                                    </td>
+                                    <td class="text-right">
+                                        <!-- Edit Venue Button -->
+                                        <a href="{{ route('venues.edit', $venue->id) }}" type="button" class="btn btn-warning text-white mx-2">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <!-- Delete Venue Button -->
+                                        <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="{{ $venue->id  }}" data-toggle="modal" data-target="#confirmModal">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr class="text-center">
+                                <td colspan="6">Records not found</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -151,8 +121,8 @@
             const deleteButton = $(this).find('#confirmDelete'); // Find the delete button in the modal
 
             // Set the route path for deleting the record
-            let deleteRoute = '{{ route('tenants.destroy', ':id') }}';
-            deleteRoute = deleteRoute.replace(':id', 100);
+            let deleteRoute = '{{ route('venues.destroy', ':id') }}';
+            deleteRoute = deleteRoute.replace(':id', recordId);
 
             // Set the onclick event for the delete button to redirect to the delete route
             deleteButton.click(function () {

@@ -49,7 +49,12 @@
                         @if($tenants->count())
                             @foreach($tenants as $tenant)
                                 <tr class="">
-                                    <td>{{ $tenant->name }}</td>
+                                    <td>
+                                        @if($tenant->logo_thumb_index_url)
+                                            <img src="{{ asset($tenant->logo_thumb_index_url) }}" alt="Tenant img" />
+                                        @endif
+                                        {{ $tenant->name }}
+                                    </td>
                                     <td>2</td>
                                     <td>5</td>
                                     <td>20</td>

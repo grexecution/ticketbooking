@@ -36,8 +36,10 @@ class SettingsController extends Controller
     {
         $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
         unset($toUpdate['id']);
+        if ($request->logo !== $request->user()->tenant->logo?->name) {
+            MediaHelper::handleMedia($request->user()->tenant, 'logo', $request->logo);
+        }
         $request->user()->tenant()->update($toUpdate);
-        MediaHelper::handleMedia($request->user()->tenant, 'logo', $request->logo);
 
         return redirect()->route('settings')->with('success', 'Operation successful!');
     }

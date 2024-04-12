@@ -2,26 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-/**
- * @mixin IdeHelperTenant
- */
-class Tenant extends Model implements HasMedia
+class Venue extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
     protected $fillable = [
         'name',
-        'company',
-        'stripe_key',
-        'stripe_secret',
-        'stripe_fee',
+        'address',
+        'zipcode',
+        'city',
+        'country',
+        'email',
+        'phone',
+        'website',
+        'description',
     ];
 
     protected $appends = [
@@ -70,18 +69,4 @@ class Tenant extends Model implements HasMedia
         return $this->getMedia('logo')->last()?->getFullUrl('thumb-edit');
     }
 
-    public function users() : HasMany
-    {
-        return $this->hasMany(User::class);
-    }
-
-    public function venues()
-    {
-        return collect();
-    }
-
-    public function events()
-    {
-        return collect();
-    }
 }

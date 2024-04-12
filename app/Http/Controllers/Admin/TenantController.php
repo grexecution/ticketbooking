@@ -71,7 +71,9 @@ class TenantController extends Controller
     public function update(UpdateTenantBySuperAdminRequest $request, Tenant $tenant) : RedirectResponse
     {
         $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
-        MediaHelper::handleMedia($tenant, 'logo', $request->logo);
+        if ($request->logo !== $tenant->logo?->name) {
+            MediaHelper::handleMedia($tenant, 'logo', $request->logo);
+        }
         $tenant->update($toUpdate);
 
         return redirect()->route('tenants.index')->with('success', 'Operation successful!');
