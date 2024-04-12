@@ -188,17 +188,6 @@
                     next: 'fas fa-chevron-right'
                 }
             })
-
-            // General Select2 plugin settings
-            let $select2 = $('.select2');
-            $select2.select2();
-            $select2.on('select2:select', function (e) {
-                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
-                var element = e.params.data.element;
-                var $element = $(element);
-                $(this).append($element);
-                $(this).trigger("change");
-            })
         });
     </script>
 

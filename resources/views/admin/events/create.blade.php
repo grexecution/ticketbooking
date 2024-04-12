@@ -242,24 +242,29 @@
                                     <div class="col-md-12 mb-4">
                                         <h4>Basic Information</h4>
                                         <div class="row">
-                                            <!-- First Row -->
                                             <div class="col-md-6">
-                                                <label for="artist">Artist</label>
-                                                <!-- Select input for Artist -->
-                                                <select class="form-control" id="artist" name="artist">
-                                                    <option value="1">Artist 1</option>
-                                                    <option value="2">Artist 2</option>
-                                                    <!-- Add more options as needed -->
-                                                </select>
+                                                <div style="padding-bottom: 4px">
+                                                    <span class="btn btn-info btn-xs select-all-artist" style="border-radius: 0">{{ __('Select All') }}</span>
+                                                    <span class="btn btn-info btn-xs deselect-all-artist" style="border-radius: 0">{{ __('Deselect All') }}</span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="selectArtist">Artist</label>
+                                                    <select class="form-control select2" id="selectArtist" name="selectArtist" multiple="multiple">
+                                                        <option value="discount1">Artist 1</option>
+                                                        <option value="discount2">Artist 2</option>
+                                                        <option value="discount3">Artist 3</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="program">Program / Event Series</label>
-                                                <!-- Select input for Program / Event Series -->
-                                                <select class="form-control" id="program" name="program">
-                                                    <option value="1">Program 1</option>
-                                                    <option value="2">Program 2</option>
-                                                    <!-- Add more options as needed -->
-                                                </select>
+                                                <div class="form-group">
+                                                    <label for="selectProgram">Program / Event Series</label>
+                                                    <select class="form-control select2" id="selectProgram" name="selectProgram">
+                                                        <option value="discount1">Program 1</option>
+                                                        <option value="discount2">Program 2</option>
+                                                        <option value="discount3">Program 3</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- Second Row -->
@@ -425,8 +430,8 @@
                                     <div class="col-md-12 mb-4">
                                         <h4>Discounts</h4>
                                         <div style="padding-bottom: 4px">
-                                            <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ __('Select All') }}</span>
-                                            <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ __('Deselect All') }}</span>
+                                            <span class="btn btn-info btn-xs select-all-discount" style="border-radius: 0">{{ __('Select All') }}</span>
+                                            <span class="btn btn-info btn-xs deselect-all-discount" style="border-radius: 0">{{ __('Deselect All') }}</span>
                                         </div>
                                         <div class="form-group">
                                             <label for="selectDiscount">Select Discount</label>
@@ -504,18 +509,44 @@
         Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"
 
         $(document).ready(function() {
-            $('#selectDiscount').select2();
+            // General Select2 plugin settings
+            let $select2 = $('.select2');
+            $select2.select2();
+            $select2.on('select2:select', function (e) {
+                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
+                var element = e.params.data.element;
+                var $element = $(element);
+                $(this).append($element);
+                $(this).trigger("change");
+            })
 
-            // Add event listener for "Select All" button
-            $('.select-all').on('click', function() {
+            $('#selectDiscount').select2();
+            $('#selectProgram').select2();
+            $('#selectArtist').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+            });
+
+            // Add event listener for "Select All" Discounts button
+            $('.select-all-discount').on('click', function() {
                 $('#selectDiscount').find('option').prop('selected', true); // Select all options
                 $('#selectDiscount').trigger('change'); // Trigger change event for Select2
             });
-
-            // Add event listener for "Deselect All" button
-            $('.deselect-all').on('click', function() {
+            // Add event listener for "Deselect All" Discounts button
+            $('.deselect-all-discount').on('click', function() {
                 $('#selectDiscount').find('option').prop('selected', false); // Deselect all options
                 $('#selectDiscount').trigger('change'); // Trigger change event for Select2
+            });
+
+            // Add event listener for "Select All" Program button
+            $('.select-all-program').on('click', function() {
+                $('#selectProgram').find('option').prop('selected', true); // Select all options
+                $('#selectProgram').trigger('change'); // Trigger change event for Select2
+            });
+            // Add event listener for "Deselect All" Program button
+            $('.deselect-all-program').on('click', function() {
+                $('#selectProgram').find('option').prop('selected', false); // Deselect all options
+                $('#selectProgram').trigger('change'); // Trigger change event for Select2
             });
 
             let dropzoneSponsors = new Dropzone("#sponsors_media", {

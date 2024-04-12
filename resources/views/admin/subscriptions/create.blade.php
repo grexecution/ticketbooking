@@ -195,6 +195,17 @@
 
     <script>
         $(document).ready(function() {
+            // General Select2 plugin settings
+            let $select2 = $('.select2');
+            $select2.select2();
+            $select2.on('select2:select', function (e) {
+                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
+                var element = e.params.data.element;
+                var $element = $(element);
+                $(this).append($element);
+                $(this).trigger("change");
+            })
+
             $('#selectEvent').select2();
 
             // Add event listener for "Select All" button
@@ -208,16 +219,6 @@
                 $('#selectEvent').find('option').prop('selected', false); // Deselect all options
                 $('#selectEvent').trigger('change'); // Trigger change event for Select2
             });
-
-            let $select2 = $('.select2');
-            $select2.select2();
-            $select2.on('select2:select', function (e) {
-                //Append selected element to the end of the list, otherwise it follows the same order as the dropdown
-                var element = e.params.data.element;
-                var $element = $(element);
-                $(this).append($element);
-                $(this).trigger("change");
-            })
         });
 
         let dropzoneLogo = new Dropzone("#subscription_logo", {
