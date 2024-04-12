@@ -35,6 +35,7 @@ class SettingsController extends Controller
     public function updateTenant(UpdateTenantByAdminRequest $request) : RedirectResponse
     {
         $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        unset($toUpdate['id']);
         $request->user()->tenant()->update($toUpdate);
         MediaHelper::handleMedia($request->user()->tenant, 'logo', $request->logo);
 
@@ -52,6 +53,7 @@ class SettingsController extends Controller
         $user = auth()->user();
         $user->password = $request->newPassword;
         $user->save();
+
         return redirect()->route('settings')->with('success', 'Operation successful!');
     }
 

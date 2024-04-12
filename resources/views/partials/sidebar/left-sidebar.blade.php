@@ -48,6 +48,13 @@
                             </a>
                         </li>
                     @endcan
+                    @can('user_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'users') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                                <p>Users</p>
+                            </a>
+                        </li>
+                    @endcan
                     @can('event_access')
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link {{ str_contains(request()->route()->getName(), 'events') ? 'active' : '' }}">

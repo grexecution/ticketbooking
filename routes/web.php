@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\TwoFactorController;
@@ -41,7 +42,12 @@ Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 
-Route::resource('admin/events', EventController::class);
+Route::resource('admin/events', EventController::class)->except('show', 'destroy');
+
+// Users
+Route::resource('admin/users', UserController::class)->except('show', 'destroy');
+Route::get('admin/users/delete/{userId}', [UserController::class, 'destroy'])->name('users.destroy');
+
 Route::resource('admin/venues', VenueController::class);
 Route::resource('admin/subscriptions', SubscriptionController::class);
 Route::resource('admin/discounts', DiscountController::class);
