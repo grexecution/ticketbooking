@@ -50,16 +50,18 @@
 
             <!-- Right Block -->
 {{--            <div class="col-md-6 text-right">--}}
-                <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">
-                    <div class="user-info">
-                        <div class="user-details">
-                            <span class="d-none d-md-inline">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span>
-                            <br>
-                            <span class="position">{{ auth()->user()->position ?? 'Administrator' }}</span>
+                <a class="" href="{{ route('settings') }}">
+                    <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">
+                        <div class="user-info d-flex">
+                            <div class="user-details">
+                                <span class="d-none d-md-inline text-dark">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span>
+                                <br>
+                                <span class="position text-bold text-dark">{{ auth()->user()->position ?? 'Administrator' }}</span>
+                            </div>
+                            <img src="{{ asset('img/avatar_demo.png') }}" class="img-circle elevation-2 ml-2" alt="User Image">
                         </div>
-                        <img src="{{ asset('img/avatar_demo.png') }}" class="img-circle elevation-2" alt="User Image">
                     </div>
-                </div>
+                </a>
 {{--            </div>--}}
         </div>
     </div>

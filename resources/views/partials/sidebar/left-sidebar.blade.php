@@ -9,7 +9,7 @@
 
 {{--     Sidebar menu--}}
     <div class="sidebar">
-        <a href="/account">
+        <a href="{{ route('settings') }}">
             <div class="user-panel mt-3 pb-4 pt-4 mb-3 d-flex flex-column">
                 <div class="image">
                     <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" class="elevation-2 rounded" alt="User Image">
