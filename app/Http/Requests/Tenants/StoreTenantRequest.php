@@ -35,8 +35,8 @@ class StoreTenantRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'company' => 'required|string|max:255',
-            'stripe_key' => 'required|string|max:255',
-            'stripe_secret' => 'required|string|max:255',
+            'stripe_key' => 'sometimes|string|max:255',
+            'stripe_secret' => 'sometimes|string|max:255',
             'stripe_fee' => 'required|int|min:0|max:100',
             'logo' => 'sometimes|string',
             'logo_origin_names' => 'sometimes|array',

@@ -41,7 +41,7 @@
                                 <div class="card-body">
                                     <!-- Form with 3 Rows -->
                                     <form id="updateTenant" action="{{ route('settings.updateTenant') }}" method="post">
-                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant->id }}">
+                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant?->id }}">
                                         @csrf
 
                                         <!-- First Row -->
@@ -164,7 +164,7 @@
                                     <h4>Payment connection via Stripe</h4>
                                     <!-- Form with 3 Rows -->
                                     <form id="updateAccount" action="{{ route('settings.updateFinance') }}" method="post">
-                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant->id }}">
+                                        <input type="hidden" name="id" value="{{ auth()->user()->tenant?->id }}">
                                         @csrf
 
                                         <!-- First Row -->
