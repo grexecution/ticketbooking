@@ -35,12 +35,12 @@ class StoreTenantRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'company' => 'required|string|max:255',
-            'stripe_key' => 'sometimes|string|max:255',
-            'stripe_secret' => 'sometimes|string|max:255',
-            'stripe_fee' => 'required|int|min:0|max:100',
-            'logo' => 'sometimes|string',
-            'logo_origin_names' => 'sometimes|array',
-            'logo_sizes' => 'sometimes|array',
+            'stripe_key' => 'sometimes|nullable|string|max:255',
+            'stripe_secret' => 'sometimes|nullable|string|max:255',
+            'stripe_fee' => 'required|nullable|int|min:0|max:100',
+            'logo' => 'sometimes|nullable|string',
+            'logo_origin_names' => 'sometimes|nullable|array',
+            'logo_sizes' => 'sometimes|nullable|array',
         ];
     }
 }

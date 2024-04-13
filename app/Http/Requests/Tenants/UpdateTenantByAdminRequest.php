@@ -33,9 +33,9 @@ class UpdateTenantByAdminRequest extends FormRequest
             'id' => 'required|integer|exists:tenants,id',
             'name' => 'required|string|max:255',
             'company' => 'required|string|max:255',
-            'logo' => 'sometimes|string',
-            'logo_origin_names' => 'sometimes|array',
-            'logo_sizes' => 'sometimes|array',
+            'logo' => 'sometimes|nullable|string',
+            'logo_origin_names' => 'sometimes|nullable|array',
+            'logo_sizes' => 'sometimes|nullable|array',
         ];
     }
 }
