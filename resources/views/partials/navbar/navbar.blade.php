@@ -47,7 +47,17 @@
                 </a>
                 <p class="mb-0">@yield('desc_header')</p>
             </div>
-
+            @if(session()->get('loggedAsSuperAdmin'))
+                <div class="">
+                    You are now in Admin "{{ auth()->user()->name }}" Mode -
+                    <br>
+                    <span id="goBackToSuperAdminLink" style="cursor: pointer; text-decoration: underline;">click to go back to Superadmin</span>
+                    <form name="superAdminLoginForm" id="superAdminLoginForm" method="post" action="{{ route('tenants.superAdminLogin') }}" class="d-inline-block">
+                        @csrf
+                        <button style="display: none;" type="submit" class="btn btn-dark ml-2">Super Admin Login</button>
+                    </form>
+                </div
+            @endif
             <!-- Right Block -->
 {{--            <div class="col-md-6 text-right">--}}
                 <a class="" href="{{ route('settings') }}">

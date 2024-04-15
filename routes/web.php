@@ -40,6 +40,7 @@ Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dash
 
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
+Route::post('admin/tenants/superAdminLogin', [TenantController::class, 'superAdminLogin'])->name('tenants.superAdminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 
 Route::resource('admin/events', EventController::class)->except('show', 'destroy');

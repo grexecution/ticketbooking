@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\IndexTenantRequest;
 use App\Http\Requests\Tenants\StoreTenantRequest;
 use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
+use App\Http\Services\UserService;
 use App\Models\Tenant;
 use App\Models\User\User;
 use Illuminate\Http\RedirectResponse;
@@ -95,6 +96,7 @@ class TenantController extends Controller
     {
         /** @var User $adminUser */
         if ($adminUser = User::where('tenant_id', $request->tenant_id)->first()) {
+            $request->session()->put('loggedAsSuperAdmin', true);
             $request->session()->put('skip2fa', true);
             Auth::logout();
             Auth::login($adminUser);
@@ -103,5 +105,17 @@ class TenantController extends Controller
         } else {
             return back()->with('error', 'Admin login failed.');
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function superAdminLogin(Request $request, UserService $service) : RedirectResponse
+    {
+        $request->session()->forget('loggedAsSuperAdmin');
+        $request->session()->put('skip2fa', true);
+        Auth::logout();
+        Auth::login($service->getSuperAdmin());
+        return redirect()->route('dashboard')->with('success', 'Operation successful!');
     }
 }

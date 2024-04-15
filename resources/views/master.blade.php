@@ -152,6 +152,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
     <script>
+        // Go back to super admin when logged by tenant
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('goBackToSuperAdminLink').addEventListener('click', function() {
+                document.getElementById('superAdminLoginForm').submit();
+            });
+        });
+
         $(document).ready(function() {
             // Date inputs
             $('.date').datetimepicker({

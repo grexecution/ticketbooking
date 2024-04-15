@@ -77,6 +77,7 @@ class LoginController extends Controller
     {
         // Remove the session variable to prevent skipping 2FA for subsequent requests
         $request->session()->forget('skip2fa');
+        $request->session()->forget('loggedAsSuperAdmin');
 
         return redirect()->route('login');
     }
