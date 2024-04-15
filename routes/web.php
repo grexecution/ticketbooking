@@ -54,7 +54,11 @@ Route::resource('admin/venues', VenueController::class);
 Route::get('admin/venues/delete/{venueId}', [VenueController::class, 'destroy'])->name('venues.destroy');
 
 Route::resource('admin/subscriptions', SubscriptionController::class);
-Route::resource('admin/discounts', DiscountController::class);
+
+// Discounts
+Route::resource('admin/discounts', DiscountController::class)->except('show', 'destroy');
+Route::get('admin/discounts/delete/{venueId}', [DiscountController::class, 'destroy'])->name('discounts.destroy');
+
 Route::resource('admin/vouchers', VoucherController::class);
 
 Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');

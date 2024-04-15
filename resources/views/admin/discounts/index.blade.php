@@ -46,83 +46,35 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="">
-                            <td>
-                                <span>Seniors</span>
-                            </td>
-                            <td>
-                                <div>Senior tickets for main events</div>
-                            </td>
-                            <td>
-                                <div>-20%</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- Edit Discount Button -->
-                                <a href="{{ route('discounts.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Discount Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="">
-                            <td>
-                                <span>Conscript</span>
-                            </td>
-                            <td>
-                                <div>Basic military servant for side events</div>
-                            </td>
-                            <td>
-                                <div>-40%</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- Edit Discount Button -->
-                                <a href="{{ route('discounts.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Discount Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-{{--                        @if($discounts->count())--}}
-{{--                            @foreach($discounts as $discount)--}}
-{{--                                <tr class="">--}}
-{{--                                    <td>{{ $discount->name }}</td>--}}
-{{--                                    <td>2</td>--}}
-{{--                                    <td>5</td>--}}
-{{--                                    <td>20</td>--}}
-{{--                                    <td>€ 365,90</td>--}}
-{{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Discount Button -->--}}
-{{--                                        <a href="{{ route('discounts.edit', $discount->id) }}" type="button"--}}
-{{--                                           class="btn btn-warning text-white mx-2">--}}
-{{--                                            <i class="fas fa-edit"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Delete Discount Button -->--}}
-{{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
-{{--                                           data-record-id="{{ $discount->id }}" data-toggle="modal"--}}
-{{--                                           data-target="#confirmModal">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Admin Login Button -->--}}
-{{--                                        <form method="post" action="{{ route('discounts.adminLogin') }}"--}}
-{{--                                              class="d-inline-block">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="tenant_id" value="{{ $discount->id }}">--}}
-{{--                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                        @else--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <td colspan="6">Records not found</td>--}}
-{{--                            </tr>--}}
-{{--                        @endif--}}
+                            @if($discounts->count())
+                                @foreach($discounts as $discount)
+                                    <tr class="">
+                                        <td>
+                                            <span>{{ $discount->name }}</span>
+                                        </td>
+                                        <td>
+                                            <div>{!! $discount->description !!}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $discount->type === 'fixed' ? "-{$discount->fixed}Є" : "-{$discount->percentage}%" }}</div>
+                                        </td>
+                                        <td class="text-right">
+                                            <!-- Edit Discount Button -->
+                                            <a href="{{ route('discounts.edit', $discount->id) }}" type="button" class="btn btn-warning text-white mx-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Delete Discount Button -->
+                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="6">Records not found</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -167,7 +119,7 @@
 
             // Set the route path for deleting the record
             let deleteRoute = '{{ route('discounts.destroy', ':id') }}';
-            deleteRoute = deleteRoute.replace(':id', 100);
+            deleteRoute = deleteRoute.replace(':id', recordId);
 
             // Set the onclick event for the delete button to redirect to the delete route
             deleteButton.click(function () {

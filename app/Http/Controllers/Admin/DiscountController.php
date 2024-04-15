@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\StoreTenantRequest;
-use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
+use App\Http\Requests\Discounts\IndexDiscountRequest;
+use App\Http\Requests\Discounts\StoreDiscountRequest;
+use App\Http\Requests\Discounts\UpdateDiscountRequest;
+use App\Models\Discount;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,9 +30,12 @@ class DiscountController extends Controller
      *
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index(IndexDiscountRequest $request)
     {
-        return view('admin.discounts.index');
+        $discounts = Discount::query()->when($request->search, function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        })->get();
+        return view('admin.discounts.index', compact('discounts'));
     }
 
     /**
@@ -39,37 +43,52 @@ class DiscountController extends Controller
      */
     public function create() : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
+        abort_if(Gate::denies('discount_access'), Response::HTTP_FORBIDDEN);
         return view('admin.discounts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTenantRequest $request) : RedirectResponse
+    public function store(StoreDiscountRequest $request) : RedirectResponse
     {
-//        Tenant::query()->create($request->validated());
-//        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
+        $toCreate = $request->validated();
+        if ($request->type === 'fixed') {
+            $toCreate['fixed'] = $request->discount;
+        } else {
+            $toCreate['percentage'] = $request->discount;
+        }
+        unset($toCreate['discount']);
+        Discount::query()->create($toCreate);
+
+        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(Discount $discount) : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-//        $tenant = Tenant::query()->findOrFail($id);
-//        return view('admin.discounts.edit', compact('tenant'));
-        return view('admin.discounts.edit');
+        abort_if(Gate::denies('discount_access'), Response::HTTP_FORBIDDEN);
+        return view('admin.discounts.edit', compact('discount'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
+    public function update(UpdateDiscountRequest $request, Discount $discount) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->update($request->validated());
-//        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
+        $toUpdate = $request->validated();
+        if ($request->type === 'fixed') {
+            $toUpdate['fixed'] = $request->discount;
+            $toUpdate['percentage'] = null;
+        } else {
+            $toUpdate['percentage'] = $request->discount;
+            $toUpdate['fixed'] = null;
+        }
+        unset($toUpdate['discount']);
+        $discount->update($toUpdate);
+        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
     }
 
     /**
@@ -77,8 +96,8 @@ class DiscountController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->delete();
-//        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
+        Discount::query()->findOrFail($id)->delete();
+        return redirect()->route('discounts.index')->with('success', 'Operation successful!');
     }
 
 }
