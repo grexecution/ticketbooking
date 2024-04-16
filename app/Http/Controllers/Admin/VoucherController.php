@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\StoreTenantRequest;
-use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
+use App\Http\Requests\Vouchers\StoreVoucherRequest;
+use App\Http\Requests\Vouchers\UpdateVoucherRequest;
+use App\Models\Event;
+use App\Models\Voucher;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,9 +32,11 @@ class VoucherController extends Controller
      *
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index(Request $request): Renderable
     {
-        return view('admin.vouchers.index');
+        return view('admin.vouchers.index', [
+            'vouchers' => Voucher::all(),
+        ]);
     }
 
     /**
@@ -39,37 +44,73 @@ class VoucherController extends Controller
      */
     public function create() : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-        return view('admin.vouchers.create');
+        abort_if(Gate::denies('voucher_access'), Response::HTTP_FORBIDDEN);
+        return view('admin.vouchers.create', [
+            'events' => Event::all(),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTenantRequest $request) : RedirectResponse
+    public function store(StoreVoucherRequest $request) : RedirectResponse
     {
-//        Tenant::query()->create($request->validated());
-//        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
+        $toCreate = $request->validated();
+        if ($request->type === 'fixed') {
+            $toCreate['fixed'] = $request->discount;
+        } else {
+            $toCreate['percentage'] = $request->discount;
+        }
+        unset($toCreate['discount']);
+        $toCreate['expired_at'] = Carbon::parse($toCreate['expired_at']);
+        $voucher = Voucher::query()->create($toCreate);
+        $voucher->events()->sync($toCreate['event_ids']);
+        $voucher->eventsExcepts()->sync($toCreate['event_except_ids']);
+
+        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(Voucher $voucher) : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-//        $tenant = Tenant::query()->findOrFail($id);
-//        return view('admin.vouchers.edit', compact('tenant'));
-        return view('admin.vouchers.edit');
+        abort_if(Gate::denies('voucher_access'), Response::HTTP_FORBIDDEN);
+        $voucher->load(['events', 'eventsExcepts']);
+
+        return view('admin.vouchers.edit', [
+            'voucher' => $voucher,
+            'events' => Event::all(),
+            'eventIds' => $voucher->events->pluck('id')->toArray(),
+            'eventExceptIds' => $voucher->eventsExcepts->pluck('id')->toArray(),
+            'discount' => $voucher->type === 'fixed' ? $voucher->fixed : $voucher->percentage,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
+    public function update(UpdateVoucherRequest $request, Voucher $voucher) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->update($request->validated());
-//        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
+        $toUpdate = $request->validated();
+        if ($request->type === 'fixed') {
+            $toUpdate['fixed'] = $request->discount;
+            $toUpdate['percentage'] = null;
+        } else {
+            $toUpdate['percentage'] = $request->discount;
+            $toUpdate['fixed'] = null;
+        }
+        $toUpdate['expired_at'] = Carbon::parse($toUpdate['expired_at']);
+        $voucher->events()->sync($toUpdate['event_ids']);
+        $voucher->eventsExcepts()->sync($toUpdate['event_except_ids']);
+        unset(
+            $toUpdate['discount'],
+            $toUpdate['eventIds'],
+            $toUpdate['eventExceptIds'],
+        );
+        $voucher->update($toUpdate);
+
+        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
     }
 
     /**
@@ -77,8 +118,7 @@ class VoucherController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->delete();
-//        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
+        Voucher::query()->findOrFail($id)->delete();
+        return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
     }
-
 }

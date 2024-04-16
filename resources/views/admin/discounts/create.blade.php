@@ -34,7 +34,7 @@
 
                     <div class="row mt-4">
                         <div class="form-group col-md-3">
-                            <label for="artist">Type of discount</label>
+                            <label for="type">Type of discount</label>
                             <select class="form-control" id="type" name="type">
                                 <option value="percentage" {{ old('type') === 'percentage' ? 'selected' : '' }}>Percentage (%)</option>
                                 <option value="fixed" {{ old('type') === 'fixed' ? 'selected' : '' }}>Fixed (Є)</option>
@@ -61,7 +61,6 @@
                             Customers can choose their own discounts. The organizer is responsible for checking upon entry!
                         </div>
                     </div>
-
 
                     <!-- Footer with Buttons -->
                     <div class="row mt-3">

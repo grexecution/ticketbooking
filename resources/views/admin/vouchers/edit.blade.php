@@ -11,12 +11,14 @@
                 <h5 class="card-title m-0">New Voucher</h5>
             </div>
             <div class="card-body">
-                <form id="create_voucher" name="create_voucher" action="{{ route('vouchers.store') }}" method="post">
+                <form id="create_voucher" name="create_voucher" action="{{ route('vouchers.update', $voucher->id) }}" method="post">
+                    <input type="hidden" name="id" value="{{ $voucher->id }}">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="name">Voucher Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Voucher Name" value="{{ old('name') }}">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Voucher Name" value="{{ old('name', $voucher->name) }}" required>
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -24,7 +26,7 @@
                         <div class="form-group col-md-6">
                             <label for="description">Internal description</label>
                             <span class="float-right text-muted">Not visible to customers</span>
-                            <input type="text" class="form-control" name="description" id="name" placeholder="Enter Internal description" value="{{ old('description') }}">
+                            <input type="text" class="form-control" name="description" id="name" placeholder="Enter Internal description" value="{{ old('description', $voucher->description) }}">
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -36,8 +38,8 @@
                         <div class="form-group col-md-3">
                             <label for="type">Type of voucher</label>
                             <select class="form-control" id="type" name="type">
-                                <option value="percentage" {{ old('type') === 'percentage' ? 'selected' : '' }}>Percentage (%)</option>
-                                <option value="fixed" {{ old('type') === 'fixed' ? 'selected' : '' }}>Fixed (Є)</option>
+                                <option value="percentage" {{ old('type', $voucher->type) === 'percentage' ? 'selected' : '' }}>Percentage (%)</option>
+                                <option value="fixed" {{ old('type', $voucher->type) === 'fixed' ? 'selected' : '' }}>Fixed (Є)</option>
                             </select>
                             @error('type')
                             <span class="text-danger">{{ $message }}</span>
@@ -45,7 +47,7 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="discount">Discount</label>
-                            <input type="text" class="form-control" name="discount" id="discount" placeholder="Enter Discount" value="{{ old('discount') }}">
+                            <input type="text" class="form-control" name="discount" id="discount" placeholder="Enter Discount" value="{{ old('discount', $discount) }}" required>
                             @error('discount')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -59,7 +61,7 @@
                     <div class="row mt-2">
                         <div class="form-group col-md-3">
                             <label for="max_usage">Maximum usage</label>
-                            <input type="number" class="form-control" name="max_usage" id="max_usage" min="0" placeholder="0 = no limit" value="{{ old('max_usage') }}">
+                            <input type="number" class="form-control" name="max_usage" id="max_usage" min="0" placeholder="0 = no limit" value="{{ old('max_usage', $voucher->max_usage) }}">
                             @error('max_usage')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -68,7 +70,7 @@
                             <label for="expired_at">Expiry Date</label>
                             <span class="float-right text-muted">Ends at 11:59 p.m</span>
                             <div class="input-group">
-                                <input type="text" class="form-control date" id="expired_at" name="expired_at">
+                                <input type="text" class="form-control date" id="expired_at" name="expired_at" value="{{ $voucher->expired_at }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                 </div>
@@ -90,12 +92,9 @@
                             <div class="form-group">
                                 <select name="event_ids[]" class="form-control select2" id="selectEvent" multiple="multiple">
                                     @foreach($events as $event)
-                                        <option value="{{ $event->id }}" {{ in_array($event->id, old('event_ids') ?? []) ? 'selected' : '' }}>{{ $event->name }}</option>
+                                        <option value="{{ $event->id }}" {{ in_array($event->id, old('event_ids', $eventIds) ?? []) ? 'selected' : '' }}>{{ $event->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('event_ids')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                     </div>
@@ -111,12 +110,9 @@
                             <div class="form-group">
                                 <select name="event_except_ids[]" class="form-control select2" id="selectExcludeEvent" multiple="multiple">
                                     @foreach($events as $event)
-                                        <option value="{{ $event->id }}" {{ in_array($event->id, old('event_id') ?? []) ? 'selected' : '' }}>{{ $event->name }}</option>
+                                        <option value="{{ $event->id }}" {{ in_array($event->id, old('event_except_ids', $eventExceptIds) ?? []) ? 'selected' : '' }}>{{ $event->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('event_except_ids')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
                         </div>
                     </div>

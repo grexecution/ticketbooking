@@ -28,9 +28,10 @@ class DiscountController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param IndexDiscountRequest $request
      * @return Renderable
      */
-    public function index(IndexDiscountRequest $request)
+    public function index(IndexDiscountRequest $request): Renderable
     {
         $discounts = Discount::query()->when($request->search, function ($query) use ($request) {
             $query->where('name', 'like', '%' . $request->search . '%');

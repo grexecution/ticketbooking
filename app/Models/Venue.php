@@ -7,6 +7,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
+/**
+ * @mixin IdeHelperVenue
+ */
 class Venue extends Model implements HasMedia
 {
     use InteractsWithMedia;

@@ -29,83 +29,35 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="">
-                            <td>
-                                <span>A8dJJ8</span>
-                            </td>
-                            <td>
-                                <div>Orpheum Email Newsletter</div>
-                            </td>
-                            <td>
-                                <div>-30%</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- Edit Voucher Button -->
-                                <a href="{{ route('vouchers.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Voucher Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="">
-                            <td>
-                                <span>MEGA SALES</span>
-                            </td>
-                            <td>
-                                <div>Black Friday voucher</div>
-                            </td>
-                            <td>
-                                <div>-40%</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- Edit Voucher Button -->
-                                <a href="{{ route('vouchers.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Voucher Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-{{--                        @if($vouchers->count())--}}
-{{--                            @foreach($vouchers as $voucher)--}}
-{{--                                <tr class="">--}}
-{{--                                    <td>{{ $voucher->name }}</td>--}}
-{{--                                    <td>2</td>--}}
-{{--                                    <td>5</td>--}}
-{{--                                    <td>20</td>--}}
-{{--                                    <td>€ 365,90</td>--}}
-{{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Voucher Button -->--}}
-{{--                                        <a href="{{ route('vouchers.edit', $voucher->id) }}" type="button"--}}
-{{--                                           class="btn btn-warning text-white mx-2">--}}
-{{--                                            <i class="fas fa-edit"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Delete Voucher Button -->--}}
-{{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
-{{--                                           data-record-id="{{ $voucher->id }}" data-toggle="modal"--}}
-{{--                                           data-target="#confirmModal">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Admin Login Button -->--}}
-{{--                                        <form method="post" action="{{ route('vouchers.adminLogin') }}"--}}
-{{--                                              class="d-inline-block">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="tenant_id" value="{{ $voucher->id }}">--}}
-{{--                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                        @else--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <td colspan="6">Records not found</td>--}}
-{{--                            </tr>--}}
-{{--                        @endif--}}
+                            @if($vouchers->count())
+                                @foreach($vouchers as $voucher)
+                                    <tr class="">
+                                        <td>
+                                            <span>{{ $voucher->name }}</span>
+                                        </td>
+                                        <td>
+                                            <div>{!! $voucher->description !!}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $voucher->type === 'fixed' ? "-{$voucher->fixed}Є" : "-{$voucher->percentage}%" }}</div>
+                                        </td>
+                                        <td class="text-right">
+                                            <!-- Edit Voucher Button -->
+                                            <a href="{{ route('vouchers.edit', $voucher->id) }}" type="button" class="btn btn-warning text-white mx-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Delete Voucher Button -->
+                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="6">Records not found</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -150,7 +102,7 @@
 
             // Set the route path for deleting the record
             let deleteRoute = '{{ route('vouchers.destroy', ':id') }}';
-            deleteRoute = deleteRoute.replace(':id', 100);
+            deleteRoute = deleteRoute.replace(':id', recordId);
 
             // Set the onclick event for the delete button to redirect to the delete route
             deleteButton.click(function () {
