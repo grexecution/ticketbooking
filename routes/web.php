@@ -43,6 +43,8 @@ Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])
 Route::post('admin/tenants/superAdminLogin', [TenantController::class, 'superAdminLogin'])->name('tenants.superAdminLogin');
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 
+// Events
+Route::post('admin/event/getData/{id}', [EventController::class, 'getData'])->name('events.getData');
 Route::resource('admin/events', EventController::class)->except('show', 'destroy');
 
 // Users
@@ -53,7 +55,9 @@ Route::get('admin/users/delete/{userId}', [UserController::class, 'destroy'])->n
 Route::resource('admin/venues', VenueController::class);
 Route::get('admin/venues/delete/{venueId}', [VenueController::class, 'destroy'])->name('venues.destroy');
 
+// Subscriptions
 Route::resource('admin/subscriptions', SubscriptionController::class);
+Route::get('admin/subscriptions/delete/{voucherId}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
 
 // Discounts
 Route::resource('admin/discounts', DiscountController::class)->except('show', 'destroy');

@@ -47,70 +47,45 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="">
-                            <td>
-                                <img src="{{ asset('img/event_demo.png') }}" alt="Subscription img" />
-                                <span>Flo & Wisch - All Shows</span>
-                            </td>
-                            <td>
-                                <div>Annual subscription for all Flo & Wisch events</div>
-                            </td>
-                            <td>
-                                <div>5</div>
-                            </td>
-                            <td>
-                                <div>€ 365,90</div>
-                            </td>
-                            <td class="text-right">
-                                <!-- View Subscription Button -->
-                                <a href="{{ route('site.event', 1) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
-                                    <i class="fas fa-link"></i>
-                                </a>
-                                <!-- Edit Subscription Button -->
-                                <a href="{{ route('subscriptions.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Subscription Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-{{--                        @if($subscriptions->count())--}}
-{{--                            @foreach($subscriptions as $subscription)--}}
-{{--                                <tr class="">--}}
-{{--                                    <td>{{ $subscription->name }}</td>--}}
-{{--                                    <td>2</td>--}}
-{{--                                    <td>5</td>--}}
-{{--                                    <td>20</td>--}}
-{{--                                    <td>€ 365,90</td>--}}
-{{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Subscription Button -->--}}
-{{--                                        <a href="{{ route('subscriptions.edit', $subscription->id) }}" type="button"--}}
-{{--                                           class="btn btn-warning text-white mx-2">--}}
-{{--                                            <i class="fas fa-edit"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Delete Subscription Button -->--}}
-{{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
-{{--                                           data-record-id="{{ $subscription->id }}" data-toggle="modal"--}}
-{{--                                           data-target="#confirmModal">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Admin Login Button -->--}}
-{{--                                        <form method="post" action="{{ route('subscriptions.adminLogin') }}"--}}
-{{--                                              class="d-inline-block">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="tenant_id" value="{{ $subscription->id }}">--}}
-{{--                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                        @else--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <td colspan="6">Records not found</td>--}}
-{{--                            </tr>--}}
-{{--                        @endif--}}
+                            @if($subscriptions->count())
+                                @foreach($subscriptions as $subscription)
+                                    <tr class="">
+                                        <td>
+                                            @if($subscription->logo_thumb_index_url)
+                                                <img src="{{ asset($subscription->logo_thumb_index_url) }}" alt="Tenant img" />
+                                            @endif
+                                            {{ $subscription->name }}
+                                        </td>
+                                        <td>
+                                            <div>{{ $subscription->short_desc }}</div>
+                                        </td>
+                                        <td>
+                                            <div>{{ $subscription->events->count() }}</div>
+                                        </td>
+                                        <td>
+                                            <div>€ {{ $subscription->price }}</div>
+                                        </td>
+                                        <td class="text-right">
+                                            <!-- View Subscription Button -->
+                                            <a href="#" target="_blank" type="button" class="btn btn-dark text-white mx-2">
+                                                <i class="fas fa-link"></i>
+                                            </a>
+                                            <!-- Edit Subscription Button -->
+                                            <a href="{{ route('subscriptions.edit', $subscription->id) }}" type="button" class="btn btn-warning text-white mx-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Delete Subscription Button -->
+                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="6">Records not found</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js AJAX Request with CSRF Token</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Example div elements with the class 'message-tip' -->
+<div id="app">
+    <!-- Select2 field -->
+    <select name="event_ids[]" class="form-control select2" id="selectEvent" multiple="multiple" v-model="selectedEvents">
+        <option v-for="event in events" :value="event.id">{{ event.name }}</option>
+    </select>
+    @error('event_ids')
+    <span class="text-danger">{{ $message }}</span>
+    @enderror
+
+    <!-- Table to display the selected events -->
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>Seat Category</th>
+            <th>Sales Volume</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="eventData in eventDataList">
+            <td>{{ eventData.eventName }}</td>
+            <td>{{ eventData.seatCategory }}</td>
+            <td>{{ eventData.salesVolume }}</td>
+            <td>
+                <button type="button" class="btn btn-danger mx-2 delete-record" @click="deleteRecord(eventData.recordId)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Vue.js library -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            events: [], // Array to store available events
+            selectedEvents: [], // Array to store selected event IDs
+            eventDataList: [] // Array to store event data received from the API
+        },
+        mounted() {
+            // Fetch available events from the server
+            this.fetchEvents();
+        },
+        methods: {
+            // Method to fetch available events from the server
+            fetchEvents() {
+                // Make an AJAX call to fetch available events
+                // Replace '/api/getEvents' with your actual endpoint
+                fetch('/api/getEvents')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.events = data;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching events:', error);
+                    });
+            },
+            // Method to handle adding a new row to the table
+            addNewRow(eventId) {
+                // Get the CSRF token from the meta tag
+                var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+                // Make an AJAX call to the API endpoint to fetch data for the new row
+                // Replace '/api/getEventData/' with your actual endpoint
+                fetch('/api/getEventData/' + eventId, {
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        this.eventDataList.push(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching event data:', error);
+                    });
+            },
+            // Method to handle deleting a record
+            deleteRecord(recordId) {
+                // Implement logic to delete the record
+                console.log('Delete record with ID:', recordId);
+            }
+        },
+        watch: {
+            // Watch for changes in selectedEvents array
+            selectedEvents(newValue, oldValue) {
+                // Add a new row for each newly selected event
+                newValue.forEach(eventId => {
+                    if (!oldValue.includes(eventId)) {
+                        this.addNewRow(eventId);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

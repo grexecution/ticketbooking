@@ -59,10 +59,9 @@ class TenantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(Tenant $tenant) : View
     {
         abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-        $tenant = Tenant::query()->findOrFail($id);
         return view('admin.tenants.edit', compact('tenant'));
     }
 

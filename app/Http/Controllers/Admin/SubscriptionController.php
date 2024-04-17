@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\StoreTenantRequest;
+use App\Http\Requests\Subscriptions\IndexSubscriptionRequest;
+use App\Http\Requests\Subscriptions\StoreSubscriptionRequest;
 use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
+use App\Models\Event;
+use App\Models\Subscription;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +30,18 @@ class SubscriptionController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param IndexSubscriptionRequest $request
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index(IndexSubscriptionRequest $request) : Renderable
     {
-        return view('admin.subscriptions.index');
+        $subscriptions = Subscription::query()->when($request->search, function ($query) use ($request) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        })->get();
+
+        return view('admin.subscriptions.index', [
+            'subscriptions' => $subscriptions,
+        ]);
     }
 
     /**
@@ -39,37 +49,46 @@ class SubscriptionController extends Controller
      */
     public function create() : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-        return view('admin.subscriptions.create');
+        abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
+        return view('admin.subscriptions.create', [
+            'events' => Event::all(),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTenantRequest $request) : RedirectResponse
+    public function store(StoreSubscriptionRequest $request) : RedirectResponse
     {
-//        Tenant::query()->create($request->validated());
-//        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
+        $toCreate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        $subscription = Subscription::query()->create($toCreate);
+        MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+
+        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) : View
+    public function edit(Subscription $subscription) : View
     {
-//        abort_if(Gate::denies('tenant_access'), Response::HTTP_FORBIDDEN);
-//        $tenant = Tenant::query()->findOrFail($id);
-//        return view('admin.subscriptions.edit', compact('tenant'));
-        return view('admin.subscriptions.edit');
+        abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
+        $subscription->load(['events']);
+        return view('admin.subscriptions.edit', compact('subscription'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantBySuperAdminRequest $request, string $id) : RedirectResponse
+    public function update(UpdateTenantBySuperAdminRequest $request, Subscription $subscription) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->update($request->validated());
-//        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
+        $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        if ($request->logo !== $subscription->logo?->name) {
+            MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+        }
+        $subscription->update($toUpdate);
+
+        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
 
     /**
@@ -77,8 +96,8 @@ class SubscriptionController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-//        Tenant::query()->findOrFail($id)->delete();
-//        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
+        Subscription::query()->findOrFail($id)->delete();
+        return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
 
 }

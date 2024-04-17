@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\StoreTenantRequest;
 use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
-use App\Models\Tenant;
-use Illuminate\Contracts\Support\Renderable;
+use App\Models\Event;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -80,6 +78,12 @@ class EventController extends Controller
     {
 //        Tenant::query()->findOrFail($id)->delete();
 //        return redirect()->route('tenants.index')->with('success', 'Operation successful!');
+    }
+
+    public function getData(Request $request, int $id): JsonResponse
+    {
+        $event = Event::find($id);
+        return response()->json($event);
     }
 
 }

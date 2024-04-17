@@ -42,4 +42,9 @@ class Event extends Model
     {
         return $this->belongsToMany(Voucher::class, 'event_voucher_excepts', 'event_id', 'voucher_id');
     }
+
+    public function subscriptions() : BelongsToMany
+    {
+        return $this->belongsToMany(Subscription::class, 'event_subscription', 'event_id', 'subscription_id');
+    }
 }
