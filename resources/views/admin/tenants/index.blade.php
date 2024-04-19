@@ -113,7 +113,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/tenants.css') }}">
 @stop
 
 @section('js')

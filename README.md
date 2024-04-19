@@ -17,7 +17,15 @@ php artisan migrate --seed
 php artisan key:generate
 php artisan storage:link
 ```
-#### To run project locally:
+#### To run local web server:
 ```bash
 php artisan serve
+```
+#### To run auto rebuilding Vue mode:
+```bash
+npm run watch
+```
+#### To generate production assets:
+```bash
+npm run prod
 ```

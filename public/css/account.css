@@ -1,8 +1,0 @@
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #000;
-}
-
-.nav-pills .nav-link:not(.active):hover {
-    color: #000;
-}

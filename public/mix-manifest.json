@@ -1,4 +1,27 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/site.css": "/css/site.css",
+    "/css/app.css": "/css/app.css",
+    "/img/avatar_demo.png": "/img/avatar_demo.png",
+    "/img/banner.png": "/img/banner.png",
+    "/img/booking.png": "/img/booking.png",
+    "/img/checkin.png": "/img/checkin.png",
+    "/img/course-default.png": "/img/course-default.png",
+    "/img/dashboard_image.png": "/img/dashboard_image.png",
+    "/img/dergreg-logo_navbar.png": "/img/dergreg-logo_navbar.png",
+    "/img/event_card_image.png": "/img/event_card_image.png",
+    "/img/event_card_image_2.png": "/img/event_card_image_2.png",
+    "/img/event_demo.png": "/img/event_demo.png",
+    "/img/event_detail.png": "/img/event_detail.png",
+    "/img/logo.png": "/img/logo.png",
+    "/img/poh-screenshot.png": "/img/poh-screenshot.png",
+    "/img/preview-default.png": "/img/preview-default.png",
+    "/img/profile.png": "/img/profile.png",
+    "/img/sales.png": "/img/sales.png",
+    "/img/seat_A.png": "/img/seat_A.png",
+    "/img/seat_B.png": "/img/seat_B.png",
+    "/img/seat_C.png": "/img/seat_C.png",
+    "/img/seat_D.png": "/img/seat_D.png",
+    "/img/thegreg_emoji_dev.png": "/img/thegreg_emoji_dev.png",
+    "/img/thegreg_logo.svg": "/img/thegreg_logo.svg"
 }

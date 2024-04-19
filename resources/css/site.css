@@ -1,0 +1,109 @@
+/** Banner **/
+
+.navbar-brand {
+    margin-right: auto;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.nav-menu {
+    margin-left: auto;
+}
+
+.navbar {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.banner-title {
+    color: white;
+}
+
+.banner-desc {
+    color: white;
+}
+
+.hero-container {
+    background-image: url('../img/banner.png');
+    background-size: cover;
+    background-position: center;
+    height: 578px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search-input {
+    width: 100%;
+    max-width: 500px;
+}
+
+/** Event item **/
+
+.ticket-icon {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.ticket-text {
+    font-size: 14px;
+}
+
+.event-item {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
+.event-item img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.event-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ffc107;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.event-favorite i {
+    color: #fff;
+}
+.category-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #ffc107;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.event-info {
+    padding: 10px;
+}
+.event-info .row {
+    margin-bottom: 5px;
+}
+
+.see-more-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+.see-more-btn button {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+

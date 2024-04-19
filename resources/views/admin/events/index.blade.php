@@ -161,7 +161,6 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
 @stop
 
 @section('js')
