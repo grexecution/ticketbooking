@@ -14,6 +14,10 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string logo
  * @property string logo_origin_names
  * @property string logo_sizes
+ * @property array event_ids
+ * @property array type
+ * @property array discount
+ * @property array sum
  */
 class UpdateSubscriptionRequest extends FormRequest
 {
@@ -41,6 +45,10 @@ class UpdateSubscriptionRequest extends FormRequest
             'logo' => 'sometimes|nullable|string',
             'logo_origin_names' => 'sometimes|nullable|array',
             'logo_sizes' => 'sometimes|nullable|array',
+//            'event_ids' => 'required|nullable|array',
+            'type' => 'required|nullable|array',
+            'discount' => 'required|nullable|array',
+            'sum' => 'required|nullable|array',
         ];
     }
 }

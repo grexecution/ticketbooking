@@ -6,7 +6,7 @@ use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subscriptions\IndexSubscriptionRequest;
 use App\Http\Requests\Subscriptions\StoreSubscriptionRequest;
-use App\Http\Requests\Tenants\UpdateTenantBySuperAdminRequest;
+use App\Http\Requests\Subscriptions\UpdateSubscriptionRequest;
 use App\Models\Event;
 use App\Models\Subscription;
 use Illuminate\Contracts\Support\Renderable;
@@ -60,8 +60,13 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request) : RedirectResponse
     {
-        $toCreate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        $toCreate = collect($request->validated())->except([
+            'logo', 'logo_origin_names', 'logo_sizes',
+            'event_ids', 'type' ,'discount', 'sum',
+        ])->toArray();
+
         $subscription = Subscription::query()->create($toCreate);
+        $this->handleSelectedEvents($request, $subscription);
         MediaHelper::handleMedia($subscription, 'logo', $request->logo);
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
@@ -74,19 +79,40 @@ class SubscriptionController extends Controller
     {
         abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
         $subscription->load(['events']);
-        return view('admin.subscriptions.edit', compact('subscription'));
+        $selectedEvents = $subscription->events->map(function (Event $event) {
+           return [
+               'id' => $event->id,
+               'name' => $event->name,
+               // ToDo need to replace after implementation event categories
+               'categories' => [
+                   ['id' => 1, 'name' => 'Category A',],
+                   ['id' => 2, 'name' => 'Category VIP',],
+               ],
+               'type' => $event->pivot->type,
+               'discount' => $event->pivot->discount,
+               'sum' => $event->pivot->sum,
+           ];
+        });
+
+        return view('admin.subscriptions.edit', compact('subscription', 'selectedEvents'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTenantBySuperAdminRequest $request, Subscription $subscription) : RedirectResponse
+    public function update(UpdateSubscriptionRequest $request, Subscription $subscription) : RedirectResponse
     {
-        $toUpdate = collect($request->validated())->except(['logo', 'logo_origin_names', 'logo_sizes'])->toArray();
+        $toUpdate = collect($request->validated())->except([
+            'logo', 'logo_origin_names', 'logo_sizes',
+            'event_ids', 'type' ,'discount', 'sum',
+        ])->toArray();
+
         if ($request->logo !== $subscription->logo?->name) {
             MediaHelper::handleMedia($subscription, 'logo', $request->logo);
         }
+
         $subscription->update($toUpdate);
+        $this->handleSelectedEvents($request, $subscription);
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
@@ -98,6 +124,31 @@ class SubscriptionController extends Controller
     {
         Subscription::query()->findOrFail($id)->delete();
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
+    }
+
+    private function handleSelectedEvents(StoreSubscriptionRequest|UpdateSubscriptionRequest $request, Subscription $subscription): void
+    {
+        $subscription->events()->sync([]);
+
+        $events = [];
+        $eventIds = array_keys($request->type);
+
+        foreach ($eventIds as $eventId) {
+            $events[] = [
+                'event_id' => $eventId,
+                'type' => $request->type[$eventId],
+                'discount' => $request->discount[$eventId],
+                'sum' => $request->sum[$eventId]
+            ];
+        }
+
+        foreach ($events as $event) {
+            $subscription->events()->attach($event['event_id'], [
+                'type' => $event['type'],
+                'discount' => $event['discount'],
+                'sum' => $event['sum'],
+            ]);
+        }
     }
 
 }

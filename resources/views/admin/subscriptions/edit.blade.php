@@ -8,15 +8,17 @@
         @include('messages')
         <div class="card orders-orders">
             <div class="card-header">
-                <h5 class="card-title m-0">New Subscription</h5>
+                <h5 class="card-title m-0">Edit Subscription</h5>
             </div>
             <div class="card-body">
-                <form id="create_subscription" name="create_subscription" action="{{ route('subscriptions.store') }}" method="post" enctype="multipart/form-data">
+                <form id="create_subscription" name="create_subscription" action="{{ route('subscriptions.update', $subscription->id) }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{ $subscription->id }}" />
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label for="name">Subscription Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Subscription Name" value="{{ old('name') }}">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter Subscription Name" value="{{ old('name', $subscription->name) }}">
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -24,7 +26,7 @@
                         <div class="form-group col-md-6">
                             <label for="short_desc">Internal description</label>
                             <span class="float-right text-muted">Not visible to customers</span>
-                            <input type="text" class="form-control" name="short_desc" id="short_desc" placeholder="Enter Internal description" value="{{ old('short_desc') }}">
+                            <input type="text" class="form-control" name="short_desc" id="short_desc" placeholder="Enter Internal description" value="{{ old('short_desc', $subscription->short_desc) }}">
                             @error('short_desc')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -32,7 +34,7 @@
                         <div class="form-group col-md-3">
                             <label for="price">Subscription Price</label>
                             <span class="float-right text-muted">Gross</span>
-                            <input type="number" min="0" step="0.1" class="form-control" name="price" id="price" placeholder="Enter Subscription Price" value="{{ old('price') }}">
+                            <input type="number" min="0" step="0.1" class="form-control" name="price" id="price" placeholder="Enter Subscription Price" value="{{ old('price', $subscription->price) }}">
                             @error('price')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -42,7 +44,7 @@
                     <div class="row mt-4">
                         <div class="form-group col-md-9">
                             <label for="description">Description text</label>
-                            <textarea name="description" class="form-control" rows="6" placeholder="Enter Description text">{{ old('description') }}</textarea>
+                            <textarea name="description" class="form-control" rows="6" placeholder="Enter Description text">{{ old('description', $subscription->description) }}</textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -59,17 +61,12 @@
                         </div>
                     </div>
 
-                    <!-- subscription-events -->
                     <subscription-events
                         :init-name="'{{ old('name', $subscription?->name ?? null) }}'"
                         :init-price="'{{ old('price', $subscription?->price ?? null) }}'"
-                        :init-selected-events="{{ json_encode($selectedEvents ?? []) }}"
-                        :init-event-ids="[{{ old('event_ids', $subscription ? $subscription?->events?->pluck('id')?->implode(',') : '') ?? '[]' }}]"
+                        :init-selected-events="{{ json_encode($selectedEvents) }}"
+{{--                        :init-event-ids="[{{ old('event_ids', $subscription ? $subscription?->events?->pluck('id')?->implode(',') : '') ?? '[]' }}]"--}}
                     ></subscription-events>
-                    @error('event_ids')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                    <!-- subscription-events (END) -->
 
                     <!-- Footer with Buttons -->
                     <div class="row mt-3">
@@ -119,7 +116,19 @@
                 }
             },
             init: function () {
-                //
+                @php
+                    $media = $subscription?->getFirstMedia('logo') ?? null;
+                @endphp
+
+                @if($media)
+                let file = {!! json_encode($media) !!}
+                this.options.addedfile.call(this, file)
+                this.options.thumbnail.call(this, file, '{{ $subscription->logo_thumb_edit_url }}')
+                file.previewElement.classList.add('dz-complete')
+                $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
+                $('#update_tenant').append('<input type="hidden" name="logo" value="' + file.name + '">')
+                this.options.maxFiles = this.options.maxFiles - 1
+                @endif
             },
             error: function (file, response) {
                 if ($.type(response) === 'string') {

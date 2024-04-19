@@ -22,6 +22,10 @@ return new class extends Migration
                 ->references('id')->on('subscriptions')
                 ->onUpdate('cascade')->onDelete('cascade');
 
+            $table->string('type')->index();
+            $table->float('discount');
+            $table->float('sum');
+
             $table->unique(['event_id', 'subscription_id']);
         });
     }

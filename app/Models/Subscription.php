@@ -72,6 +72,8 @@ class Subscription extends Model implements HasMedia
 
     public function events() : BelongsToMany
     {
-        return $this->belongsToMany(Event::class, 'event_subscription', 'subscription_id', 'event_id');
+        return $this
+            ->belongsToMany(Event::class, 'event_subscription', 'subscription_id', 'event_id')
+            ->withPivot(['type', 'discount', 'sum']);
     }
 }

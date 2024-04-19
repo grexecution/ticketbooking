@@ -18,6 +18,5 @@ class SeatCategoryResource extends JsonResource
             'id' => $this['id'],
             'name' => $this['name'],
         ];
-//        return parent::toArray($request);
     }
 }

@@ -17,6 +17,7 @@ class EventResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            // ToDo need to replace after implementation event categories
             'categories' => SeatCategoryResource::collection([
                 ['id' => 1, 'name' => 'Category A',],
                 ['id' => 2, 'name' => 'Category VIP',],
