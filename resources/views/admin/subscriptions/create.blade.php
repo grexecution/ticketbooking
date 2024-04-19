@@ -64,7 +64,7 @@
                         :init-name="'{{ old('name', $subscription?->name ?? null) }}'"
                         :init-price="'{{ old('price', $subscription?->price ?? null) }}'"
                         :init-selected-events="{{ json_encode($selectedEvents ?? []) }}"
-                        :init-event-ids="[{{ old('event_ids', $subscription ? $subscription?->events?->pluck('id')?->implode(',') : '') ?? '[]' }}]"
+{{--                        :init-event-ids="[{{ old('event_ids', $subscription ? $subscription?->events?->pluck('id')?->implode(',') : '') ?? '[]' }}]"--}}
                     ></subscription-events>
                     @error('event_ids')
                     <span class="text-danger">{{ $message }}</span>
