@@ -125,7 +125,7 @@
                 this.options.thumbnail.call(this, file, '{{ $subscription->logo_thumb_edit_url }}')
                 file.previewElement.classList.add('dz-complete')
                 $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
-                $('#update_tenant').append('<input type="hidden" name="logo" value="' + file.name + '">')
+                $('#create_subscription').append('<input type="hidden" name="logo" value="' + file.name + '">')
                 this.options.maxFiles = this.options.maxFiles - 1
                 @endif
             },
