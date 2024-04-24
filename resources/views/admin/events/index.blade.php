@@ -11,7 +11,7 @@
         <div class="container-fluid bg-white py-3">
             <div class="row m-3">
                 <div class="col-md-8">
-                    <form action="{{ route('tenants.index') }}" method="GET">
+                    <form action="{{ route('events.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -21,9 +21,9 @@
                                 <!-- Search select input -->
                                 <select class="custom-select mb-2" name="status">
                                     <option value="">Select status</option>
-                                    <option value="category1">Status 1</option>
-                                    <option value="category2">Status 2</option>
-                                    <option value="category3">Status 3</option>
+                                    <option value="live" {{ old('status', request()->get('status')) == "live" ? 'selected' : '' }}>Live</option>
+                                    <option value="hidden" {{ old('status', request()->get('status')) == "hidden" ? 'selected' : '' }}>Hidden</option>
+                                    <option value="preview" {{ old('status', request()->get('status')) == "preview" ? 'selected' : '' }}>Preview</option>
                                 </select>
                             </div>
                             <div class="col-md-3">
@@ -57,78 +57,54 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="">
-                            <td>
-                                <img src="{{ asset('img/event_demo.png') }}" alt="Event img" />
-                                <span>This is an event title for a test event</span>
-                            </td>
-                            <td>
-                                <div>
-                                    Sunday, June 30, 2024
-                                </div>
-                                <div>
-                                    Start: 8:00 p.m
-                                </div>
-                            </td>
-                            <td>
-                                <div>166 / 200</div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>live</td>
-                            <td class="text-right">
-                                <!-- View Event Button -->
-                                <a href="{{ route('site.event', 1) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
-                                    <i class="fas fa-link"></i>
-                                </a>
-                                <!-- Edit Event Button -->
-                                <a href="{{ route('events.create') }}" type="button" class="btn btn-warning text-white mx-2">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <!-- Delete Event Button -->
-                                <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-{{--                        @if($events->count())--}}
-{{--                            @foreach($events as $event)--}}
-{{--                                <tr class="">--}}
-{{--                                    <td>{{ $event->name }}</td>--}}
-{{--                                    <td>2</td>--}}
-{{--                                    <td>5</td>--}}
-{{--                                    <td>20</td>--}}
-{{--                                    <td>€ 365,90</td>--}}
-{{--                                    <td class="text-right">--}}
-{{--                                        <!-- Edit Event Button -->--}}
-{{--                                        <a href="{{ route('tenants.edit', $event->id) }}" type="button"--}}
-{{--                                           class="btn btn-warning text-white mx-2">--}}
-{{--                                            <i class="fas fa-edit"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Delete Event Button -->--}}
-{{--                                        <a href="#" class="btn btn-danger mx-2 delete-record"--}}
-{{--                                           data-record-id="{{ $event->id }}" data-toggle="modal"--}}
-{{--                                           data-target="#confirmModal">--}}
-{{--                                            <i class="fas fa-trash"></i>--}}
-{{--                                        </a>--}}
-{{--                                        <!-- Admin Login Button -->--}}
-{{--                                        <form method="post" action="{{ route('tenants.adminLogin') }}"--}}
-{{--                                              class="d-inline-block">--}}
-{{--                                            @csrf--}}
-{{--                                            <input type="hidden" name="tenant_id" value="{{ $event->id }}">--}}
-{{--                                            <button type="submit" class="btn btn-dark ml-2">Admin Login</button>--}}
-{{--                                        </form>--}}
-{{--                                    </td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
-{{--                        @else--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <td colspan="6">Records not found</td>--}}
-{{--                            </tr>--}}
-{{--                        @endif--}}
+                            @if($events->count())
+                                @foreach($events as $event)
+                                    <tr class="">
+                                        <td>
+                                            @if($event->logo_thumb_index_url)
+                                                <img src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
+                                            @endif
+                                            {{ $event->name }}
+                                            <span>{{ $event->short_desc }}</span>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                {{ $event->start_date?->format('l, F j, Y') ?? '' }}
+                                            </div>
+                                            <div>
+                                                Start: {{ $event->start_time?->format('g:i a') ?? '' }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>0 / 200</div>
+                                            <div class="progress mb-3">
+                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                                                    <span class="sr-only">0% Complete (warning)</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ $event->status }}</td>
+                                        <td class="text-right">
+                                            <!-- View Event Button -->
+                                            <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
+                                                <i class="fas fa-link"></i>
+                                            </a>
+                                            <!-- Edit Event Button -->
+                                            <a href="{{ route('events.edit', $event->id) }}" type="button" class="btn btn-warning text-white mx-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <!-- Delete Event Button -->
+                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="{{ $event->id }}" data-toggle="modal" data-target="#confirmModal">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="text-center">
+                                    <td colspan="6">Records not found</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -171,8 +147,8 @@
             const deleteButton = $(this).find('#confirmDelete'); // Find the delete button in the modal
 
             // Set the route path for deleting the record
-            let deleteRoute = '{{ route('tenants.destroy', ':id') }}';
-            deleteRoute = deleteRoute.replace(':id', 100);
+            let deleteRoute = '{{ route('events.destroy', ':id') }}';
+            deleteRoute = deleteRoute.replace(':id', recordId);
 
             // Set the onclick event for the delete button to redirect to the delete route
             deleteButton.click(function () {

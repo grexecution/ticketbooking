@@ -144,7 +144,6 @@
                     @php
                         $media = $tenant?->getFirstMedia('logo') ?? null;
                     @endphp
-
                     @if($media)
                     let file = {!! json_encode($media) !!}
                     this.options.addedfile.call(this, file)
