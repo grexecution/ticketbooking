@@ -75,7 +75,7 @@ class EventController extends Controller
         $toCreate = collect($request->validated())->except([
             'logo', 'logo_origin_names', 'logo_sizes',
             'partners', 'partners_origin_names', 'partners_sizes',
-            'program_id',
+            'artist_ids', 'program_id',
         ])->toArray();
 
         $event = Event::query()->create($toCreate);
@@ -112,7 +112,7 @@ class EventController extends Controller
         $toUpdate = collect($request->validated())->except([
             'logo', 'logo_origin_names', 'logo_sizes',
             'partners', 'partners_origin_names', 'partners_sizes',
-            'artist_ids',
+            'artist_ids', 'program_id',
         ])->toArray();
 
         $toUpdate['start_time'] = Carbon::parse($request->start_time);
