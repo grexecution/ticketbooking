@@ -44,7 +44,12 @@
                     <div class="row mt-4">
                         <div class="form-group col-md-9">
                             <label for="description">Description text</label>
-                            <textarea name="description" class="form-control" rows="6" placeholder="Enter Description text">{{ old('description', $subscription->description) }}</textarea>
+                            <textarea
+                                class="form-control tinymceTextarea {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                name="description"
+                                placeholder="Enter Subscription Description"
+                                id="description">{!! old('description', $subscription->description) ?? "" !!}
+                            </textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

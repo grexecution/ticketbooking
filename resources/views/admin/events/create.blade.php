@@ -153,7 +153,12 @@
                             <div class="row mt-4">
                                 <div class="form-group col-md-12">
                                     <label for="description">Event description</label>
-                                    <textarea name="description" class="form-control" rows="12" placeholder="Enter Event Description">{{ old('description') }}</textarea>
+                                    <textarea
+                                        class="form-control tinymceTextarea {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                        name="description"
+                                        placeholder="Enter Event Description"
+                                        id="description">{!! old('description') ?? "" !!}
+                                    </textarea>
                                 </div>
                                 @error('description')
                                 <span class="text-danger">{{ $message }}</span>

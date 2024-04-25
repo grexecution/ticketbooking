@@ -12,26 +12,26 @@
                     <!-- Title -->
                     <div class="row">
                         <div class="col">
-                            <h1>Flo & Wisch - Gefühlsecht</h1>
+                            <h1>{{ $event->name }}</h1>
                         </div>
                     </div>
                     <!-- Description -->
                     <div class="row">
                         <div class="col">
-                            <p>This year, the directors will open the festival themselves with a real cabaret hit! When Flo and Wisch perform their most popular numbers from ten years, there won't be a dry eye in the room. Experience a punch-packed and hit-filled evening with a guaranteed sense of humor!</p>
+                            <p>{{ $event->description }}</p>
                         </div>
                     </div>
                     <!-- Event Details -->
                     <div class="row">
                         <div class="col">
                             <div class="event-detail">
-                                <i class="fas fa-calendar-alt"></i> Saturday, 13.04.2024 | 19:00
+                                <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('g:i a') ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i> Orpheum Vienna
+                                <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-euro-sign"></i> from €28.00
+                                <i class="fas fa-euro-sign"></i> from €{{ $event->prive ?? 0 }}
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,8 @@
             </div>
             <!-- Event Image -->
             <div class="col-lg-4">
-                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">
+{{--                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">--}}
+                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded">
             </div>
         </div>
 

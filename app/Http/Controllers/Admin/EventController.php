@@ -159,6 +159,10 @@ class EventController extends Controller
 
     private function handleArtists(StoreEventRequest|UpdateEventRequest $request, Event $event) : void
     {
+        if (!$request->artist_ids) {
+            return;
+        }
+
         $existsIds = Artist::query()->whereIn('id', $request->artist_ids)->get()->pluck('id')->toArray();
         $newArtists = array_diff($request->artist_ids, $existsIds);
         $createdIds = [];

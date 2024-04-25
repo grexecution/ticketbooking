@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class EventController extends Controller
 
     public function show(string $id) : Renderable
     {
-        $event = new \stdClass();
+        $event = Event::findOrFail($id);
         return view('site.events.show', compact('event'));
     }
 }

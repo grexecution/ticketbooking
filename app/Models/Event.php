@@ -51,6 +51,7 @@ class Event extends Model implements HasMedia
         'partners',
         'logo_thumb_index_url',
         'logo_thumb_edit_url',
+        'logo_event_url',
     ];
 
     /**
@@ -66,6 +67,11 @@ class Event extends Model implements HasMedia
         $this->addMediaConversion('thumb-edit')
             ->width(120)
             ->height(120)
+            ->sharpen(10);
+
+        $this->addMediaConversion('event-show')
+            ->width(350)
+            ->height(218)
             ->sharpen(10);
     }
 
@@ -96,6 +102,14 @@ class Event extends Model implements HasMedia
     public function getLogoThumbEditUrlAttribute() : ? string
     {
         return $this->getMedia('logo')->last()?->getFullUrl('thumb-edit');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLogoEventUrlAttribute() : ? string
+    {
+        return $this->getMedia('logo')->last()?->getFullUrl('event-show');
     }
 
     public function venue(): BelongsTo
