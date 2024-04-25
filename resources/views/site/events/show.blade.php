@@ -18,7 +18,7 @@
                     <!-- Description -->
                     <div class="row">
                         <div class="col">
-                            <p>{{ $event->description }}</p>
+                            <p>{!! $event->description !!}</p>
                         </div>
                     </div>
                     <!-- Event Details -->
