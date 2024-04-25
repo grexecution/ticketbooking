@@ -107,3 +107,33 @@
     cursor: pointer;
 }
 
+#seats_container {
+    position: relative;
+    border-radius: 0 !important;
+    background-color: #ffffff;
+    background-size: 0.5rem 0.5rem;
+    background-position: 0.25rem 0.25rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 1px, transparent 1px);
+    margin: 0;
+}
+
+#seats_container::before, #seats_container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: 2.5rem 2.5rem;
+    background-position: 0.25rem 0.25rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 2px, transparent 2px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 2px, transparent 2px);
+    z-index: -1;
+}
+
+#seats_container::after {
+    background-size: 5rem 5rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 3px, transparent 3px);
+}
