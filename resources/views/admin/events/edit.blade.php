@@ -30,7 +30,9 @@
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-3">
-                            <button class="btn btn-warning text-white"><i class="fas fa-qrcode"></i></button>
+                            <button class="btn btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
+                                <i class="fas fa-qrcode"></i>
+                            </button>
                         </div>
                         <div class="col-md-3">
                             <button class="btn btn-dark"><i class="fas fa-print"></i></button>
@@ -535,6 +537,30 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal QR-code -->
+    <div class="modal fade" id="qrCodeModal" tabindex="-1" role="dialog" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="qrCodeInput" readonly value="{{ route('site.scanner') }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="copyButton"><i class="fas fa-copy"></i> Copy</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @section('css')
@@ -715,6 +741,18 @@
                 deleteButton.click(function() {
                     window.location.href = deleteRoute;
                 });
+            });
+
+            // QR-code modal
+            // Add click event listener to copy button
+            document.getElementById('copyButton').addEventListener('click', function() {
+                var input = document.getElementById('qrCodeInput');
+                input.select();
+                input.setSelectionRange(0, 99999); // For mobile devices
+
+                document.execCommand('copy');
+                // Show message that text was copied
+                alert('Text copied!');
             });
         });
     </script>
