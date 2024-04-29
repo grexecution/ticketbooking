@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\Site\TicketScannerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +32,13 @@ Route::get('/2fa', [TwoFactorController::class, 'show'])->name('2fa');
 Route::get('/2fa/resendCode', [TwoFactorController::class, 'resendCode'])->name('2fa.resendCode');
 Route::post('/2fa', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 
+// Front
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
+
+// Scanner
+Route::get('/scanner', [TicketScannerController::class, 'show'])->name('site.scanner');
 
 // Admin
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
