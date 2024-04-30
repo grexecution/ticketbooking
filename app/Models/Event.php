@@ -30,6 +30,8 @@ class Event extends Model implements HasMedia
         'name',
         'artist',
         'price',
+        'seat_type',
+        'seat_amount',
         'active',
         'status',
         'start_date',

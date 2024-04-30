@@ -17,6 +17,8 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string start_time
  * @property string doors_open_time
  * @property float price
+ * @property string seat_type
+ * @property string seat_amount
  * @property string logo
  * @property array logo_origin_names
  * @property array logo_sizes
@@ -53,6 +55,8 @@ class StoreEventRequest extends FormRequest
             'start_time' => 'sometimes|nullable|string',
             'doors_open_time' => 'sometimes|nullable|string',
             'price' => 'sometimes|nullable|numeric',
+            'seat_type' => 'required|in:seat_plan,no_seat_plan',
+            'seat_amount' => 'sometimes|nullable|numeric',
             'logo' => 'sometimes|nullable|string',
             'logo_origin_names' => 'sometimes|nullable|array',
             'logo_sizes' => 'sometimes|nullable|array',
