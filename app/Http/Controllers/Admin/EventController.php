@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\MediaHelper;
+use App\Helpers\PriceHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\IndexEventRequest;
 use App\Http\Requests\Events\StoreEventRequest;
@@ -78,6 +79,8 @@ class EventController extends Controller
             'artist_ids', 'program_id',
         ])->toArray();
 
+        $toCreate['price'] = PriceHelper::fromStrToFloat($toCreate['price']);
+
         $event = Event::query()->create($toCreate);
         $event->discounts()->sync($toCreate['discount_ids'] ?? []);
         $this->handleArtists($request, $event);
@@ -117,6 +120,7 @@ class EventController extends Controller
 
         $toUpdate['start_time'] = Carbon::parse($request->start_time);
         $toUpdate['doors_open_time'] = Carbon::parse($request->doors_open_time);
+        $toUpdate['price'] = PriceHelper::fromStrToFloat($toUpdate['price']);
 
         $event->update($toUpdate);
         if ($request->logo !== $event->logo?->name) {

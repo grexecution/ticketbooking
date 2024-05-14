@@ -251,11 +251,22 @@
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
 
     <script>
         Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"
 
         $(document).ready(function() {
+            $('#price').inputmask({
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'radixPoint': ',',
+                'autoGroup': true,
+                'digits': 2,
+                'digitsOptional': false,
+                'placeholder': '0'
+            });
+
             // General Select2 plugin settings
             let $select2 = $('.select2');
             $select2.select2();
