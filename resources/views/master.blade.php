@@ -209,7 +209,7 @@
             })
 
             tinymce.init({
-                language: "uk",
+                language: "en",
                 selector: '.tinymceTextarea',
                 plugins: "code,link,lists,image",
                 {{--images_upload_url: '{{ route('media.upload_tiny_mce') }}',--}}
