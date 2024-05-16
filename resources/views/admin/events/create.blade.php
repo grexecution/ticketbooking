@@ -20,10 +20,6 @@
                             <h4>Basic Information</h4>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div style="padding-bottom: 4px">
-                                        <span class="btn btn-info btn-xs select-all-artists" style="border-radius: 0">{{ __('Select All') }}</span>
-                                        <span class="btn btn-info btn-xs deselect-all-artists" style="border-radius: 0">{{ __('Deselect All') }}</span>
-                                    </div>
                                     <div class="form-group">
                                         <label for="selectArtist">Artist</label>
                                         <select class="form-control select2" id="selectArtist" name="artist_ids[]" multiple="multiple">
@@ -297,17 +293,6 @@
             $('.deselect-all-discount').on('click', function() {
                 $('#selectDiscount').find('option').prop('selected', false); // Deselect all options
                 $('#selectDiscount').trigger('change'); // Trigger change event for Select2
-            });
-
-            // Add event listener for "Select All" Artist button
-            $('.select-all-artists').on('click', function() {
-                $('#selectArtist').find('option').prop('selected', true); // Select all options
-                $('#selectArtist').trigger('change'); // Trigger change event for Select2
-            });
-            // Add event listener for "Deselect All" Artist button
-            $('.deselect-all-artists').on('click', function() {
-                $('#selectArtist').find('option').prop('selected', false); // Deselect all options
-                $('#selectArtist').trigger('change'); // Trigger change event for Select2
             });
 
             let dropzoneSponsors = new Dropzone("#partners", {

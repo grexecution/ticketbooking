@@ -283,10 +283,6 @@
                                         <h4>Basic Information</h4>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div style="padding-bottom: 4px">
-                                                    <span class="btn btn-info btn-xs select-all-artists" style="border-radius: 0">{{ __('Select All') }}</span>
-                                                    <span class="btn btn-info btn-xs deselect-all-artists" style="border-radius: 0">{{ __('Deselect All') }}</span>
-                                                </div>
                                                 <div class="form-group">
                                                     <label for="selectArtist">Artist</label>
                                                     <select class="form-control select2" id="selectArtist" name="artist_ids[]" multiple="multiple">
