@@ -248,7 +248,7 @@
                                                 <a href="#" class="btn btn-dark mx-2">Completed</a>
                                             </td>
                                             <td class="text-right">
-                                                <a href="#" class="btn btn-warning mx-2">
+                                                <a href="{{ route('orders.show', 1) }}" class="btn btn-warning mx-2">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                     More
                                                 </a>

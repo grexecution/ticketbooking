@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
@@ -43,6 +44,7 @@ Route::get('/scanner', [TicketScannerController::class, 'show'])->name('site.sca
 // Admin
 Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+// Tenants
 Route::get('admin/tenants/delete/{tenantId}', [TenantController::class, 'destroy'])->name('tenants.destroy');
 Route::post('admin/tenants/adminLogin', [TenantController::class, 'adminLogin'])->name('tenants.adminLogin');
 Route::post('admin/tenants/superAdminLogin', [TenantController::class, 'superAdminLogin'])->name('tenants.superAdminLogin');
@@ -54,16 +56,21 @@ Route::get('admin/events/{eventId}/status/{status}', [EventController::class, 's
 Route::get('admin/events/delete/{eventId}', [EventController::class, 'destroy'])->name('events.destroy');
 Route::resource('admin/events', EventController::class)->except('show', 'destroy');
 
+// Orders
+Route::get('admin/orders/{orderId}/invoice', [OrderController::class, 'showInvoice'])->name('showInvoice');
+Route::get('admin/orders/{orderId}/tickets', [OrderController::class, 'showTickets'])->name('showTickets');
+Route::resource('admin/orders', OrderController::class)->only('show');
+
 // Users
 Route::resource('admin/users', UserController::class)->except('show', 'destroy');
 Route::get('admin/users/delete/{userId}', [UserController::class, 'destroy'])->name('users.destroy');
 
-//Venues
-Route::resource('admin/venues', VenueController::class);
+// Venues
+Route::resource('admin/venues', VenueController::class)->except('show', 'destroy');
 Route::get('admin/venues/delete/{venueId}', [VenueController::class, 'destroy'])->name('venues.destroy');
 
 // Subscriptions
-Route::resource('admin/subscriptions', SubscriptionController::class);
+Route::resource('admin/subscriptions', SubscriptionController::class)->except('show', 'destroy');
 Route::get('admin/subscriptions/delete/{voucherId}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
 
 // Discounts
