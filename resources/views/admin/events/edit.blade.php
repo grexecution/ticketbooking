@@ -92,7 +92,7 @@
 
         <div class="container">
             <!-- Horizontal tabs -->
-            <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+            <ul class="nav nav-tabs mt-3 border-0" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="true">Seating Plan</a>
                 </li>
@@ -407,7 +407,7 @@
                                         <div class="row mt-4">
                                             <div class="col-md-8">
                                                 <label for="logo">Short Description</label>
-                                                <textarea name="short_desc" class="form-control" rows="4" placeholder="Enter Short Description">{{ old('short_desc', $event->short_desc) }}</textarea>
+                                                <textarea name="short_desc" class="form-control" rows="5" placeholder="Enter Short Description">{{ old('short_desc', $event->short_desc) }}</textarea>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="logo">Event Picture</label>
