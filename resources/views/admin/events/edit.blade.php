@@ -7,21 +7,21 @@
     <div class="container pt-3">
         @include('messages')
 
-        <div class="container bg-white px-4">
+        <div class="container bg-white px-4 rounded">
             <!-- First block -->
             <div class="row py-3 align-items-center">
                 <!-- First column with event details -->
                 <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-2 bg-light p-3 rounded">
-                            <p>{{ $event->start_date?->format('M d') }}</p>
-                            <p>{{ $event->start_date?->format('Y') }}</p>
+                    <div class="row gap-4">
+                        <div class="bg-light p-3 rounded">
+                            <p class="text-xl font-weight-bold">{{ $event->start_date?->format('M d') }}</p>
+                            <p class="font-weight-bold text-secondary">{{ $event->start_date?->format('Y') }}</p>
                             <p>{{ $event->start_date?->format('D') }} - {{ $event->start_time?->format('g:i a') }}</p>
                         </div>
-                        <div class="col-md-10 d-flex flex-col align-items-start justify-center">
+                        <div class="d-flex flex-col align-items-start justify-center">
                             @if($event->venue)
                                 <p><i class="fas fa-map-marker-alt"></i> {{ $event->venue->name }}</p>
-                                <h2 class="font-weight-bold">{{ $event->name }}</h2>
+                                <h1 class="text-xl font-weight-bold">{{ $event->name }}</h1>
                             @endif
                         </div>
                     </div>
@@ -63,24 +63,24 @@
             <!-- Second block -->
             <div class="row py-3">
                 <div class="bg-light rounded w-100 d-flex p-4">
-                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center gap-2">
                         <img src="{{ asset('img/sales.png') }}" alt="Sales Image" width="91" height="70">
-                        <div class="d-flex flex-col ml-1">
-                            <div>Sales Volume</div>
+                        <div class="d-flex flex-col">
+                            <div class="font-weight-bold">Sales Volume</div>
                             <div>€3.450</div>
                         </div>
                     </div>
-                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center gap-2">
                         <img src="{{ asset('img/booking.png') }}" alt="Bookings Image" width="91" height="70">
-                        <div class="d-flex flex-col ml-1">
-                            <div>Bookings</div>
+                        <div class="d-flex flex-col">
+                            <div class="font-weight-bold">Bookings</div>
                             <div>166 / 200</div>
                         </div>
                     </div>
-                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center gap-2">
                         <img src="{{ asset('img/checkin.png') }}" alt="Check-ins Image" width="91" height="70">
-                        <div class="d-flex flex-col ml-1">
-                            <div>Check-ins</div>
+                        <div class="d-flex flex-col">
+                            <div class="font-weight-bold">Check-ins</div>
                             <div>0 / 200</div>
                         </div>
                         
@@ -109,7 +109,7 @@
 
             <!-- Tab content -->
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active bg-white" id="seating" role="tabpanel" aria-labelledby="seating-tab">
+                <div class="tab-pane fade show active bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
                     <!-- Seats and Pricing Content -->
 {{--                    <div class="card seats-plan">--}}
 {{--                        <div class="card-body">--}}
@@ -212,7 +212,7 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade bg-white" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
+                <div class="tab-pane fade bg-white rounded" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
                     <!-- Bookings content -->
                     <div class="card seats-plan">
                         <div class="card-body">
@@ -270,7 +270,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade bg-white" id="invoice" role="tabpanel" aria-labelledby="invoice-tab">
+                <div class="tab-pane fade bg-white rounded" id="invoice" role="tabpanel" aria-labelledby="invoice-tab">
                     <!-- Invoice content -->
                     <div class="card seats-plan">
                         <div class="card-body">
@@ -278,7 +278,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade bg-white" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <div class="tab-pane fade bg-white rounded" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                     <!-- Settings content -->
                     <div class="card seats-plan">
                         <div class="card-body">
@@ -290,9 +290,10 @@
                                     <!-- Basic Information -->
                                     <div class="col-md-12 mb-4">
                                         <h4>Basic Information</h4>
-                                        <div class="row">
+                                        <hr>
+                                        <div class="row mt-4">
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group d-flex flex-col">
                                                     <label for="selectArtist">Artist</label>
                                                     <select class="form-control select2" id="selectArtist" name="artist_ids[]" multiple="multiple">
                                                         @foreach($artists as $artist)
@@ -305,7 +306,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="form-group">
+                                                <div class="form-group d-flex flex-col">
                                                     <label for="selectProgram">Program / Event Series</label>
                                                     <select class="form-control select2" id="selectProgram" name="program_id">
                                                         @foreach($programs as $program)
@@ -401,16 +402,17 @@
                                 <div class="row mt-4">
                                     <div class="col-md-12 mb-4">
                                         <h4>Detailed Information</h4>
+                                        <hr>
                                         <!-- Detailed Information -->
                                         <div class="row mt-4">
-                                            <div class="col-md-6">
+                                            <div class="col-md-8">
                                                 <label for="logo">Short Description</label>
                                                 <textarea name="short_desc" class="form-control" rows="4" placeholder="Enter Short Description">{{ old('short_desc', $event->short_desc) }}</textarea>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label for="logo">Event Picture</label>
                                                 <div
-                                                    class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                                    class="p-0 border-0 rounded dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
                                                     id="logo">
                                                 </div>
                                                 @error('logo')

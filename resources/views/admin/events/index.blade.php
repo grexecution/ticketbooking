@@ -69,7 +69,7 @@
                                                 <span>{{ $event->short_desc }}</span>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="col-md-2">
                                             <div>
                                                 {{ $event->start_date?->format('l, F j, Y') ?? '' }}
                                             </div>
@@ -77,7 +77,7 @@
                                                 Start: {{ $event->start_time?->format('g:i a') ?? '' }}
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="col-md-1">
                                             <div>0 / 200</div>
                                             <div class="progress mb-3">
                                                 <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">

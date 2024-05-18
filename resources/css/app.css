@@ -114,3 +114,15 @@
 .nav-pills .nav-link:not(.active):hover {
     color: #000;
 }
+
+.tab-content {
+    padding-top: 20px!important
+  }
+
+.tab-pane {
+    border-radius: 20px!important;
+  }
+
+.dropzone .dz-preview {
+    margin: 0px!important;
+}
