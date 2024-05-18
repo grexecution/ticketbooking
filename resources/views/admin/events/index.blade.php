@@ -65,7 +65,7 @@
                                                 <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
                                             <div class="d-flex flex-col ml-2 align-items-start">
-                                                {{ $event->name }}
+                                                <p class="font-weight-bold">{{ $event->name }}</p>
                                                 <span>{{ $event->short_desc }}</span>
                                             </div>
                                         </td>
@@ -87,18 +87,20 @@
                                         </td>
                                         <td>{{ $event->status }}</td>
                                         <td class="text-right col-md-2">
-                                            <!-- View Event Button -->
-                                            <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
-                                                <i class="fas fa-link"></i>
-                                            </a>
-                                            <!-- Edit Event Button -->
-                                            <a href="{{ route('events.edit', $event->id) }}" type="button" class="btn btn-warning text-white mx-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <!-- Delete Event Button -->
-                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="{{ $event->id }}" data-toggle="modal" data-target="#confirmModal">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                            <div class="d-flex gap-1">
+                                                <!-- View Event Button -->
+                                                <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white">
+                                                    <i class="fas fa-link"></i>
+                                                </a>
+                                                <!-- Edit Event Button -->
+                                                <a href="{{ route('events.edit', $event->id) }}" type="button" class="btn btn-warning text-white">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <!-- Delete Event Button -->
+                                                <a href="#" class="btn btn-danger delete-record" data-record-id="{{ $event->id }}" data-toggle="modal" data-target="#confirmModal">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

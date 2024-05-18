@@ -94,16 +94,16 @@
             <!-- Horizontal tabs -->
             <ul class="nav nav-tabs mt-3 border-0" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="true">Seating Plan</a>
+                    <a class="nav-link tab-text active" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="true">Seating Plan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
+                    <a class="nav-link tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
+                    <a class="nav-link tab-text" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                    <a class="nav-link tab-text" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
                 </li>
             </ul>
 
@@ -289,7 +289,7 @@
                                 <div class="row mt-4">
                                     <!-- Basic Information -->
                                     <div class="col-md-12 mb-4">
-                                        <h4>Basic Information</h4>
+                                        <h3 class="settings-title">Basic Information</h3>
                                         <hr>
                                         <div class="row mt-4">
                                             <div class="col-md-6">
@@ -401,7 +401,7 @@
                                 <!-- Detailed Information -->
                                 <div class="row mt-4">
                                     <div class="col-md-12 mb-4">
-                                        <h4>Detailed Information</h4>
+                                        <h3 class="settings-title">Detailed Information</h3>
                                         <hr>
                                         <!-- Detailed Information -->
                                         <div class="row mt-4">
@@ -443,11 +443,15 @@
                                 <!-- Discounts -->
                                 <div class="row mt-4">
                                     <div class="col-md-12 mb-4">
-                                        <h4>Discounts</h4>
-                                        <div style="padding-bottom: 4px">
-                                            <span class="btn btn-info btn-xs select-all-discount" style="border-radius: 0">{{ __('Select All') }}</span>
-                                            <span class="btn btn-info btn-xs deselect-all-discount" style="border-radius: 0">{{ __('Deselect All') }}</span>
+                                        <div class="d-flex flex-row justify-between">
+                                           <h3 class="settings-title">Discounts</h3>
+                                           <hr>
+                                            <div style="padding-bottom: 4px">
+                                                <span class="btn btn-info btn-xs select-all-discount" style="border-radius: 0">{{ __('Select All') }}</span>
+                                                <span class="btn btn-info btn-xs deselect-all-discount" style="border-radius: 0">{{ __('Deselect All') }}</span>
+                                            </div> 
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label for="selectDiscount">Select Discount</label>
                                             <select name="discount_ids[]" class="form-control select2" id="selectDiscount" multiple="multiple">
@@ -464,7 +468,8 @@
                                 <!-- Event Sponsors -->
                                 <div class="row mt-4">
                                     <div class="col-md-12 mb-4">
-                                        <h4>Event Sponsors</h4>
+                                        <h3 class="settings-title">Event Sponsors</h3>
+                                        <hr>
                                         <div class="form-group">
                                             <p>Auf den Tickets sowie auf der Eventseite haben Sie die Möglichkeit Ihre Sponsoren hervorzuheben.
                                                 Minimum 400 X 400 Pixelbreite. Erlaubte Dateiformate: PNG, JPG, SVG</p>
