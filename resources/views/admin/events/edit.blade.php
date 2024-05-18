@@ -7,27 +7,27 @@
     <div class="container pt-3">
         @include('messages')
 
-        <div class="container bg-white">
+        <div class="container bg-white px-4">
             <!-- First block -->
-            <div class="row py-3">
+            <div class="row py-3 align-items-center">
                 <!-- First column with event details -->
                 <div class="col-md-8">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-2 bg-light p-3 rounded">
                             <p>{{ $event->start_date?->format('M d') }}</p>
                             <p>{{ $event->start_date?->format('Y') }}</p>
                             <p>{{ $event->start_date?->format('D') }} - {{ $event->start_time?->format('g:i a') }}</p>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-10 d-flex flex-col align-items-start justify-center">
                             @if($event->venue)
                                 <p><i class="fas fa-map-marker-alt"></i> {{ $event->venue->name }}</p>
-                                <h2>{{ $event->name }}</h2>
+                                <h2 class="font-weight-bold">{{ $event->name }}</h2>
                             @endif
                         </div>
                     </div>
                 </div>
                 <!-- Second column with buttons -->
-                <div class="col-md-4">
+                <div class="col-md-4 d-flex justify-end">
                     <div class="row">
                         <div class="col-md-2">
                             <button class="btn btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
@@ -61,7 +61,7 @@
             <!-- Separated line -->
             <hr>
             <!-- Second block -->
-            <div class="row p-3">
+            <div class="row py-3">
                 <div class="bg-light rounded w-100 d-flex p-4">
                     <div class="col-md-4 d-flex flex-row justify-center align-items-center">
                         <img src="{{ asset('img/sales.png') }}" alt="Sales Image" width="91" height="70">

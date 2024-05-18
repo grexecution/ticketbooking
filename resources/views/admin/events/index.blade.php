@@ -60,9 +60,9 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td class="d-flex align-items-center">
+                                        <td class="d-flex align-items-center border-0">
                                             @if($event->logo_thumb_index_url)
-                                                <img class="w-40 h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
                                             <div class="d-flex flex-col ml-2 align-items-start">
                                                 {{ $event->name }}
@@ -86,7 +86,7 @@
                                             </div>
                                         </td>
                                         <td>{{ $event->status }}</td>
-                                        <td class="text-right">
+                                        <td class="text-right col-md-2">
                                             <!-- View Event Button -->
                                             <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
                                                 <i class="fas fa-link"></i>
