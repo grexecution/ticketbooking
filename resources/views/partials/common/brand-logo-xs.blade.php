@@ -25,10 +25,10 @@
         {{-- Brand text --}}
         <div>
             <h4 class="brand-text font-weight-normal text-white mb-0 {{ config('adminlte.classes_brand_text') }} logo-header">
-            theGreg.io
+            Ticketwilli
         </h4>
         <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }} logo-desc">
-            DIY your online Business
+            Die Online-Pudl für Events
         </span>
         </div>
     </a>

@@ -29,20 +29,20 @@
                 <!-- Second column with buttons -->
                 <div class="col-md-4">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <button class="btn btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
                                 <i class="fas fa-qrcode"></i>
                             </button>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <button class="btn btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-secondary">
                                 <i class="fas fa-link"></i>
                             </a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="dropdown">
                                 <button class="btn btn-success dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Status: {{ ucfirst($event->status) }}
@@ -61,22 +61,31 @@
             <!-- Separated line -->
             <hr>
             <!-- Second block -->
-            <div class="row py-3">
-                <div class="col-md-4">
-                    <img src="{{ asset('img/sales.png') }}" alt="Sales Image" width="91" height="70">
-                    <div>Sales Volume</div>
-                    <div>€3.450</div>
-                </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('img/booking.png') }}" alt="Bookings Image" width="91" height="70">
-                    <div>Bookings</div>
-                    <div>166 / 200</div>
-                </div>
-                <div class="col-md-4">
-                    <img src="{{ asset('img/checkin.png') }}" alt="Check-ins Image" width="91" height="70">
-                    <div>Check-ins</div>
-                    <div>0 / 200</div>
-                    <div class="text-right text-secondary">Inactive</div>
+            <div class="row p-3">
+                <div class="bg-light rounded w-100 d-flex p-4">
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                        <img src="{{ asset('img/sales.png') }}" alt="Sales Image" width="91" height="70">
+                        <div class="d-flex flex-col ml-1">
+                            <div>Sales Volume</div>
+                            <div>€3.450</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                        <img src="{{ asset('img/booking.png') }}" alt="Bookings Image" width="91" height="70">
+                        <div class="d-flex flex-col ml-1">
+                            <div>Bookings</div>
+                            <div>166 / 200</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex flex-row justify-center align-items-center">
+                        <img src="{{ asset('img/checkin.png') }}" alt="Check-ins Image" width="91" height="70">
+                        <div class="d-flex flex-col ml-1">
+                            <div>Check-ins</div>
+                            <div>0 / 200</div>
+                        </div>
+                        
+                        <div class="text-right text-secondary absolute right-5 top-5">Inactive</div>
+                    </div>
                 </div>
             </div>
         </div>

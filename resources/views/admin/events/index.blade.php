@@ -60,12 +60,14 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td>
+                                        <td class="d-flex align-items-center">
                                             @if($event->logo_thumb_index_url)
-                                                <img src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                <img class="w-40 h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
-                                            {{ $event->name }}
-                                            <span>{{ $event->short_desc }}</span>
+                                            <div class="d-flex flex-col ml-2 align-items-start">
+                                                {{ $event->name }}
+                                                <span>{{ $event->short_desc }}</span>
+                                            </div>
                                         </td>
                                         <td>
                                             <div>
