@@ -445,13 +445,13 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="d-flex flex-row justify-between">
                                            <h3 class="settings-title">Discounts</h3>
-                                           <hr>
+                                        
                                             <div style="padding-bottom: 4px">
                                                 <span class="btn btn-info btn-xs select-all-discount" style="border-radius: 0">{{ __('Select All') }}</span>
                                                 <span class="btn btn-info btn-xs deselect-all-discount" style="border-radius: 0">{{ __('Deselect All') }}</span>
                                             </div> 
                                         </div>
-                                        
+                                        <hr>
                                         <div class="form-group">
                                             <label for="selectDiscount">Select Discount</label>
                                             <select name="discount_ids[]" class="form-control select2" id="selectDiscount" multiple="multiple">

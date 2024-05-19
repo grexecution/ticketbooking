@@ -79,7 +79,7 @@
             </div>
 
             <div class="col-5">
-                <button id="loginButton" type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                <button id="loginButton" type="submit" class="btn-willi btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span id="buttonText" class="fas fa-sign-in-alt"></span>
                     <span id="buttonSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                     {{ __('adminlte.sign_in') }}
