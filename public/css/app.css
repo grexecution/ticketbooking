@@ -29,4 +29,9 @@
 .tab-text { text-align: center; }
 .settings-title {font-size: 24px; font-weight: 600; padding-bottom: 10px;}
 .btn-willi {background-color: #FAB400; color: white; border-radius: 10px!important; border:none}
+.btn-willi:not(:disabled):not(.disabled):active {background-color: #FAB400;border-color: #FAB400;}
+.btn-willi:focus {background-color: #FAB400;border-color: #FAB400;}
+.btn-willi:hover {background-color: #FAB400;border-color: #FAB400;}
 .card-primary.card-outline {border-top: 3px solid #FAB400!important;}
+.form-control:focus {border-color: #FAB400;}
+.login-card-body .input-group .form-control:focus~.input-group-append .input-group-text {border-color: #FAB400;}
