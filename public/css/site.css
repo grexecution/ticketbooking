@@ -1,1 +1,141 @@
-.navbar-brand{margin-right:auto}.search-container{text-align:center}.search-form{display:inline-block}.nav-menu{margin-left:auto}.navbar{padding-left:15%;padding-right:15%}.banner-desc,.banner-title{color:#fff}.hero-container{align-items:center;background-image:url(/images/banner.png?215dfeb5e689a1fca6ca2f7bdc5a4240);background-position:50%;background-size:cover;display:flex;height:578px;justify-content:center}.search-input{max-width:500px;width:100%}.ticket-icon{margin-right:10px;width:30px}.ticket-text{font-size:14px}.event-item{background-color:#fff;border-radius:10px;margin-bottom:20px;overflow:hidden;position:relative}.event-item img{border-top-left-radius:10px;border-top-right-radius:10px;width:100%}.event-label{background-color:#ffc107;border-radius:5px;padding:5px 10px;position:absolute;right:10px;top:10px}.event-favorite i{color:#fff}.category-label{background-color:#ffc107;border-radius:5px;bottom:10px;color:#fff;left:10px;padding:5px 10px;position:absolute}.event-info{padding:10px}.event-info .row{margin-bottom:5px}.see-more-btn{margin-top:20px;text-align:center}.see-more-btn button{background-color:#fff;border:2px solid #000;border-radius:20px;color:#000;cursor:pointer;font-size:16px;padding:10px 20px}#seats_container{background-color:#fff;background-image:linear-gradient(90deg,rgba(50,100,150,.1) 1px,transparent 0),linear-gradient(180deg,rgba(50,100,150,.1) 1px,transparent 0);background-position:.25rem .25rem;background-size:.5rem .5rem;border-radius:0!important;margin:0;position:relative}#seats_container:after,#seats_container:before{background-image:linear-gradient(90deg,rgba(50,100,150,.1) 2px,transparent 0),linear-gradient(180deg,rgba(50,100,150,.1) 2px,transparent 0);background-position:.25rem .25rem;background-size:2.5rem 2.5rem;bottom:0;content:"";left:0;position:absolute;right:0;top:0;z-index:-1}#seats_container:after{background-image:linear-gradient(90deg,rgba(50,100,150,.1) 3px,transparent 0),linear-gradient(180deg,rgba(50,100,150,.1) 3px,transparent 0);background-size:5rem 5rem}
+/** Banner **/
+
+.navbar-brand {
+    margin-right: auto;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.search-form {
+    display: inline-block;
+}
+
+.nav-menu {
+    margin-left: auto;
+}
+
+.navbar {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.banner-title {
+    color: white;
+}
+
+.banner-desc {
+    color: white;
+}
+
+.hero-container {
+    background-image: url(/images/banner.png?215dfeb5e689a1fca6ca2f7bdc5a4240);
+    background-size: cover;
+    background-position: center;
+    height: 578px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.search-input {
+    width: 100%;
+    max-width: 500px;
+}
+
+/** Event item **/
+
+.ticket-icon {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.ticket-text {
+    font-size: 14px;
+}
+
+.event-item {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
+.event-item img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.event-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ffc107;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.event-favorite i {
+    color: #fff;
+}
+.category-label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #ffc107;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.event-info {
+    padding: 10px;
+}
+.event-info .row {
+    margin-bottom: 5px;
+}
+
+.see-more-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+.see-more-btn button {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#seats_container {
+    position: relative;
+    border-radius: 0 !important;
+    background-color: #ffffff;
+    background-size: 0.5rem 0.5rem;
+    background-position: 0.25rem 0.25rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 1px, transparent 1px);
+    margin: 0;
+}
+
+#seats_container::before, #seats_container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: 2.5rem 2.5rem;
+    background-position: 0.25rem 0.25rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 2px, transparent 2px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 2px, transparent 2px);
+    z-index: -1;
+}
+
+#seats_container::after {
+    background-size: 5rem 5rem;
+    background-image: linear-gradient(to right, rgba(50, 100, 150, 0.1) 3px, transparent 3px),
+    linear-gradient(to bottom, rgba(50, 100, 150, 0.1) 3px, transparent 3px);
+}
+
+/*# sourceMappingURL=site.css.map*/
