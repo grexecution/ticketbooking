@@ -60,14 +60,16 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td>
+                                        <td class="d-flex align-items-center border-0">
                                             @if($event->logo_thumb_index_url)
-                                                <img src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
-                                            {{ $event->name }}
-                                            <span>{{ $event->short_desc }}</span>
+                                            <div class="d-flex flex-col ml-2 align-items-start">
+                                                <p class="font-weight-bold">{{ $event->name }}</p>
+                                                <span>{{ $event->short_desc }}</span>
+                                            </div>
                                         </td>
-                                        <td>
+                                        <td class="col-md-2">
                                             <div>
                                                 {{ $event->start_date?->format('l, F j, Y') ?? '' }}
                                             </div>
@@ -75,7 +77,7 @@
                                                 Start: {{ $event->start_time?->format('g:i a') ?? '' }}
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="col-md-1">
                                             <div>0 / 200</div>
                                             <div class="progress mb-3">
                                                 <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -84,19 +86,21 @@
                                             </div>
                                         </td>
                                         <td>{{ $event->status }}</td>
-                                        <td class="text-right">
-                                            <!-- View Event Button -->
-                                            <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
-                                                <i class="fas fa-link"></i>
-                                            </a>
-                                            <!-- Edit Event Button -->
-                                            <a href="{{ route('events.edit', $event->id) }}" type="button" class="btn btn-warning text-white mx-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <!-- Delete Event Button -->
-                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="{{ $event->id }}" data-toggle="modal" data-target="#confirmModal">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
+                                        <td class="text-right col-md-2">
+                                            <div class="d-flex gap-1">
+                                                <!-- View Event Button -->
+                                                <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white">
+                                                    <i class="fas fa-link"></i>
+                                                </a>
+                                                <!-- Edit Event Button -->
+                                                <a href="{{ route('events.edit', $event->id) }}" type="button" class="btn btn-warning text-white">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <!-- Delete Event Button -->
+                                                <a href="#" class="btn btn-danger delete-record" data-record-id="{{ $event->id }}" data-toggle="modal" data-target="#confirmModal">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

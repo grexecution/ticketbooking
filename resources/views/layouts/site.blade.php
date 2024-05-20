@@ -21,8 +21,8 @@
         <div class="navbar-brand">
             <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
             <div>
-                Ticket booking <br>
-                <span class="ticket-text">Just sell tickets</span>
+                Ticketwilli<br>
+                <span class="ticket-text">Die Online-Pudl für Events</span>
             </div>
         </div>
         <div class="search-container">

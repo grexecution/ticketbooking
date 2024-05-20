@@ -9,7 +9,7 @@
 @endif
 
 <span class="logo-section">
-    <a href="{{ $dashboard_url }}" style="gap: 10px" class="sidebar brand-link d-flex flex-row align-items-center py-4 row-gap-3"
+    <a href="/" style="gap: 10px; white-space:normal!important" class="sidebar brand-link d-flex flex-row align-items-center py-4 row-gap-3"
        @if($layoutHelper->isLayoutTopnavEnabled())
            class="navbar-brand {{ config('adminlte.classes_brand') }}"
        @else
@@ -17,18 +17,18 @@
         @endif>
 
         {{-- Small brand logo --}}
-        <img src="{{ asset(config('adminlte.logo_img', 'img/logo.png')) }}"
+        <img src="{{ asset(config('adminlte.logo_img', 'img/logo-willi.png')) }}"
              alt="{{ config('adminlte.logo_img_alt', 'derGreg.com') }}"
              class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}"
-             style="opacity:.8">
+             style="opacity:1">
 
         {{-- Brand text --}}
         <div>
-            <h4 class="brand-text font-weight-normal text-white mb-0 {{ config('adminlte.classes_brand_text') }} logo-header">
-            theGreg.io
-        </h4>
-        <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }} logo-desc">
-            DIY your online Business
+            <h2 class="brand-text font-weight-normal text-white mb-0 {{ config('adminlte.classes_brand_text') }} logo-header">
+            Ticketwilli
+        </h2>
+        <span class="brand-text lh-sm font-weight-light {{ config('adminlte.classes_brand_text') }} logo-desc">
+            Die Online-Pudl für Events
         </span>
         </div>
     </a>
