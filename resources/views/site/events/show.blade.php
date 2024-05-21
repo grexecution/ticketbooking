@@ -4,6 +4,7 @@
 
 @section('content')
 {{--    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>--}}
+<div class="bg-white border-bottom">
     <div class="container">
         <div class="row mt-5 mb-5">
             <!-- Event Banner -->
@@ -45,7 +46,7 @@
         </div>
 
         <!-- Seats and Pricing -->
-{{--        <div class="row mt-4">--}}
+{{--        <div class="row">--}}
 {{--            <h1>Seat Plan Canvas</h1>--}}
 {{--            <div class="seats_container"></div>--}}
 {{--        </div>--}}
@@ -86,9 +87,13 @@
 {{--        </div>--}}
 
         <!-- Seat Layout -->
-        <div class="row mt-4 mb-5">
+        
+    </div>
+</div>
+<div class="main-bg">
+    <div class="row py-6 mb-5 container m-auto">
             <div class="col">
-                <div class="text-center mb-2">STAGE</div>
+                <div class="text-center mb-2 bg-white py-6">STAGE</div>
 {{--                <div class="seat-layout">--}}
 {{--                    <div class="row">--}}
 {{--                        <div class="col-1"></div>--}}
@@ -109,7 +114,8 @@
 {{--                </div>--}}
             </div>
         </div>
-    </div>
+</div>
+
 
     <div class="absolute flex flex-col h-screen w-100">
         {{--    <div class="bg-[#ab1f34] flex justify-center border-b border-[#d05063]">--}}
