@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <form id="create_venue" name="create_venue" action="{{ route('venues.update', $venue->id) }}" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="id", value="{{ $venue->id }}"/>
+                    <input type="hidden" name="id" value="{{ $venue->id }}"/>
                     @csrf
                     @method('PUT')
 
