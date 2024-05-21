@@ -60,14 +60,19 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request) : RedirectResponse
     {
-        $toCreate = collect($request->validated())->except([
-            'logo', 'logo_origin_names', 'logo_sizes',
-            'event_ids', 'type' ,'discount', 'sum',
-        ])->toArray();
+        try {
+            $toCreate = collect($request->validated())->except([
+                'logo', 'logo_origin_names', 'logo_sizes',
+                'event_ids', 'type' , 'discount', 'sum',
+            ])->toArray();
 
-        $subscription = Subscription::query()->create($toCreate);
-        $this->handleSelectedEvents($request, $subscription);
-        MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+            $subscription = Subscription::query()->create($toCreate);
+            $this->handleSelectedEvents($request, $subscription);
+            MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+
+        } catch (\Throwable $e) {
+            return redirect()->route('subscriptions.create')->with('error', 'Operation failed!');
+        }
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
@@ -102,17 +107,22 @@ class SubscriptionController extends Controller
      */
     public function update(UpdateSubscriptionRequest $request, Subscription $subscription) : RedirectResponse
     {
-        $toUpdate = collect($request->validated())->except([
-            'logo', 'logo_origin_names', 'logo_sizes',
-            'event_ids', 'type' ,'discount', 'sum',
-        ])->toArray();
+        try {
+            $toUpdate = collect($request->validated())->except([
+                'logo', 'logo_origin_names', 'logo_sizes',
+                'event_ids', 'type' ,'discount', 'sum',
+            ])->toArray();
 
-        if ($request->logo !== $subscription->logo?->name) {
-            MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+            if ($request->logo !== $subscription->logo?->name) {
+                MediaHelper::handleMedia($subscription, 'logo', $request->logo);
+            }
+
+            $subscription->update($toUpdate);
+            $this->handleSelectedEvents($request, $subscription);
+
+        } catch (\Throwable $e) {
+            return redirect()->route('subscriptions.edit')->with('error', 'Operation failed!');
         }
-
-        $subscription->update($toUpdate);
-        $this->handleSelectedEvents($request, $subscription);
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
