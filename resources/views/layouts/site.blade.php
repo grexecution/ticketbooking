@@ -18,22 +18,25 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <div class="navbar-brand">
-            <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
-            <div>
-                Ticketwilli<br>
-                <span class="ticket-text">Die Online-Pudl für Events</span>
-            </div>
-        </div>
-        <div class="search-container">
+            <a class="navbar-brand col-md-3" href="/">
+                <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
+                <div class="d-flex flex-col gap-0">
+                    Ticketwilli<br>
+                    <span class="ticket-text">Die Online-Pudl für Events</span>
+                </div>
+            </a>
+        <div class="search-container col-md-6">
             <form class="form-inline my-2 my-lg-0 search-form"> <!-- Center the search input -->
-                <input class="form-control mr-sm-2" type="search" placeholder="Search for events..." aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Events durchsuchen..." aria-label="Search">
             </form>
         </div>
         <div class="nav-menu">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav d-flex flex-col gap-2">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('site.events') }}">All Events</a>
+                    <a class="nav-link" href="{{ route('site.events') }}">Alle Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('site.events') }}">Über</a>
                 </li>
             </ul>
         </div>

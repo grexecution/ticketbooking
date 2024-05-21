@@ -12,7 +12,7 @@
                     <!-- Title -->
                     <div class="row">
                         <div class="col">
-                            <h1>{{ $event->name }}</h1>
+                            <h1 class="event-title">{{ $event->name }}</h1>
                         </div>
                     </div>
                     <!-- Description -->
@@ -23,7 +23,7 @@
                     </div>
                     <!-- Event Details -->
                     <div class="row">
-                        <div class="col">
+                        <div class="col d-flex gap-6">
                             <div class="event-detail">
                                 <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('g:i a') ?? '' }}
                             </div>
@@ -31,7 +31,7 @@
                                 <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-euro-sign"></i> from €{{ $event->prive ?? 0 }}
+                                <i class="fas fa-money-bill"></i> Preis ab {{ $event->prive ?? 0 }}
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
             <!-- Event Image -->
             <div class="col-lg-4">
 {{--                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">--}}
-                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded">
+                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded event-image">
             </div>
         </div>
 

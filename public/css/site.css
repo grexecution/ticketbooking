@@ -1,7 +1,17 @@
+.container {
+    max-width: 1280px!important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 /** Banner **/
 
 .navbar-brand {
     margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .search-container {
@@ -16,17 +26,20 @@
     margin-left: auto;
 }
 
-.navbar {
-    padding-left: 15%;
-    padding-right: 15%;
-}
-
 .banner-title {
     color: white;
 }
 
 .banner-desc {
     color: white;
+}
+
+.form-inline .form-control {
+    width: 460px;
+}
+
+.nav-link {
+    text-wrap: nowrap;
 }
 
 .hero-container {
@@ -46,7 +59,7 @@
 /** Event item **/
 
 .ticket-icon {
-    width: 30px;
+    width: 60px;
     margin-right: 10px;
 }
 
@@ -91,6 +104,24 @@
 }
 .event-info .row {
     margin-bottom: 5px;
+}
+.event-image {
+    height: 100%!important;
+    object-fit: cover!important;;
+}
+
+.event-detail {
+    font-weight: 700;
+}
+.event-title {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.event-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .see-more-btn {
