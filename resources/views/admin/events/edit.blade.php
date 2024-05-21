@@ -38,7 +38,7 @@
                             <button class="btn btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
                         </div>
                         <div class="col-md-2">
-                            <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-secondary">
+                            <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-secondary">
                                 <i class="fas fa-link"></i>
                             </a>
                         </div>
@@ -83,8 +83,8 @@
                             <div class="font-weight-bold">Check-ins</div>
                             <div>0 / 200</div>
                         </div>
-                        
-                        <div class="text-right text-secondary absolute right-5 top-5">Inactive</div>
+
+                        <div class="text-right text-secondary absolute right-5 top-5">{{ $event->status === \App\Models\Event::STATUS_LIVE ? 'Live' : 'Inactive' }}</div>
                     </div>
                 </div>
             </div>
@@ -445,11 +445,11 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="d-flex flex-row justify-between">
                                            <h3 class="settings-title">Discounts</h3>
-                                        
+
                                             <div style="padding-bottom: 4px">
                                                 <span class="btn btn-info btn-xs select-all-discount" style="border-radius: 0">{{ __('Select All') }}</span>
                                                 <span class="btn btn-info btn-xs deselect-all-discount" style="border-radius: 0">{{ __('Deselect All') }}</span>
-                                            </div> 
+                                            </div>
                                         </div>
                                         <hr>
                                         <div class="form-group">

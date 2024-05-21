@@ -16,12 +16,17 @@ class EventController extends Controller
         return view('site.events.index', compact('events'));
     }
 
-    public function show(string $id) : Renderable
+    public function show(Request $request, string $id) : Renderable
     {
         $event = Event::findOrFail($id);
-        if ($event->status !== Event::STATUS_LIVE) {
+        $isPreview = false;
+
+        if ($event->status === Event::STATUS_PREVIEW && request()->input('preview')) {
+            $isPreview = true;
+        } elseif ($event->status !== Event::STATUS_LIVE) {
             abort(404);
         }
-        return view('site.events.show', compact('event'));
+
+        return view('site.events.show', compact('event', 'isPreview'));
     }
 }

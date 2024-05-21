@@ -13,7 +13,7 @@
                     <!-- Title -->
                     <div class="row">
                         <div class="col">
-                            <h1 class="event-title">{{ $event->name }}</h1>
+                            <h1 class="event-title">{{ $isPreview ? 'Preview: ' : '' }}{{ $event->name }}</h1>
                         </div>
                     </div>
                     <!-- Description -->
@@ -87,7 +87,7 @@
 {{--        </div>--}}
 
         <!-- Seat Layout -->
-        
+
     </div>
 </div>
 <div class="main-bg">
