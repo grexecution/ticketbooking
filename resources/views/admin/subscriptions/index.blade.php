@@ -50,11 +50,11 @@
                             @if($subscriptions->count())
                                 @foreach($subscriptions as $subscription)
                                     <tr class="">
-                                        <td>
+                                        <td class="d-flex align-items-center border-0">
                                             @if($subscription->logo_thumb_index_url)
-                                                <img src="{{ asset($subscription->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($subscription->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
-                                            {{ $subscription->name }}
+                                            <p class="font-weight-bold ml-2">{{ $subscription->name }}</p>
                                         </td>
                                         <td>
                                             <div>{{ $subscription->short_desc }}</div>

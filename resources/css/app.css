@@ -126,3 +126,7 @@
 .dropzone .dz-preview {
     margin: 0px!important;
 }
+
+.event-body {
+    vertical-align: middle!important;
+}

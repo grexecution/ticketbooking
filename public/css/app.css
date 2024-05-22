@@ -127,4 +127,6 @@
     margin: 0px!important;
 }
 
-/*# sourceMappingURL=app.css.map*/
+.event-body {
+    vertical-align: middle!important;
+}

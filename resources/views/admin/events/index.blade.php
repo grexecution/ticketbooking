@@ -10,7 +10,7 @@
         <!-- Search and Add Event Section -->
         <div class="container-fluid bg-white py-3">
             <div class="row m-3">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <form action="{{ route('events.index') }}" method="GET">
                         @csrf
                         <div class="row">
@@ -20,7 +20,7 @@
                             <div class="col-md-3">
                                 <!-- Search select input -->
                                 <select class="custom-select mb-2" name="status">
-                                    <option value="">Select status</option>
+                                    <option value="">Filter by status</option>
                                     <option value="live" {{ old('status', request()->get('status')) == "live" ? 'selected' : '' }}>Live</option>
                                     <option value="hidden" {{ old('status', request()->get('status')) == "hidden" ? 'selected' : '' }}>Hidden</option>
                                     <option value="preview" {{ old('status', request()->get('status')) == "preview" ? 'selected' : '' }}>Preview</option>
@@ -37,7 +37,7 @@
                     </form>
 
                 </div>
-                <div class="col-md-2"></div>
+                <div class=""></div>
                 <div class="col-md-2 text-right">
                     <a href="{{ route('events.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Event</a>
                 </div>
@@ -60,7 +60,7 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td class="d-flex align-items-center border-0">
+                                        <td class="d-flex align-items-center">
                                             @if($event->logo_thumb_index_url)
                                                 <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif
@@ -69,7 +69,7 @@
                                                 <span>{{ $event->short_desc }}</span>
                                             </div>
                                         </td>
-                                        <td class="col-md-2">
+                                        <td class="col-md-2 event-body">
                                             <div>
                                                 {{ $event->start_date?->format('l, F j, Y') ?? '' }}
                                             </div>
@@ -77,7 +77,7 @@
                                                 Start: {{ $event->start_time?->format('g:i a') ?? '' }}
                                             </div>
                                         </td>
-                                        <td class="col-md-1">
+                                        <td class="col-md-1 event-body">
                                             <div>0 / 200</div>
                                             <div class="progress mb-3">
                                                 <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
@@ -85,9 +85,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $event->status }}</td>
-                                        <td class="text-right col-md-2">
-                                            <div class="d-flex gap-1">
+                                        <td class="event-body text-center">{{ $event->status }}</td>
+                                        <td class="text-right col-md-2 event-body">
+                                            <div class="d-flex justify-content-end gap-1">
                                                 <!-- View Event Button -->
                                                 <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white">
                                                     <i class="fas fa-link"></i>
