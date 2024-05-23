@@ -66,12 +66,18 @@ class SubscriptionController extends Controller
                 'event_ids', 'type' , 'discount', 'sum',
             ])->toArray();
 
+            /** @var Subscription $subscription */
             $subscription = Subscription::query()->create($toCreate);
-            $this->handleSelectedEvents($request, $subscription);
             MediaHelper::handleMedia($subscription, 'logo', $request->logo);
 
+            $result = $this->handleSelectedEvents($request, $subscription);
+            if (! $result) {
+                $subscription->delete();
+                return redirect()->route('subscriptions.create')->with('error', 'Invalid Sales volume!');
+            }
+
         } catch (\Throwable $e) {
-            return redirect()->route('subscriptions.create')->with('error', 'Operation failed!');
+            return redirect()->route('subscriptions.create')->with('error', 'Invalid Sales volume!');
         }
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
@@ -117,11 +123,15 @@ class SubscriptionController extends Controller
                 MediaHelper::handleMedia($subscription, 'logo', $request->logo);
             }
 
+            $result = $this->handleSelectedEvents($request, $subscription);
+            if (! $result) {
+                return redirect()->route('subscriptions.edit', $request->id)->with('error', 'Invalid Sales volume!');
+            }
+
             $subscription->update($toUpdate);
-            $this->handleSelectedEvents($request, $subscription);
 
         } catch (\Throwable $e) {
-            return redirect()->route('subscriptions.edit')->with('error', 'Operation failed!');
+            return redirect()->route('subscriptions.edit', $request->id)->with('error', 'Invalid Sales volume!');
         }
 
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
@@ -136,10 +146,8 @@ class SubscriptionController extends Controller
         return redirect()->route('subscriptions.index')->with('success', 'Operation successful!');
     }
 
-    private function handleSelectedEvents(StoreSubscriptionRequest|UpdateSubscriptionRequest $request, Subscription $subscription): void
+    private function handleSelectedEvents(StoreSubscriptionRequest|UpdateSubscriptionRequest $request, Subscription $subscription): bool
     {
-        $subscription->events()->sync([]);
-
         $events = [];
         $eventIds = array_keys($request->type);
 
@@ -152,6 +160,13 @@ class SubscriptionController extends Controller
             ];
         }
 
+        $sum = collect($events)->sum('sum');
+        if ($sum !== (float) $request->price) {
+            return false;
+        }
+
+        $subscription->events()->sync([]);
+
         foreach ($events as $event) {
             $subscription->events()->attach($event['event_id'], [
                 'type' => $event['type'],
@@ -159,6 +174,8 @@ class SubscriptionController extends Controller
                 'sum' => $event['sum'],
             ]);
         }
+
+        return true;
     }
 
 }

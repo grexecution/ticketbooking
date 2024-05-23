@@ -54,11 +54,27 @@
                             </td>
                             <td>
                                 <div class="volume">
-                                    <select v-model="selectedEvent.type" class="form-control type" :id="'type' + selectedEvent.id" :name="'type[' + selectedEvent.id + ']'">
+                                    <select
+                                        v-model="selectedEvent.type"
+                                        :id="'type' + selectedEvent.id"
+                                        :name="'type[' + selectedEvent.id + ']'"
+                                        @change="dividePrice"
+                                        class="form-control type"
+                                    >
                                         <option value="percentage">%</option>
                                         <option value="fixed">Є</option>
                                     </select>
-                                    <input v-model="selectedEvent.discount" type="number" step="0.1" min="0" class="form-control discount" :id="'discount' + selectedEvent.id" :name="'discount[' + selectedEvent.id + ']'" placeholder="0" />
+                                    <input
+                                        v-model="selectedEvent.discount"
+                                        :id="'discount' + selectedEvent.id"
+                                        :name="'discount[' + selectedEvent.id + ']'"
+                                        @change="dividePrice"
+                                        type="number"
+                                        step="0.1"
+                                        min="0"
+                                        class="form-control discount"
+                                        placeholder="0"
+                                    />
                                 </div>
                             </td>
                             <td>
@@ -189,25 +205,32 @@ export default {
                 const totalFixed = fixedEvents.reduce((total, event) => total + event.discount, 0);
                 if (totalFixed <= 0) {
                     this.error = 'Invalid fixed price value. Should be bigger than zero.'
-                } else if (!percentageEvents.length && totalFixed !== totalLeftSum) {
-                    this.error = 'Invalid fixed price value. Should be less than subscription price.'
-                } else {
-                    fixedEvents.forEach(event => {
-                        event.sum = Math.round(event.discount);
-                        totalLeftSum -= event.discount;
-                    });
+                } else if (!percentageEvents.length && totalFixed != totalLeftSum) {
+                    let diff = 0;
+                    if (totalLeftSum > totalFixed) {
+                        diff = Math.abs(totalFixed - totalLeftSum).toFixed(1)
+                        this.error = `Invalid fixed price value. Missing ${diff}€`
+                    } else if (totalLeftSum < totalFixed) {
+                        diff = (totalFixed - totalLeftSum).toFixed(1)
+                        this.error = `Invalid fixed price value. More than ${diff}€`
+                    } else {
+                        this.error = 'Invalid fixed price value.'
+                    }
                 }
+                fixedEvents.forEach(event => {
+                    event.sum = event.discount.toFixed(1);
+                    totalLeftSum -= event.discount;
+                });
             }
 
             if (!this.error && percentageEvents.length > 0) {
                 const totalPercentage = percentageEvents.reduce((total, event) => total + event.discount, 0);
                 if (totalPercentage !== 100) {
                     this.error = 'Invalid percentage value. Should be equal 100% if percentage is used.'
-                } else {
-                    percentageEvents.forEach(event => {
-                        event.sum = Math.round((event.discount / 100) * totalLeftSum);
-                    })
                 }
+                percentageEvents.forEach(event => {
+                    event.sum = ((event.discount / 100) * totalLeftSum).toFixed(1);
+                })
             }
         }
     },
@@ -222,6 +245,7 @@ export default {
             const selectedOption = e.params.data; // Access the selected option's data
             const selectedEventId = parseInt(selectedOption.id);
             this.addToSelectedEvents(selectedEventId); // Add the selected event to the selectedEvents array
+            this.dividePrice()
         });
 
         // Add event listener for "unselect" event on Select2
@@ -229,6 +253,7 @@ export default {
             const unselectedOption = e.params.data; // Access the unselected option's data
             const unselectedEventId = parseInt(unselectedOption.id);
             this.removeFromSelectedEvents(unselectedEventId); // Remove the unselected event from the selectedEvents array
+            this.dividePrice()
         });
 
         // Add event listener for "Select All" button
@@ -236,6 +261,7 @@ export default {
             selectEvent.find('option').prop('selected', true); // Select all options
             selectEvent.trigger('change'); // Trigger change event for Select2
             this.allEvents.forEach(event => this.addToSelectedEvents(event.id));
+            this.dividePrice()
         });
 
         // Add event listener for "Deselect All" Program button
@@ -243,6 +269,7 @@ export default {
             selectEvent.find('option').prop('selected', false); // Deselect all options
             selectEvent.trigger('change'); // Trigger change event for Select2
             this.clearSelectedEvents(); // Clear the selectedEvents array
+            this.dividePrice()
         });
 
         // Add event listener for Subscription Name input
