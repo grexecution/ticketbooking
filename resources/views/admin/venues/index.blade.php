@@ -49,11 +49,11 @@
                         @if($venues->count())
                             @foreach($venues as $venue)
                                 <tr>
-                                    <td>
+                                    <td class="d-flex align-items-center border-0">
                                         @if($venue->logo_thumb_index_url)
-                                            <img src="{{ asset($venue->logo_thumb_index_url) }}" alt="Venue img" />
+                                            <img class="h-100 img-fluid img-thumbnail" src="{{ asset($venue->logo_thumb_index_url) }}" alt="Venue img" />
                                         @endif
-                                        <span>{{ $venue->name }}</span>
+                                        <p class="font-weight-bold ml-2">{{ $venue->name }}</p>
                                     </td>
                                     <td>
                                         <div>{{ implode(', ', [$venue->address, $venue->zipcode, $venue->country]) }}</div>
