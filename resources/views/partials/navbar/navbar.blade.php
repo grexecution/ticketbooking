@@ -68,7 +68,11 @@
                                 <br>
                                 <span class="position text-bold text-dark">{{ auth()->user()->position ?? 'Administrator' }}</span>
                             </div>
-                            <img src="{{ asset('img/avatar_demo.png') }}" class="img-circle elevation-2 ml-2" alt="User Image">
+                            @if(auth()->user()?->avatar_url)
+                                <img src="{{ auth()->user()->avatar_url }}" class="elevation-2 rounded" alt="User Image">
+                            @else
+                                <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" width="52px" class="img-circle elevation-2 ml-2" alt="User Image">
+                            @endif
                         </div>
                     </div>
                 </a>

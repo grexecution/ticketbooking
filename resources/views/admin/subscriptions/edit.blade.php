@@ -96,7 +96,7 @@
         $(document).ready(function() {
             CKEDITOR.replace('description');
         });
-        
+
         Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"
 
         let dropzoneLogo = new Dropzone("#logo", {

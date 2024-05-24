@@ -131,6 +131,19 @@
                                     <!-- Dividing Line -->
                                     <hr>
 
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <label for="fileInput">User Avatar</label>
+                                            <div
+                                                class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                                id="avatar">
+                                            </div>
+                                        </div>
+                                        @error('avatar')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
                                     <!-- Third Row -->
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -308,6 +321,63 @@
                         file.previewElement.classList.add('dz-complete')
                         $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
                         $('#updateTenant').append('<input type="hidden" name="logo" value="' + file.name + '">')
+                        this.options.maxFiles = this.options.maxFiles - 1
+                    @endif
+                },
+                error: function (file, response) {
+                    if ($.type(response) === 'string') {
+                        let message = response // dropzone sends it's own error messages in string
+                    } else {
+                        let message = response.errors.file
+                    }
+                    file.previewElement.classList.add('dz-error')
+                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+                    _results = []
+                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                        node = _ref[_i]
+                        _results.push(node.textContent = message)
+                    }
+
+                    return _results
+                }
+            });
+
+            let dropzoneAvatar = new Dropzone("#avatar", {
+                url: '{{ route('media.upload_file') }}',
+                maxFilesize: 50, // MB
+                maxFiles: 1,
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                params: {
+                    size: 50
+                },
+                acceptedFiles: ".jpeg,.jpg,.png,.gif",
+                success: function (file, response) {
+                    $('#updateAccount').append('<input type="hidden" name="avatar" value="' + response.name + '">')
+                    $('#updateAccount').append('<input type="hidden" name="avatar_origin_names[' + response.name + ']" value="' + response.original_name + '">')
+                    $('#updateAccount').append('<input type="hidden" name="avatar_sizes[' + response.name + ']" value="' + response.size + '">')
+                },
+                removedfile: function (file) {
+                    file.previewElement.remove()
+                    if (file.status !== 'error') {
+                        $('#updateAccount').find('input[name="avatar"]').remove()
+                        this.options.maxFiles = this.options.maxFiles + 1
+                    }
+                },
+                init: function () {
+                    @php
+                        $media = auth()->user()?->getFirstMedia('avatar') ?? null;
+                    @endphp
+
+                    @if($media)
+                        let file = {!! json_encode($media) !!}
+                        this.options.addedfile.call(this, file)
+                        this.options.thumbnail.call(this, file, '{{ $user->avatar_thumb_edit_url }}')
+                        file.previewElement.classList.add('dz-complete')
+                        $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
+                        $('#updateAccount').append('<input type="hidden" name="avatar" value="' + file.name + '">')
                         this.options.maxFiles = this.options.maxFiles - 1
                     @endif
                 },

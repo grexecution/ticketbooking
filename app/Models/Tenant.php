@@ -26,6 +26,7 @@ class Tenant extends Model implements HasMedia
 
     protected $appends = [
         'logo',
+        'avatar_url',
         'logo_thumb_index_url',
         'logo_thumb_edit_url',
     ];
@@ -35,6 +36,11 @@ class Tenant extends Model implements HasMedia
      */
     public function registerMediaConversions(Media $media = null) : void
     {
+        $this->addMediaConversion('avatar')
+            ->width(72)
+            ->height(69)
+            ->sharpen(10);
+
         $this->addMediaConversion('thumb-index')
             ->width(83)
             ->height(60)
@@ -52,6 +58,14 @@ class Tenant extends Model implements HasMedia
     public function getLogoAttribute() : ? Media
     {
         return $this->getMedia('logo')->last();
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getAvatarUrlAttribute() : ? string
+    {
+        return $this->getMedia('logo')->last()?->getFullUrl('avatar');
     }
 
     /**

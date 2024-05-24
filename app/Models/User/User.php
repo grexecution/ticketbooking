@@ -13,13 +13,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /**
  * @mixin IdeHelperUser
  */
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens,
+        HasFactory,
+        Notifiable,
+        SoftDeletes,
+        InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -57,6 +64,63 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $appends = [
+        'avatar',
+        'avatar_url',
+        'avatar_thumb_index_url',
+        'avatar_thumb_edit_url',
+    ];
+
+    public function registerMediaConversions(Media $media = null) : void
+    {
+        $this->addMediaConversion('avatar')
+            ->width(52)
+            ->height(51)
+            ->sharpen(10);
+
+        $this->addMediaConversion('thumb-index')
+            ->width(83)
+            ->height(60)
+            ->sharpen(10);
+
+        $this->addMediaConversion('thumb-edit')
+            ->width(120)
+            ->height(120)
+            ->sharpen(10);
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getAvatarAttribute() : ? Media
+    {
+        return $this->getMedia('avatar')->last();
+    }
+
+    /**
+     * @return Media|null
+     */
+    public function getAvatarUrlAttribute() : ? string
+    {
+        return $this->getMedia('avatar')->last()?->getFullUrl('avatar');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarThumbIndexUrlAttribute() : ? string
+    {
+        return $this->getMedia('avatar')->last()?->getFullUrl('thumb-index');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarThumbEditUrlAttribute() : ? string
+    {
+        return $this->getMedia('avatar')->last()?->getFullUrl('thumb-edit');
+    }
 
     /**
      * @return bool

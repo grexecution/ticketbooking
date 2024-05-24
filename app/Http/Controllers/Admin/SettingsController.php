@@ -28,7 +28,12 @@ class SettingsController extends Controller
 
     public function updateAccount(UpdateAccountRequest $request) : RedirectResponse
     {
-        $request->user()->update($request->validated());
+        $toUpdate = collect($request->validated())->except(['avatar', 'avatar_origin_names', 'avatar_sizes'])->toArray();
+        if ($request->avatar !== $request->user()->avatar?->name) {
+            MediaHelper::handleMedia($request->user(), 'avatar', $request->avatar);
+        }
+        $request->user()->update($toUpdate);
+
         return redirect()->route('settings')->with('success', 'Operation successful!');
     }
 

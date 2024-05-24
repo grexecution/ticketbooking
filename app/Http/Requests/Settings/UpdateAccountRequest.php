@@ -8,6 +8,9 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string first_name
  * @property string last_name
  * @property string email
+ * @property string avatar
+ * @property string avatar_origin_names
+ * @property string avatar_sizes
  */
 class UpdateAccountRequest extends FormRequest
 {
@@ -30,6 +33,9 @@ class UpdateAccountRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'avatar' => 'sometimes|nullable|string',
+            'avatar_origin_names' => 'sometimes|nullable|array',
+            'avatar_sizes' => 'sometimes|nullable|array',
         ];
     }
 }

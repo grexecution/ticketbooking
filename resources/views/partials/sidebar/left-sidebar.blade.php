@@ -12,10 +12,16 @@
         <a href="{{ route('settings') }}">
             <div class="user-panel mt-3 pb-4 pt-4 mb-3 d-flex flex-column">
                 <div class="image">
-                    <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" class="elevation-2 rounded" alt="User Image">
+                    @if(auth()->user()?->tenant?->avatar_url)
+                        <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded" alt="User Image">
+                    @else
+                        <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" class="elevation-2 rounded" alt="User Image">
+                    @endif
                 </div>
                 <div class="info pt-3">
-                    <h3 class="text-white mb-0">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</h3>
+                    @if(auth()->user()?->tenant?->name)
+                        <h3 class="text-white mb-0">{{ auth()->user()->tenant->name }}</h3>
+                    @endif
                     <a href="#" class="d-block">{{ auth()->user()->email }}</a>
                 </div>
             </div>
