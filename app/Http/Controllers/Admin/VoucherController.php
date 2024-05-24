@@ -64,8 +64,8 @@ class VoucherController extends Controller
         unset($toCreate['discount']);
         $toCreate['expired_at'] = Carbon::parse($toCreate['expired_at']);
         $voucher = Voucher::query()->create($toCreate);
-        $voucher->events()->sync($toCreate['event_ids']);
-        $voucher->eventsExcepts()->sync($toCreate['event_except_ids']);
+        $voucher->events()->sync($toCreate['event_ids'] ?? []);
+        $voucher->eventsExcepts()->sync($toCreate['event_except_ids'] ?? []);
 
         return redirect()->route('vouchers.index')->with('success', 'Operation successful!');
     }
@@ -101,8 +101,8 @@ class VoucherController extends Controller
             $toUpdate['fixed'] = null;
         }
         $toUpdate['expired_at'] = Carbon::parse($toUpdate['expired_at']);
-        $voucher->events()->sync($toUpdate['event_ids']);
-        $voucher->eventsExcepts()->sync($toUpdate['event_except_ids']);
+        $voucher->events()->sync($toUpdate['event_ids'] ?? []);
+        $voucher->eventsExcepts()->sync($toUpdate['event_except_ids'] ?? []);
         unset(
             $toUpdate['discount'],
             $toUpdate['eventIds'],
