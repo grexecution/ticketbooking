@@ -593,6 +593,8 @@
         }
 
         $(document).ready(function() {
+            CKEDITOR.replace('description');
+
             $('#price').inputmask({
                 'alias': 'numeric',
                 'groupSeparator': '.',

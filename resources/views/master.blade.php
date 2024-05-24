@@ -172,9 +172,6 @@
         @endif
 
         $(document).ready(function() {
-            // Text Editor
-            CKEDITOR.replace('description');
-
             // Date inputs
             $('.date').datetimepicker({
                 format: 'YYYY-MM-DD',
