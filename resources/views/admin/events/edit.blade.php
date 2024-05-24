@@ -424,7 +424,7 @@
                                             <div class="form-group col-md-12">
                                                 <label for="logo">Event description</label>
                                                 <textarea
-                                                    class="form-control tinymceTextarea {{ $errors->has('description') ? 'is-invalid' : '' }}"
+                                                    class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}"
                                                     name="description"
                                                     placeholder="Enter Event Description"
                                                     id="description">{!! old('description', $event->description) ?? "" !!}

@@ -159,7 +159,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdn.tiny.cloud/1/jp5i7upc1vqkm6xggbgqd0s5yixpl79qbjce5nlkrn6etkxp/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 
     <script>
         @if(session()->get('loggedAsSuperAdmin'))
@@ -172,6 +172,9 @@
         @endif
 
         $(document).ready(function() {
+            // Text Editor
+            CKEDITOR.replace('description');
+
             // Date inputs
             $('.date').datetimepicker({
                 format: 'YYYY-MM-DD',
@@ -207,37 +210,6 @@
                     next: 'fas fa-chevron-right'
                 }
             })
-
-            tinymce.init({
-                language: "en",
-                selector: '.tinymceTextarea',
-                plugins: "code,link,lists,image",
-                {{--images_upload_url: '{{ route('media.upload_tiny_mce') }}',--}}
-                automatic_uploads: true,
-                file_picker_types: 'image',
-                images_upload_credentials: true,
-                file_picker_callback: function(cb, value, meta) {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.onchange = function() {
-                        var file = this.files[0];
-                        var id = 'blobid' + (new Date()).getTime();
-                        var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                        var blobInfo = blobCache.create(id, file);
-                        blobCache.add(blobInfo);
-                        cb(blobInfo.blobUri(), { title: file.name });
-                    };
-                    input.click();
-                },
-                themes: "modern",
-                valid_elements: '*',
-                // valid_styles: '*',
-                extended_valid_elements: "*[*]",
-                // extended_valid_elements: "svg[*],defs[*],pattern[*],desc[*],metadata[*],g[*],mask[*],path[*],line[*],marker[*],rect[*],circle[*],ellipse[*],polygon[*],polyline[*],linearGradient[*],radialGradient[*],stop[*],image[*],view[*],text[*],textPath[*],title[*],tspan[*],glyph[*],symbol[*],switch[*],use[*]",
-                height: 300,
-                toolbar: "code | insertfile undo redo | link | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-            });
         });
     </script>
 
