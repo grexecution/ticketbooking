@@ -46,13 +46,22 @@
                         @endif
                         <div class="col-md-2">
                             <div class="dropdown">
-                                <button class="btn btn-success dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @php
+                                $btnClass = match($event->status) {
+                                    'live' => 'btn-success',
+                                    'hidden' => 'btn-secondary',
+                                    'preview' => 'btn-warning',
+                                    'ended' => 'btn-dark',
+                                }
+                                @endphp
+                                <button class="btn {{ $btnClass }} dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Status: {{ ucfirst($event->status) }}
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="statusDropdown">
                                     <a class="dropdown-item" href="{{ route('events.status', [$event->id , 'live']) }}" {{ $event->status == "live" ? 'selected' : '' }}>Live</a>
                                     <a class="dropdown-item" href="{{ route('events.status', [$event->id , 'hidden']) }}" {{ $event->status == "hidden" ? 'selected' : '' }}>Hidden</a>
                                     <a class="dropdown-item" href="{{ route('events.status', [$event->id , 'preview']) }}" {{ $event->status == "preview" ? 'selected' : '' }}>Preview</a>
+                                    <a class="dropdown-item" href="{{ route('events.status', [$event->id , 'ended']) }}" {{ $event->status == "ended" ? 'selected' : '' }}>Ended</a>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +95,13 @@
                             <div>0 / 200</div>
                         </div>
 
-                        <div class="text-right text-secondary absolute right-5 top-5">{{ $event->status === \App\Models\Event::STATUS_LIVE ? 'Live' : 'Inactive' }}</div>
+                        <div class="text-right text-secondary absolute right-5 top-5">
+                            @if($event->status === \App\Models\Event::STATUS_LIVE)
+                                <span style="color: #28a745">Live</span>
+                            @else
+                                <span style="color: #dc3545">Inactive</span>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -297,7 +312,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group d-flex flex-col">
                                                     <label for="selectArtist">Artist</label>
-                                                    <select class="form-control select2" id="selectArtist" name="artist_ids[]" multiple="multiple">
+                                                    <select class="form-control select2" id="selectArtist" name="artist_ids[]" multiple="multiple" {{ $isEnded ? 'disabled' : '' }}>
                                                         @foreach($artists as $artist)
                                                             <option value="{{ $artist->id }}" {{ in_array($artist->id, old('artist_ids', $event->artists->pluck('id')->toArray()) ?? []) ? 'selected' : '' }}>{{ $artist->name }}</option>
                                                         @endforeach
@@ -310,7 +325,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group d-flex flex-col">
                                                     <label for="selectProgram">Program / Event Series</label>
-                                                    <select class="form-control select2" id="selectProgram" name="program_id">
+                                                    <select class="form-control select2" id="selectProgram" name="program_id" {{ $isEnded ? 'disabled' : '' }}>
                                                         @foreach($programs as $program)
                                                             <option value="{{ $program->id }}" {{ $program->id == old('program_id', $event->program_id) ? 'selected' : '' }}>{{ $program->name }}</option>
                                                         @endforeach
@@ -326,7 +341,7 @@
                                             <div class="col-md-6">
                                                 <label for="event_name">Event Name</label>
                                                 <!-- Text input for Event Name -->
-                                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $event->name) }}" placeholder="Enter Event Name">
+                                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $event->name) }}" placeholder="Enter Event Name" {{ $isEnded ? 'disabled' : '' }}>
                                                 @error('name')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -334,9 +349,9 @@
                                             <div class="col-md-6">
                                                 <label for="venue">Venue</label>
                                                 <!-- Select input for Venue -->
-                                                <select class="form-control" id="venue" name="venue_id">
+                                                <select class="form-control" id="venue" name="venue_id" {{ $isEnded ? 'disabled' : '' }}>
                                                     @foreach($venues as $venue)
-                                                        <option value="{{ $venue->id }}" {{ old('venue_id', $event->venue_id) == $event->venue_id ? 'selected' : '' }}>{{ $venue->name }}</option>
+                                                        <option value="{{ $venue->id }}" {{ old('venue_id', $event->venue_id) == $event->venue_id ? 'selected' : '' }} {{ $isEnded ? 'disabled' : '' }}>{{ $venue->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('venue_id')
@@ -350,7 +365,7 @@
                                             <div class="col-md-3">
                                                 <label for="start_date">Date</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control date" id="start_date" name="start_date" value="{{ old('start_date', $event->start_date) }}">
+                                                    <input type="text" class="form-control date" id="start_date" name="start_date" value="{{ old('start_date', $event->start_date) }}" {{ $isEnded ? 'disabled' : '' }}>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                                     </div>
@@ -362,7 +377,7 @@
                                             <div class="col-md-3">
                                                 <label for="start_time">Event Start</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control timepicker" id="start_time" name="start_time" value="{{ old('start_time', $event->start_time?->format('H:i:s')) }}">
+                                                    <input type="text" class="form-control timepicker" id="start_time" name="start_time" value="{{ old('start_time', $event->start_time?->format('H:i:s')) }}" {{ $isEnded ? 'disabled' : '' }}>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="far fa-clock"></i></span>
                                                     </div>
@@ -374,7 +389,7 @@
                                             <div class="col-md-3">
                                                 <label for="doors_open_time">Doors Open</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control timepicker" id="doors_open_time" name="doors_open_time" value="{{ old('doors_open_time', $event->doors_open_time?->format('H:i:s')) }}">
+                                                    <input type="text" class="form-control timepicker" id="doors_open_time" name="doors_open_time" value="{{ old('doors_open_time', $event->doors_open_time?->format('H:i:s')) }}" {{ $isEnded ? 'disabled' : '' }}>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="far fa-clock"></i></span>
                                                     </div>
@@ -390,7 +405,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">€</span>
                                                     </div>
-                                                    <input type="text" class="form-control" id="price" name="price" value="{{ old('price', str_replace('.', ',', $event->price)) }}">
+                                                    <input type="text" class="form-control" id="price" name="price" value="{{ old('price', str_replace('.', ',', $event->price)) }}" {{ $isEnded ? 'disabled' : '' }}>
                                                     @error('price')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
@@ -409,7 +424,7 @@
                                         <div class="row mt-4">
                                             <div class="col-md-8">
                                                 <label for="logo">Short Description</label>
-                                                <textarea name="short_desc" class="form-control" rows="5" placeholder="Enter Short Description">{{ old('short_desc', $event->short_desc) }}</textarea>
+                                                <textarea name="short_desc" class="form-control" rows="5" placeholder="Enter Short Description" {{ $isEnded ? 'disabled' : '' }}>{{ old('short_desc', $event->short_desc) }}</textarea>
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="logo">Event Picture</label>
@@ -430,6 +445,7 @@
                                                     name="description"
                                                     placeholder="Enter Event Description"
                                                     id="description">{!! old('description', $event->description) ?? "" !!}
+                                                    {{ $isEnded ? 'disabled' : '' }}
                                                 </textarea>
                                             </div>
                                             @error('description')
@@ -441,6 +457,7 @@
                                 <seat-plan
                                     :init-seat-type="'{{ old('seat_type', $event->seat_type) }}'"
                                     :init-seat-amount="'{{ old('seat_amount', $event->seat_amount) }}'"
+                                    :status="'{{ $event->status }}'"
                                 ></seat-plan>
                                 <!-- Discounts -->
                                 <div class="row mt-4">
@@ -456,7 +473,7 @@
                                         <hr>
                                         <div class="form-group">
                                             <label for="selectDiscount">Select Discount</label>
-                                            <select name="discount_ids[]" class="form-control select2" id="selectDiscount" multiple="multiple">
+                                            <select name="discount_ids[]" class="form-control select2" id="selectDiscount" multiple="multiple" {{ $isEnded ? 'disabled' : '' }}>
                                                 @foreach($discounts as $discount)
                                                     <option value="{{ $discount->id }}" {{ in_array($discount->id, old('discount_ids', $event->discounts->pluck('id')->toArray()) ?? []) ? 'selected' : '' }}>{{ $discount->name }}</option>
                                                 @endforeach
@@ -490,7 +507,7 @@
                                 <!-- Save Button -->
                                 <div class="row justify-content-end mt-4">
                                     <div class="col-md-2">
-                                        <button type="submit" class="btn btn-dark btn-block">Save</button>
+                                        <button type="submit" class="btn btn-dark btn-block" {{ $isEnded ? 'disabled' : '' }}>Save</button>
                                     </div>
                                 </div>
                             </form>
@@ -534,7 +551,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="qrCodeInput" readonly value="{{ route('site.scanner') }}">
+                        <input type="text" class="form-control" id="qrCodeInput" readonly value="{{ route('site.scanner') }}" {{ $isEnded ? 'disabled' : '' }}>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -595,7 +612,13 @@
         }
 
         $(document).ready(function() {
-            CKEDITOR.replace('description');
+            const editor = CKEDITOR.replace('description');
+            @if($isEnded)
+                // Set CKEditor to read-only mode
+                editor.on('instanceReady', function() {
+                    editor.setReadOnly(true);
+                });
+            @endif
 
             $('#price').inputmask({
                 'alias': 'numeric',
@@ -683,7 +706,7 @@
                     this.options.thumbnail.call(this, file, '{{ $media->getFullUrl('thumb-edit') }}')
                     file.previewElement.classList.add('dz-complete')
                     $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
-                    $('#update_event').append('<input type="hidden" name="partners[]" value="' + file.name + '">')
+                    $('#update_event').append('<input type="hidden" name="partners[]" value="' + file.name + '" \'{{ $isEnded ? 'disabled' : '' }}\z'>')
                     this.options.maxFiles = this.options.maxFiles - 1
                     @endforeach
                     @endif
@@ -759,6 +782,11 @@
                     return _results
                 }
             });
+
+            @if($isEnded)
+                dropzoneSponsors.disable();
+                dropzoneLogo.disable();
+            @endif
 
             $('#confirmModal').on('show.bs.modal', function (event) {
                 const button = $(event.relatedTarget); // Button that triggered the modal

@@ -21,6 +21,7 @@ class Event extends Model implements HasMedia
     public const STATUS_LIVE = 'live';
     public const STATUS_HIDDEN = 'hidden';
     public const STATUS_PREVIEW = 'preview';
+    public const STATUS_ENDED = 'ended';
 
     protected $table = 'events';
 

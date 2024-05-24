@@ -104,6 +104,7 @@ class EventController extends Controller
             'artists' => Artist::all(),
             'programs' => Program::all(),
             'discounts' => Discount::all(),
+            'isEnded' => $event->status === Event::STATUS_ENDED
         ]);
     }
 
