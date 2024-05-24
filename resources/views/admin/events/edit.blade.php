@@ -37,11 +37,13 @@
                         <div class="col-md-2">
                             <button class="btn btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
                         </div>
-                        <div class="col-md-2">
-                            <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-secondary">
-                                <i class="fas fa-link"></i>
-                            </a>
-                        </div>
+                        @if($event->status !== \App\Models\Event::STATUS_HIDDEN)
+                            <div class="col-md-2">
+                                <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-secondary">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                            </div>
+                        @endif
                         <div class="col-md-2">
                             <div class="dropdown">
                                 <button class="btn btn-success dropdown-toggle" type="button" id="statusDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

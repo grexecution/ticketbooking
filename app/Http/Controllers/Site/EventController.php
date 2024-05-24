@@ -20,13 +20,14 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $isPreview = false;
+        $isUnavailable = false;
 
         if ($event->status === Event::STATUS_PREVIEW && request()->input('preview')) {
             $isPreview = true;
         } elseif ($event->status !== Event::STATUS_LIVE) {
-            abort(404);
+            $isUnavailable = true;
         }
 
-        return view('site.events.show', compact('event', 'isPreview'));
+        return view('site.events.show', compact('event', 'isPreview', 'isUnavailable'));
     }
 }

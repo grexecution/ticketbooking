@@ -90,131 +90,142 @@
 
     </div>
 </div>
-<div class="main-bg">
-    <div class="row py-6 mb-5 container m-auto">
+
+@if($isUnavailable)
+    <div class="main-bg">
+        <div class="row py-6 mb-5 container m-auto">
             <div class="col">
-                <div class="text-center mb-2 bg-white py-6">STAGE</div>
-{{--                <div class="seat-layout">--}}
-{{--                    <div class="row">--}}
-{{--                        <div class="col-1"></div>--}}
-{{--                        @for($k = 0; $k < 10; $k++)--}}
-{{--                            <div class="col seat-header">{{chr(65 + $k)}}</div>--}}
-{{--                        @endfor--}}
-{{--                    </div>--}}
-{{--                    @for($i = 0; $i < 10; $i++)--}}
-{{--                        <div class="row">--}}
-{{--                            <div class="col-1">{{$i + 1}}</div>--}}
-{{--                            @for($j = 0; $j < 10; $j++)--}}
-{{--                                <div class="col seat">--}}
-{{--                                    <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1" onclick="openPopup('Row {{ $i + 1 }} - Seat {{ chr(65 + $j) }}', '€ 39,90')">--}}
-{{--                                </div>--}}
-{{--                            @endfor--}}
-{{--                        </div>--}}
-{{--                    @endfor--}}
-{{--                </div>--}}
-            </div>
-        </div>
-</div>
-
-
-    <div class="absolute flex flex-col h-screen w-100">
-        {{--    <div class="bg-[#ab1f34] flex justify-center border-b border-[#d05063]">--}}
-        {{--        <img class="h-11 py-1" src="logo_small.jpg">--}}
-        {{--        <div class="absolute h-12 right-3 flex flex-row gap-3 items-center content-center">--}}
-        {{--            <a class="github-button" href="https://github.com/alisaitteke/seatmap-canvas/subscription"--}}
-        {{--               data-icon="octicon-eye" aria-label="Watch alisaitteke/seatmap-canvas on GitHub">Watch</a>--}}
-        {{--            <a class="github-button" href="https://github.com/alisaitteke" aria-label="Follow @alisaitteke on GitHub">Follow--}}
-        {{--                @alisaitteke</a>--}}
-        {{--            <a class="github-button" href="https://github.com/alisaitteke/seatmap-canvas/fork"--}}
-        {{--               data-icon="octicon-repo-forked" aria-label="Fork alisaitteke/seatmap-canvas on GitHub">Fork</a></div>--}}
-        {{--    </div>--}}
-        <div class="flex flex-row h-full">
-            <div class="w-48 bg-gray-100 hidden md:block border-r border-r-gray-300 shadow-lg">
-                <div class="flex flex-col gap-3 p-1.5 text-xs">
-                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
-                            id="zoomout-button">
-                        <i class="fa-solid fa-magnifying-glass-minus mr-2"></i>
-                        All Blocks
-                    </button>
-                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
-                            id="get-selected-seats">
-                        <i class="fa-solid fa-code mr-2"></i>
-                        Get Json
-                    </button>
-{{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
-{{--                            data-block-id="block-0">--}}
-{{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
-{{--                        Zoom Block 1--}}
-{{--                    </button>--}}
-                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"
-                            data-block-id="block-1">
-                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
-                        Zoom Block 2
-                    </button>
-{{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
-{{--                            data-block-id="block-2">--}}
-{{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
-{{--                        Zoom Block 3--}}
-{{--                    </button>--}}
-{{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
-{{--                            data-block-id="block-3">--}}
-{{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
-{{--                        Zoom Block 4--}}
-{{--                    </button>--}}
-{{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"--}}
-{{--                            id="randomize-btn"--}}
-{{--                            data-block-id="block-2">--}}
-{{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
-{{--                        Randomize--}}
-{{--                    </button>--}}
-                </div>
-            </div>
-            <div id="seats_container" class="w-full flex-1 h-full"></div>
-
-            <div class="flex flex-col w-52 flex-0 border-l">
-                <div class="text-center w-full text-sm p-2 bg-gray-100 border-b">Selected Seats</div>
-                <table class="table-auto text-sm">
-                    <tbody id="selected-seats">
-
-                    </tbody>
-                </table>
-                <button id="checkout" class="btn btn-primary">Checkout</button>
+                <div class="text-center mb-2 bg-white py-6">This Event is not available</div>
             </div>
         </div>
     </div>
+@else
+    <div class="main-bg">
+        <div class="row py-6 mb-5 container m-auto">
+                <div class="col">
+                    <div class="text-center mb-2 bg-white py-6">STAGE</div>
+    {{--                <div class="seat-layout">--}}
+    {{--                    <div class="row">--}}
+    {{--                        <div class="col-1"></div>--}}
+    {{--                        @for($k = 0; $k < 10; $k++)--}}
+    {{--                            <div class="col seat-header">{{chr(65 + $k)}}</div>--}}
+    {{--                        @endfor--}}
+    {{--                    </div>--}}
+    {{--                    @for($i = 0; $i < 10; $i++)--}}
+    {{--                        <div class="row">--}}
+    {{--                            <div class="col-1">{{$i + 1}}</div>--}}
+    {{--                            @for($j = 0; $j < 10; $j++)--}}
+    {{--                                <div class="col seat">--}}
+    {{--                                    <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1" onclick="openPopup('Row {{ $i + 1 }} - Seat {{ chr(65 + $j) }}', '€ 39,90')">--}}
+    {{--                                </div>--}}
+    {{--                            @endfor--}}
+    {{--                        </div>--}}
+    {{--                    @endfor--}}
+    {{--                </div>--}}
+                </div>
+            </div>
+    </div>
 
-    <!-- Popup Modal -->
-{{--    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">--}}
-{{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-{{--            <div class="modal-content">--}}
-{{--                <div class="modal-header">--}}
-{{--                    <h5 class="modal-title" id="popupModalLabel">Your Places</h5>--}}
-{{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                        <span aria-hidden="true">&times;</span>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--                <div class="modal-body">--}}
-{{--                    <ul class="list-group" id="ticketList">--}}
-{{--                        <!-- Add rows for selected tickets here -->--}}
-{{--                        <li class="list-group-item d-flex justify-content-between align-items-center">Row 1 - Seat 1<span class="badge badge-primary badge-pill">€ 39,90</span><span class="remove-icon" onclick="removeTicket(this)">Remove</span></li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--                <div class="modal-footer">--}}
-{{--                    <div>Total</div>--}}
-{{--                    <div>€ 45,90</div>--}}
-{{--                    <button type="button" class="btn btn-warning" onclick="checkout()">To the checkout</button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
-{{--    <div class="card">--}}
-{{--        <div class="card-body">--}}
-{{--            <h5 class="card-title">{{ $event?->name ?? '' }}</h5>--}}
-{{--            <p class="card-text">{{ $event?->description ?? '' }}</p>--}}
-{{--            <!-- Add more details about the event -->--}}
-{{--        </div>--}}
-{{--    </div>--}}
+        <div class="absolute flex flex-col h-screen w-100">
+            {{--    <div class="bg-[#ab1f34] flex justify-center border-b border-[#d05063]">--}}
+            {{--        <img class="h-11 py-1" src="logo_small.jpg">--}}
+            {{--        <div class="absolute h-12 right-3 flex flex-row gap-3 items-center content-center">--}}
+            {{--            <a class="github-button" href="https://github.com/alisaitteke/seatmap-canvas/subscription"--}}
+            {{--               data-icon="octicon-eye" aria-label="Watch alisaitteke/seatmap-canvas on GitHub">Watch</a>--}}
+            {{--            <a class="github-button" href="https://github.com/alisaitteke" aria-label="Follow @alisaitteke on GitHub">Follow--}}
+            {{--                @alisaitteke</a>--}}
+            {{--            <a class="github-button" href="https://github.com/alisaitteke/seatmap-canvas/fork"--}}
+            {{--               data-icon="octicon-repo-forked" aria-label="Fork alisaitteke/seatmap-canvas on GitHub">Fork</a></div>--}}
+            {{--    </div>--}}
+            <div class="flex flex-row h-full">
+                <div class="w-48 bg-gray-100 hidden md:block border-r border-r-gray-300 shadow-lg">
+                    <div class="flex flex-col gap-3 p-1.5 text-xs">
+                        <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
+                                id="zoomout-button">
+                            <i class="fa-solid fa-magnifying-glass-minus mr-2"></i>
+                            All Blocks
+                        </button>
+                        <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
+                                id="get-selected-seats">
+                            <i class="fa-solid fa-code mr-2"></i>
+                            Get Json
+                        </button>
+    {{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
+    {{--                            data-block-id="block-0">--}}
+    {{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
+    {{--                        Zoom Block 1--}}
+    {{--                    </button>--}}
+                        <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"
+                                data-block-id="block-1">
+                            <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                            Zoom Block 2
+                        </button>
+    {{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
+    {{--                            data-block-id="block-2">--}}
+    {{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
+    {{--                        Zoom Block 3--}}
+    {{--                    </button>--}}
+    {{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"--}}
+    {{--                            data-block-id="block-3">--}}
+    {{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
+    {{--                        Zoom Block 4--}}
+    {{--                    </button>--}}
+    {{--                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"--}}
+    {{--                            id="randomize-btn"--}}
+    {{--                            data-block-id="block-2">--}}
+    {{--                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>--}}
+    {{--                        Randomize--}}
+    {{--                    </button>--}}
+                    </div>
+                </div>
+                <div id="seats_container" class="w-full flex-1 h-full"></div>
+
+                <div class="flex flex-col w-52 flex-0 border-l">
+                    <div class="text-center w-full text-sm p-2 bg-gray-100 border-b">Selected Seats</div>
+                    <table class="table-auto text-sm">
+                        <tbody id="selected-seats">
+
+                        </tbody>
+                    </table>
+                    <button id="checkout" class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Modal -->
+    {{--    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">--}}
+    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
+    {{--            <div class="modal-content">--}}
+    {{--                <div class="modal-header">--}}
+    {{--                    <h5 class="modal-title" id="popupModalLabel">Your Places</h5>--}}
+    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+    {{--                        <span aria-hidden="true">&times;</span>--}}
+    {{--                    </button>--}}
+    {{--                </div>--}}
+    {{--                <div class="modal-body">--}}
+    {{--                    <ul class="list-group" id="ticketList">--}}
+    {{--                        <!-- Add rows for selected tickets here -->--}}
+    {{--                        <li class="list-group-item d-flex justify-content-between align-items-center">Row 1 - Seat 1<span class="badge badge-primary badge-pill">€ 39,90</span><span class="remove-icon" onclick="removeTicket(this)">Remove</span></li>--}}
+    {{--                    </ul>--}}
+    {{--                </div>--}}
+    {{--                <div class="modal-footer">--}}
+    {{--                    <div>Total</div>--}}
+    {{--                    <div>€ 45,90</div>--}}
+    {{--                    <button type="button" class="btn btn-warning" onclick="checkout()">To the checkout</button>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+
+    {{--    <div class="card">--}}
+    {{--        <div class="card-body">--}}
+    {{--            <h5 class="card-title">{{ $event?->name ?? '' }}</h5>--}}
+    {{--            <p class="card-text">{{ $event?->description ?? '' }}</p>--}}
+    {{--            <!-- Add more details about the event -->--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+@endif
 @endsection
 
 @section('styles')
