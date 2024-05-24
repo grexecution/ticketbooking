@@ -32,7 +32,7 @@
                                 <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-money-bill"></i> Preis ab {{ $event->price ?? 0 }}
+                                <i class="fas fa-money-bill"></i> Preis ab €{{ $event->price ?? 0 }}
                             </div>
                         </div>
                     </div>
