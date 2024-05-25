@@ -3,6 +3,7 @@
 @section('title', 'Checkout 1 Step')
 
 @section('content')
+    <!-- Step 1: Information -->
     <div class="container mt-5">
         <div class="step-indicator">
             <div class="active">1. Information</div>
@@ -21,7 +22,7 @@
                 </div>
 
                 <h4 class="mt-4">Customer data</h4>
-                <form>
+                <form action="{{ route('checkout.step2') }}" method="get">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="firstName">First name</label>
@@ -59,7 +60,9 @@
                     <hr>
                     <h5>In total: €120,00</h5>
                 </div>
-                <button type="button" class="btn btn-primary btn-block mt-3">Further</button>
+                <form action="{{ route('checkout.step2') }}" method="get">
+                    <button type="submit" class="btn btn-primary btn-block mt-3">Further</button>
+                </form>
             </div>
         </div>
     </div>
