@@ -39,9 +39,9 @@ Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
 Route::get('/checkout', [CheckoutController::class, 'showStep1']);
 Route::post('/checkout/step1', [CheckoutController::class, 'postStep1']);
-Route::get('/checkout/step2', [CheckoutController::class, 'showStep2']);
+Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('checkout.step2');
 Route::post('/checkout/step2', [CheckoutController::class, 'postStep2']);
-Route::get('/checkout/step3', [CheckoutController::class, 'showStep3']);
+Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
 Route::post('/checkout/step3', [CheckoutController::class, 'postStep3']);
 
 // Scanner
