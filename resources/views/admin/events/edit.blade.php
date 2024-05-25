@@ -706,7 +706,7 @@
                     this.options.thumbnail.call(this, file, '{{ $media->getFullUrl('thumb-edit') }}')
                     file.previewElement.classList.add('dz-complete')
                     $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
-                    $('#update_event').append('<input type="hidden" name="partners[]" value="' + file.name + '" \'{{ $isEnded ? 'disabled' : '' }}\z'>')
+                    $('#update_event').append('<input type="hidden" name="partners[]" value="' + file.name + '" \'{{ $isEnded ? 'disabled' : '' }}\'>')
                     this.options.maxFiles = this.options.maxFiles - 1
                     @endforeach
                     @endif
