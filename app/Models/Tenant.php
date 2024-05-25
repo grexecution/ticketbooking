@@ -37,8 +37,8 @@ class Tenant extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null) : void
     {
         $this->addMediaConversion('avatar')
-            ->width(72)
-            ->height(69)
+            ->width(252)
+            ->height(167)
             ->sharpen(10);
 
         $this->addMediaConversion('thumb-index')

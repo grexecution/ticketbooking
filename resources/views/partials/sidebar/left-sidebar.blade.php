@@ -22,7 +22,9 @@
                     @if(auth()->user()?->tenant?->name)
                         <h3 class="sidebar-name text-white mb-0">{{ auth()->user()->tenant->name }}</h3>
                     @endif
+                    @if(auth()->user()?->tenant?->company)
                     <a href="#" class="d-block">{{ auth()->user()->tenant->company }}</a>
+                    @endif
                 </div>
             </div>
         </a>
