@@ -173,3 +173,33 @@
 }
 
 /*# sourceMappingURL=site.css.map*/
+
+/* Checkout */
+
+ .step-indicator {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 20px;
+ }
+.step-indicator div {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+.step-indicator .active {
+    background-color: #ffc107;
+}
+.order-summary {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+}
+.order-summary .ticket-warning {
+    background-color: #ffc107;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}

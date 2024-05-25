@@ -56,7 +56,7 @@ export default {
         </div>
         <div class="row mt-4">
             <div class="col-12 text-right">
-                <button type="button" class="checkout-btn">To the checkout</button>
+                <a href="/checkout" type="button" class="checkout-btn">To the checkout</a>
             </div>
         </div>
     </div>

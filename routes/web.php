@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -37,6 +37,12 @@ Route::post('/2fa', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
+Route::get('/checkout', [CheckoutController::class, 'showStep1']);
+Route::post('/checkout/step1', [CheckoutController::class, 'postStep1']);
+Route::get('/checkout/step2', [CheckoutController::class, 'showStep2']);
+Route::post('/checkout/step2', [CheckoutController::class, 'postStep2']);
+Route::get('/checkout/step3', [CheckoutController::class, 'showStep3']);
+Route::post('/checkout/step3', [CheckoutController::class, 'postStep3']);
 
 // Scanner
 Route::get('/scanner', [TicketScannerController::class, 'show'])->name('site.scanner');
