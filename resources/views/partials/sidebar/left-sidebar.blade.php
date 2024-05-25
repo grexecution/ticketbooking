@@ -11,18 +11,20 @@
     <div class="sidebar">
         <a href="{{ route('settings') }}">
             <div class="user-panel mt-3 pb-4 pt-4 mb-3 d-flex flex-column">
-                <div class="image">
+                <div class="">
                     @if(auth()->user()?->tenant?->avatar_url)
-                        <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded" alt="User Image">
+                        <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded w-100" alt="User Image">
                     @else
-                        <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" class="elevation-2 rounded" alt="User Image">
+                        <img src="{{ asset('/img/default_stage.jpg') }}" class="elevation-2 rounded w-100" alt="User Image">
                     @endif
                 </div>
                 <div class="info pt-3">
                     @if(auth()->user()?->tenant?->name)
-                        <h3 class="text-white mb-0">{{ auth()->user()->tenant->name }}</h3>
+                        <h3 class="sidebar-name text-white mb-0">{{ auth()->user()->tenant->name }}</h3>
                     @endif
-                    <a href="#" class="d-block">{{ auth()->user()->email }}</a>
+                    @if(auth()->user()?->tenant?->company)
+                    <a href="#" class="d-block">{{ auth()->user()->tenant->company }}</a>
+                    @endif
                 </div>
             </div>
         </a>

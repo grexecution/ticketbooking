@@ -62,14 +62,14 @@
 {{--            <div class="col-md-6 text-right">--}}
                 <a class="" href="{{ route('settings') }}">
                     <div class="d-flex flex-row justify-content-end align-items-center" style="gap: 16px">
-                        <div class="user-info d-flex">
+                        <div class="user-info d-flex gap-2">
                             <div class="user-details">
                                 <span class="d-none d-md-inline text-dark">{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</span>
                                 <br>
                                 <span class="position text-bold text-dark">{{ auth()->user()->position ?? 'Administrator' }}</span>
                             </div>
                             @if(auth()->user()?->avatar_url)
-                                <img src="{{ auth()->user()->avatar_url }}" class="elevation-2 rounded" alt="User Image">
+                                <img src="{{ auth()->user()->avatar_url }}" class="elevation-2 rounded-circle" alt="User Image">
                             @else
                                 <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" width="52px" class="img-circle elevation-2 ml-2" alt="User Image">
                             @endif

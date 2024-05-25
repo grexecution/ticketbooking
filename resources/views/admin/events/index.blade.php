@@ -8,14 +8,14 @@
         @include('messages')
 
         <!-- Search and Add Event Section -->
-        <div class="container-fluid bg-white py-3">
-            <div class="row m-3">
-                <div class="col-md-10">
+        <div class="container-fluid card bg-white py-3">
+            <div class="row my-2 mx-3">
+                <div class="col-md-9">
                     <form action="{{ route('events.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Event name" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control bg-light" placeholder="Event name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
                                 <!-- Search select input -->
@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
-                                <button class="btn btn-warning text-white btn-block" type="submit">Search</button>
+                                <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
                             </div>
                         </div>
                         @error('search')
@@ -37,36 +37,40 @@
                     </form>
 
                 </div>
-                <div class=""></div>
+                <div class="col-md-1"></div>
                 <div class="col-md-2 text-right">
-                    <a href="{{ route('events.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Event</a>
+                    <a href="{{ route('events.create') }}" class="btn btn-blackish btn-dark"><i class="fas fa-plus"></i> New Event</a>
                 </div>
             </div>
+    </div>
 
             <!-- Event Table -->
-            <div class="row mt-5 mx-3">
+    <div class="container-fluid card bg-white py-3">
+            <div class="row mx-3">
                 <div class="col">
                     <table class="table table-full-width">
                         <thead>
                         <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Bookings</th>
-                            <th>Status</th>
-                            <th class="text-right">Actions</th>
+                            <th class="table-head-single">Event</th>
+                            <th class="table-head-single">Date</th>
+                            <th class="table-head-single">Bookings</th>
+                            <th class="table-head-single">Status</th>
+                            <th class="table-head-single text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td class="d-flex align-items-center">
-                                            @if($event->logo_thumb_index_url)
-                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
-                                            @endif
-                                            <div class="d-flex flex-col ml-2 align-items-start">
-                                                <p class="font-weight-bold">{{ $event->name }}</p>
-                                                <span>{{ $event->short_desc }}</span>
+                                        <td style="border-top: 1px solid #dee2e6;">
+                                            <div class="d-flex align-items-center">
+                                                @if($event->logo_thumb_index_url)
+                                                    <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                @endif
+                                                <div class="d-flex flex-col ml-2 align-items-start">
+                                                    <p class="font-weight-bold">{{ $event->name }}</p>
+                                                    <span>{{ $event->short_desc }}</span>
+                                                </div>
                                             </div>
                                         </td>
                                         <td class="col-md-2 event-body">
@@ -85,7 +89,17 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="event-body text-center">{{ $event->status }}</td>
+                                        @php
+                                        $btnClass = match($event->status) {
+                                                'live' => 'btn-success',
+                                                'hidden' => 'btn-secondary',
+                                                'preview' => 'btn-warning',
+                                                'ended' => 'btn-dark',
+                                            }
+                                        @endphp
+                                        <td class="event-body {{ $btnClass }} text-center">
+                                            {{ ucfirst($event->status) }}
+                                        </td>
                                         <td class="text-right col-md-2 event-body">
                                             <div class="d-flex justify-content-end gap-1">
                                                 <!-- View Event Button -->

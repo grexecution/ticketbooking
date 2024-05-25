@@ -8,18 +8,18 @@
         @include('messages')
 
         <!-- Search and Add Subscription Section -->
-        <div class="container-fluid bg-white py-3">
-            <div class="row m-3">
+        <div class="container-fluid card bg-white py-3">
+            <div class="row my-2 mx-3">
                 <div class="col-md-8">
                     <form action="{{ route('subscriptions.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Subscription name" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control bg-light" placeholder="Subscription name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
-                                <button class="btn btn-warning text-white btn-block" type="submit">Search</button>
+                                <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
                             </div>
                         </div>
                     </form>
@@ -29,21 +29,23 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-2 text-right">
-                    <a href="{{ route('subscriptions.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Subscription</a>
+                    <a href="{{ route('subscriptions.create') }}" class="btn btn-blackish btn-dark"><i class="fas fa-plus"></i> New Subscription</a>
                 </div>
             </div>
+        </div>
 
             <!-- Subscription Table -->
-            <div class="row mt-5 mx-3">
+        <div class="container-fluid card bg-white py-3">
+            <div class="row mx-3">
                 <div class="col">
                     <table class="table table-full-width">
                         <thead>
                         <tr>
-                            <th>Subscription</th>
-                            <th>Internal description</th>
-                            <th>Events</th>
-                            <th>Price</th>
-                            <th class="text-right">Actions</th>
+                            <th class="table-head-single">Subscription</th>
+                            <th class="table-head-single">Internal description</th>
+                            <th class="table-head-single">Events</th>
+                            <th class="table-head-single">Price</th>
+                            <th class="table-head-single text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
