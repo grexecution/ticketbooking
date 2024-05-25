@@ -99,6 +99,9 @@
             </div>
         </div>
     </div>
+
+@elseif($event->seat_type === 'no_seat_plan' )<div class="container mt-5">
+    <no-seat-plan></no-seat-plan>
 @else
     <div class="main-bg">
         <div class="row py-6 mb-5 container m-auto">
@@ -303,118 +306,69 @@
         // }
 
         $(document).ready(function () {
-            let seatmap = new SeatMapCanvas("#seats_container", {
-                legend: true,
-                style: {
-                    seat: {
-                        hover: '#8fe100',
-                        color: '#f0f7fa',
-                        selected: '#8fe100',
-                        check_icon_color: '#fff',
-                        not_salable: '#0088d3',
-                        focus: '#8fe100',
-                    },
-                    legend: {
-                        font_color: '#3b3b3b',
-                        show: false
-                    },
-                    block: {
-                        title_color: '#fff'
+            @if(! $isUnavailable && $event->seat_type === 'seat_plan')
+                let seatmap = new SeatMapCanvas("#seats_container", {
+                    legend: true,
+                    style: {
+                        seat: {
+                            hover: '#8fe100',
+                            color: '#f0f7fa',
+                            selected: '#8fe100',
+                            check_icon_color: '#fff',
+                            not_salable: '#0088d3',
+                            focus: '#8fe100',
+                        },
+                        legend: {
+                            font_color: '#3b3b3b',
+                            show: false
+                        },
+                        block: {
+                            title_color: '#fff'
+                        }
                     }
-                }
-            });
+                });
 
 
-            seatmap.eventManager.addEventListener("SEAT.CLICK", (seat) => {
-                if (!seat.isSelected() && seat.item.salable === true) {
-                    seat.select()
-                } else {
-                    seat.unSelect()
-                }
-
-                updateSelectedSeats()
-            });
-
-
-            // FOR DEMO
-            const generateSingleBlock = function () {
-                let block_colors = ["#01a5ff"]; // Using only one color for the block
-                let blocks = [];
-                let seats = [];
-                let blockTitle = `Block 1`; // Set the block title
-
-                // Loop to generate seats
-                for (let row = 0; row < 15; row++) {
-                    for (let col = 0; col < 30; col++) {
-                        let x = col * 33;
-                        let y = row * 30;
-                        let salable = Math.ceil(Math.random() * 10) > 3;
-                        let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10;
-
-                        let seat = {
-                            id: `s-${row}-${col}`,
-                            x: x,
-                            y: y,
-                            color: block_colors[0], // Use the first color from the block colors array
-                            salable: salable,
-                            custom_data: {
-                                any: "things",
-                                price: randomPrice,
-                                basket_name: `${blockTitle} - ${row + 1} ${col + 1}`
-                            },
-                            note: "note test",
-                            tags: {},
-                            title: `${blockTitle}\n${row + 1} ${col + 1}`
-                        };
-
-                        seats.push(seat);
+                seatmap.eventManager.addEventListener("SEAT.CLICK", (seat) => {
+                    if (!seat.isSelected() && seat.item.salable === true) {
+                        seat.select()
+                    } else {
+                        seat.unSelect()
                     }
-                }
 
-                // Create the block object
-                let block = {
-                    "id": "block-1",
-                    "title": blockTitle,
-                    "labels": [],
-                    "color": block_colors[0], // Use the first color from the block colors array
-                    "seats": seats
-                };
+                    updateSelectedSeats()
+                });
 
-                blocks.push(block);
 
-                // Replace the data with the generated block
-                seatmap.data.replaceData(blocks);
-            };
-
-            const generateTwoBlocks = function () {
-                let block_colors = ["#01a5ff", "#fccf4e"]; // Colors for the two blocks
-                let blocks = [];
-
-                for (let blockIndex = 0; blockIndex < 2; blockIndex++) { // Loop for two blocks
-                    let blockTitle = `Block ${blockIndex + 1}`;
+                // FOR DEMO
+                const generateSingleBlock = function () {
+                    let block_colors = ["#01a5ff"]; // Using only one color for the block
+                    let blocks = [];
                     let seats = [];
+                    let blockTitle = `Block 1`; // Set the block title
 
-                    for (let row = 0; row < 25; row++) { // Loop for rows
-                        for (let col = 0; col < 20; col++) { // Loop for seats in a row
+                    // Loop to generate seats
+                    for (let row = 0; row < 15; row++) {
+                        for (let col = 0; col < 30; col++) {
                             let x = col * 33;
                             let y = row * 30;
                             let salable = Math.ceil(Math.random() * 10) > 3;
                             let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10;
 
                             let seat = {
-                                id: `s-${blockIndex}-${row}-${col}`,
+                                id: `s-${row}-${col}`,
                                 x: x,
                                 y: y,
-                                color: block_colors[blockIndex], // Use color corresponding to the block
+                                color: block_colors[0], // Use the first color from the block colors array
                                 salable: salable,
                                 custom_data: {
                                     any: "things",
                                     price: randomPrice,
-                                    basket_name: `${blockTitle} - Row ${row + 1} Seat ${col + 1}`
+                                    basket_name: `${blockTitle} - ${row + 1} ${col + 1}`
                                 },
                                 note: "note test",
                                 tags: {},
-                                title: `${blockTitle}\nRow ${row + 1} Seat ${col + 1}`
+                                title: `${blockTitle}\n${row + 1} ${col + 1}`
                             };
 
                             seats.push(seat);
@@ -423,181 +377,232 @@
 
                     // Create the block object
                     let block = {
-                        "id": `block-${blockIndex + 1}`,
+                        "id": "block-1",
                         "title": blockTitle,
                         "labels": [],
-                        "color": block_colors[blockIndex], // Use color corresponding to the block
+                        "color": block_colors[0], // Use the first color from the block colors array
                         "seats": seats
                     };
 
                     blocks.push(block);
-                }
 
-                // Replace the data with the generated blocks
-                seatmap.data.replaceData(blocks);
-            };
+                    // Replace the data with the generated block
+                    seatmap.data.replaceData(blocks);
+                };
 
-            const generateRandomBlocks = function () {
-                let block_colors = ["#01a5ff", "#fccf4e", "#01a5ff", "#01a5ff"];
-                let blocks = []
-                let last_x = 0;
-                for (let j = 0; j < 4; j++) { // blocks
+                const generateTwoBlocks = function () {
+                    let block_colors = ["#01a5ff", "#fccf4e"]; // Colors for the two blocks
+                    let blocks = [];
 
-                    let color = block_colors[j];
+                    for (let blockIndex = 0; blockIndex < 2; blockIndex++) { // Loop for two blocks
+                        let blockTitle = `Block ${blockIndex + 1}`;
+                        let seats = [];
 
-                    let seats = []
-                    let cell_count = 0;
-                    let row_count = 0;
-                    let block_final_x = 0;
-                    let randomSeatCount = Math.round((Math.random() * (Math.abs(400 - 200))) + 200)
-                    let randomCell = Math.round((Math.random() * (Math.abs(28 - 12))) + 12)
-                    let blockTitle = `Block ${j + 1}`;
+                        for (let row = 0; row < 25; row++) { // Loop for rows
+                            for (let col = 0; col < 20; col++) { // Loop for seats in a row
+                                let x = col * 33;
+                                let y = row * 30;
+                                let salable = Math.ceil(Math.random() * 10) > 3;
+                                let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10;
 
-                    for (let k = 0; k < randomSeatCount; k++) { // row
-                        if (k % randomCell === 0) {
-                            cell_count = 1;
-                            row_count++;
+                                let seat = {
+                                    id: `s-${blockIndex}-${row}-${col}`,
+                                    x: x,
+                                    y: y,
+                                    color: block_colors[blockIndex], // Use color corresponding to the block
+                                    salable: salable,
+                                    custom_data: {
+                                        any: "things",
+                                        price: randomPrice,
+                                        basket_name: `${blockTitle} - Row ${row + 1} Seat ${col + 1}`
+                                    },
+                                    note: "note test",
+                                    tags: {},
+                                    title: `${blockTitle}\nRow ${row + 1} Seat ${col + 1}`
+                                };
+
+                                seats.push(seat);
+                            }
                         }
 
-                        let x = (cell_count * 33) + last_x;
-                        let y = row_count * 30;
+                        // Create the block object
+                        let block = {
+                            "id": `block-${blockIndex + 1}`,
+                            "title": blockTitle,
+                            "labels": [],
+                            "color": block_colors[blockIndex], // Use color corresponding to the block
+                            "seats": seats
+                        };
 
-                        if (block_final_x < x) block_final_x = x;
-                        let salable = Math.ceil(Math.random() * 10) > 3;
-                        let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10
-
-                        let seat = {
-                            id: `s-${k}`,
-                            x: x,
-                            y: y,
-                            color: color, // can use item.color from json data
-                            salable: salable,
-                            custom_data: {
-                                any: "things",
-                                price: randomPrice,
-                                basket_name: `${blockTitle} - ${cell_count} ${row_count}`
-                            },
-                            note: "note test",
-                            tags: {},
-                            title: `${blockTitle}\n${cell_count} ${row_count}`
-                        }
-                        cell_count++;
-                        seats.push(seat)
+                        blocks.push(block);
                     }
 
-                    last_x = block_final_x + 100;
+                    // Replace the data with the generated blocks
+                    seatmap.data.replaceData(blocks);
+                };
 
-                    let block = {
-                        "id": `block-${j}`,
-                        "title": blockTitle,
-                        "labels": [],
-                        "color": color,
-                        "seats": seats
-                    };
+                const generateRandomBlocks = function () {
+                    let block_colors = ["#01a5ff", "#fccf4e", "#01a5ff", "#01a5ff"];
+                    let blocks = []
+                    let last_x = 0;
+                    for (let j = 0; j < 4; j++) { // blocks
 
-                    blocks.push(block);
+                        let color = block_colors[j];
+
+                        let seats = []
+                        let cell_count = 0;
+                        let row_count = 0;
+                        let block_final_x = 0;
+                        let randomSeatCount = Math.round((Math.random() * (Math.abs(400 - 200))) + 200)
+                        let randomCell = Math.round((Math.random() * (Math.abs(28 - 12))) + 12)
+                        let blockTitle = `Block ${j + 1}`;
+
+                        for (let k = 0; k < randomSeatCount; k++) { // row
+                            if (k % randomCell === 0) {
+                                cell_count = 1;
+                                row_count++;
+                            }
+
+                            let x = (cell_count * 33) + last_x;
+                            let y = row_count * 30;
+
+                            if (block_final_x < x) block_final_x = x;
+                            let salable = Math.ceil(Math.random() * 10) > 3;
+                            let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10
+
+                            let seat = {
+                                id: `s-${k}`,
+                                x: x,
+                                y: y,
+                                color: color, // can use item.color from json data
+                                salable: salable,
+                                custom_data: {
+                                    any: "things",
+                                    price: randomPrice,
+                                    basket_name: `${blockTitle} - ${cell_count} ${row_count}`
+                                },
+                                note: "note test",
+                                tags: {},
+                                title: `${blockTitle}\n${cell_count} ${row_count}`
+                            }
+                            cell_count++;
+                            seats.push(seat)
+                        }
+
+                        last_x = block_final_x + 100;
+
+                        let block = {
+                            "id": `block-${j}`,
+                            "title": blockTitle,
+                            "labels": [],
+                            "color": color,
+                            "seats": seats
+                        };
+
+                        blocks.push(block);
+                    }
+
+                    seatmap.data.replaceData(blocks);
                 }
 
-                seatmap.data.replaceData(blocks);
-            }
-
-            const unselectSeat = function () {
-                let seatId = $(this).attr('seat-id');
-                let blockId = $(this).attr('block-id');
-                let seat = seatmap.data.getSeat(seatId, blockId);
-                seat.svg.unSelect()
-                updateSelectedSeats()
-            }
-
-            const updateSelectedSeats = function () {
-                let selectedSeats = seatmap.data.getSelectedSeats();
-
-                let seatsTemplateHtml = ``
-
-                if (selectedSeats.length === 0) {
-                    seatsTemplateHtml = `
-                    <tr class="text-center py-2 px-2 flex flex-col">
-                        <td class="text-lg text-gray-400"><i class="fa-regular fa-face-rolling-eyes"></i></td>
-                        <td class="text-gray-400">No selected seat</td>
-                    </tr>
-                `
+                const unselectSeat = function () {
+                    let seatId = $(this).attr('seat-id');
+                    let blockId = $(this).attr('block-id');
+                    let seat = seatmap.data.getSeat(seatId, blockId);
+                    seat.svg.unSelect()
+                    updateSelectedSeats()
                 }
 
-                for (let i = 0; i < selectedSeats.length; i++) {
-                    let selectedSeat = selectedSeats[i];
+                const updateSelectedSeats = function () {
+                    let selectedSeats = seatmap.data.getSelectedSeats();
 
-                    let priceFormatted = selectedSeat.custom_data.price.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                    })
+                    let seatsTemplateHtml = ``
 
-                    let html = `<tr class="w-full h-8 hover:bg-blue-100 py-1 px-2 items-center">
-                    <td class="w-6">
-                        <div class="inline-block w-3 h-3 bg-[#8fe100] rounded-lg ml-1"></div>
-                    </td>
-                    <td class="flex-0">${selectedSeat.custom_data.basket_name}</td>
-                    <td class="text-right font-bold">${priceFormatted}</td>
-                    <td class="w-6 unselect-seat text-center cursor-pointer text-red-200 hover:text-red-500" seat-id="${selectedSeat.id}" block-id="${selectedSeat.block.id}">
-                        <i class="fa-solid fa-xmark text-md "></i>
-                    </td>
-                </tr>`
+                    if (selectedSeats.length === 0) {
+                        seatsTemplateHtml = `
+                        <tr class="text-center py-2 px-2 flex flex-col">
+                            <td class="text-lg text-gray-400"><i class="fa-regular fa-face-rolling-eyes"></i></td>
+                            <td class="text-gray-400">No selected seat</td>
+                        </tr>
+                    `
+                    }
 
-                    seatsTemplateHtml += html;
+                    for (let i = 0; i < selectedSeats.length; i++) {
+                        let selectedSeat = selectedSeats[i];
+
+                        let priceFormatted = selectedSeat.custom_data.price.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+
+                        let html = `<tr class="w-full h-8 hover:bg-blue-100 py-1 px-2 items-center">
+                        <td class="w-6">
+                            <div class="inline-block w-3 h-3 bg-[#8fe100] rounded-lg ml-1"></div>
+                        </td>
+                        <td class="flex-0">${selectedSeat.custom_data.basket_name}</td>
+                        <td class="text-right font-bold">${priceFormatted}</td>
+                        <td class="w-6 unselect-seat text-center cursor-pointer text-red-200 hover:text-red-500" seat-id="${selectedSeat.id}" block-id="${selectedSeat.block.id}">
+                            <i class="fa-solid fa-xmark text-md "></i>
+                        </td>
+                    </tr>`
+
+                        seatsTemplateHtml += html;
+                    }
+
+                    if (selectedSeats.length > 0) {
+                        let totalPrice = selectedSeats.reduce((accumulator, currentValue) => accumulator + currentValue.custom_data.price,0)
+                        let priceFormatted = totalPrice.toLocaleString('en-US', {
+                            style: 'currency',
+                            currency: 'USD',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                        })
+                        seatsTemplateHtml += `
+                        <tr class="border-t h-6 text-center bg-gray-200">
+                            <td colspan="4" class="py-1">Total: <strong>${priceFormatted}</strong> for ${selectedSeats.length} seats </td>
+                        </tr>
+                    `
+                    }
+
+                    $('#selected-seats').html(seatsTemplateHtml)
+
+                    $(".unselect-seat").on('click', unselectSeat)
                 }
 
-                if (selectedSeats.length > 0) {
-                    let totalPrice = selectedSeats.reduce((accumulator, currentValue) => accumulator + currentValue.custom_data.price,0)
-                    let priceFormatted = totalPrice.toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                    })
-                    seatsTemplateHtml += `
-                    <tr class="border-t h-6 text-center bg-gray-200">
-                        <td colspan="4" class="py-1">Total: <strong>${priceFormatted}</strong> for ${selectedSeats.length} seats </td>
-                    </tr>
-                `
-                }
-
-                $('#selected-seats').html(seatsTemplateHtml)
-
-                $(".unselect-seat").on('click', unselectSeat)
-            }
-
-            // generateRandomBlocks()
-            generateSingleBlock()
-            // generateTwoBlocks()
-            updateSelectedSeats()
-
-
-            $("#zoomout-button").on("click", function () {
-                seatmap.zoomManager.zoomToVenue();
-            });
-
-            $(".zoom-to-block").on("click", function (a) {
-                let blockId = $(this).attr('data-block-id');
-                seatmap.zoomManager.zoomToBlock(blockId);
-            });
-            $("#get-selected-seats").on("click", function (a) {
-                let selectedSeats = seatmap.data.getSelectedSeats();
-                console.log(selectedSeats)
-            });
-            $("#checkout").on("click", function (a) {
-                let selectedSeats = seatmap.data.getSelectedSeats();
-                const seats = selectedSeats.map(seat => seat.id)
-                alert('Selected seats: ' + seats)
-            });
-
-            // $(".unselect-seat").on("click", function (a) {
-            //
-            // });
-
-            $("#randomize-btn").on("click", function (a) {
                 // generateRandomBlocks()
-            });
+                generateSingleBlock()
+                // generateTwoBlocks()
+                updateSelectedSeats()
+
+
+                $("#zoomout-button").on("click", function () {
+                    seatmap.zoomManager.zoomToVenue();
+                });
+
+                $(".zoom-to-block").on("click", function (a) {
+                    let blockId = $(this).attr('data-block-id');
+                    seatmap.zoomManager.zoomToBlock(blockId);
+                });
+                $("#get-selected-seats").on("click", function (a) {
+                    let selectedSeats = seatmap.data.getSelectedSeats();
+                    console.log(selectedSeats)
+                });
+                $("#checkout").on("click", function (a) {
+                    let selectedSeats = seatmap.data.getSelectedSeats();
+                    const seats = selectedSeats.map(seat => seat.id)
+                    alert('Selected seats: ' + seats)
+                });
+
+                // $(".unselect-seat").on("click", function (a) {
+                //
+                // });
+
+                $("#randomize-btn").on("click", function (a) {
+                    // generateRandomBlocks()
+                });
+            @endif
         });
 
     </script>
