@@ -58,6 +58,7 @@ img, video {
 
 .main-sidebar {
     background-color: #101010;
+    position: fixed !important;
 }
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
@@ -167,6 +168,23 @@ img, video {
     justify-content: center;
 }
 
+.btn-greyish {
+    height: calc(2.75rem + 2px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    min-width: 40px;
+}
+
+.btn-success {
+    color: #00A624;
+    background-color: #9DFF8D;
+    border-color: #9DFF8D;
+    box-shadow: none;
+    height: calc(2.75rem + 2px);
+}
+
 .form-control {
     height: calc(2.75rem + 2px);
 }
@@ -179,3 +197,4 @@ img, video {
     border-top: 0px!important;
     border-color: #000;
 }
+

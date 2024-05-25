@@ -30,16 +30,16 @@
                 <div class="col-md-4 d-flex justify-end">
                     <div class="row">
                         <div class="col-md-2">
-                            <button class="btn btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
+                            <button class="btn btn-orange btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
                                 <i class="fas fa-qrcode"></i>
                             </button>
                         </div>
                         <div class="col-md-2">
-                            <button class="btn btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
+                            <button class="btn btn-blackish btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
                         </div>
                         @if($event->status !== \App\Models\Event::STATUS_HIDDEN)
                             <div class="col-md-2">
-                                <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-secondary">
+                                <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-greyish btn-secondary">
                                     <i class="fas fa-link"></i>
                                 </a>
                             </div>
