@@ -9,13 +9,13 @@
 
         <!-- Add Voucher Section -->
         <div class="container-fluid card bg-white py-3">
-            <div class="row m-3">
-            <div class="col-md-8">
+            <div class="row my-2 mx-3">
+            <div class="col-md-10">
                     <form action="{{ route('vouchers.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Voucher Name" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control bg-light" placeholder="Voucher Name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
@@ -27,22 +27,23 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="col-md-10"></div>
+                <div class=""></div>
                 <div class="col-md-2 text-right">
-                    <a href="{{ route('vouchers.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Voucher</a>
+                    <a href="{{ route('vouchers.create') }}" class="btn btn-blackish btn-dark"><i class="fas fa-plus"></i> New Voucher</a>
                 </div>
             </div>
-
+        </div>
             <!-- Voucher Table -->
-            <div class="row mt-5 mx-3">
+        <div class="container-fluid card bg-white py-3">
+            <div class="row mx-3">
                 <div class="col">
                     <table class="table table-full-width">
                         <thead>
                         <tr>
-                            <th>Coupon</th>
-                            <th>Internal description</th>
-                            <th>Discount</th>
-                            <th class="text-right">Actions</th>
+                            <th class="table-head-single">Coupon</th>
+                            <th class="table-head-single">Internal description</th>
+                            <th class="table-head-single">Discount</th>
+                            <th class="table-head-single text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>

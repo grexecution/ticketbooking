@@ -9,13 +9,13 @@
 
         <!-- Search and Add Venue Section -->
         <div class="container-fluid card bg-white py-3">
-            <div class="row m-3">
+            <div class="row my-2 mx-3">
                 <div class="col-md-8">
                     <form action="{{ route('venues.index') }}" method="GET">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
-                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Venue name" value="{{ request()->get('search') }}">
+                                <input type="text" name="search" class="form-control bg-light" placeholder="Venue name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
@@ -29,20 +29,22 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-2 text-right">
-                    <a href="{{ route('venues.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Venue</a>
+                    <a href="{{ route('venues.create') }}" class="btn btn-blackish btn-dark"><i class="fas fa-plus"></i> New Venue</a>
                 </div>
             </div>
+        </div>
 
             <!-- Venue Table -->
-            <div class="row mt-5 mx-3">
+        <div class="container-fluid card bg-white py-3">
+            <div class="row mx-3">
                 <div class="col">
                     <table class="table table-full-width">
                         <thead>
                         <tr>
-                            <th>Venue</th>
-                            <th>Address</th>
-                            <th>Events</th>
-                            <th class="text-right">Actions</th>
+                            <th class="table-head-single">Venue</th>
+                            <th class="table-head-single">Address</th>
+                            <th class="table-head-single">Events</th>
+                            <th class="table-head-single text-right">Actions</th>
                         </tr>
                         </thead>
                         <tbody>

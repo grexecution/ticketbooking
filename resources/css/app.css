@@ -147,12 +147,24 @@ img, video {
     padding-bottom: 6px;
 }
 
-.button-orange {
+.btn-orange {
     background-color: #ffc107;
     border-color: #ffc107;
     -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
     box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     height: calc(2.75rem + 2px);
+}
+
+.btn-blackish {
+    background-color: #000;
+    border-color: #000;
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3); 
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
+    height: calc(2.75rem + 2px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
 }
 
 .form-control {
@@ -161,4 +173,9 @@ img, video {
 
 .custom-select {
     height: calc(2.75rem + 2px);
+}
+
+.table-head-single {
+    border-top: 0px!important;
+    border-color: #000;
 }
