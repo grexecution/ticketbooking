@@ -16,9 +16,9 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar py-3 navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-            <a class="navbar-brand col-md-3" href="/">
+            <a class="navbar-brand col-md-3 px-0" href="/">
                 <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
                 <div class="d-flex flex-col gap-0">
                     Ticketwilli<br>

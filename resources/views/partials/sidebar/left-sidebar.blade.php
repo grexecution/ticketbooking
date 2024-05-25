@@ -122,12 +122,6 @@
                 </ul>
             </ul>
         </nav>
-
-        <div class="sidebar-help">
-            <h5 class="sidebar-help-header">Do you need help?</h5>
-            <p class="sidebar-help-description">If you need help, please contact us at any time and read my FAQ</p>
-            <button class="btn btn-black btn-block bg-black" data-toggle="modal" data-target="#supportModal">Get Help</button>
-        </div>
     </div>
 
 </aside>
