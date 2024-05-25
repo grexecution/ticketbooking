@@ -7,7 +7,7 @@
     <div class="container pt-3">
         @include('messages')
 
-        <div class="container bg-white px-4 rounded">
+        <div class="container card px-4">
             <!-- First block -->
             <div class="row py-3 align-items-center">
                 <!-- First column with event details -->
@@ -107,26 +107,26 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container p-0 mt-12">
             <!-- Horizontal tabs -->
             <ul class="nav nav-tabs mt-3 border-0" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link tab-text active" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="true">Seating Plan</a>
+                    <a class="nav-link px-20 tab-text active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Event</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
+                    <a class="nav-link px-20 tab-text" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="false">Seating Plan</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link tab-text" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
+                    <a class="nav-link px-20 tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link tab-text" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                    <a class="nav-link px-20 tab-text" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
                 </li>
             </ul>
 
             <!-- Tab content -->
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
+                <div class="tab-pane fade bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
                     <!-- Seats and Pricing Content -->
 {{--                    <div class="card seats-plan">--}}
 {{--                        <div class="card-body">--}}
@@ -295,7 +295,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade bg-white rounded" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <div class="tab-pane fade show active bg-white rounded" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                     <!-- Settings content -->
                     <div class="card seats-plan">
                         <div class="card-body">

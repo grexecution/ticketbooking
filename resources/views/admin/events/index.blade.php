@@ -28,7 +28,7 @@
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
-                                <button class="btn btn-warning text-white btn-block" type="submit">Search</button>
+                                <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
                             </div>
                         </div>
                         @error('search')
@@ -60,7 +60,7 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td class="d-flex align-items-center">
+                                        <td class="d-flex align-items-center" style="border-top: 1px solid #dee2e6;">
                                             @if($event->logo_thumb_index_url)
                                                 <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                             @endif

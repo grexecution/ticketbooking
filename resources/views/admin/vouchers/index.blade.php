@@ -8,8 +8,25 @@
         @include('messages')
 
         <!-- Add Voucher Section -->
-        <div class="container-fluid bg-white py-3">
+        <div class="container-fluid card bg-white py-3">
             <div class="row m-3">
+            <div class="col-md-8">
+                    <form action="{{ route('vouchers.index') }}" method="GET">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" name="search" class="form-control bg-light mb-2" placeholder="Voucher Name" value="{{ request()->get('search') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <!-- Search button -->
+                                <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                    @error('search')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="col-md-10"></div>
                 <div class="col-md-2 text-right">
                     <a href="{{ route('vouchers.create') }}" class="btn btn-dark"><i class="fas fa-plus"></i> New Voucher</a>

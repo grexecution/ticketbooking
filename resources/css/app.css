@@ -70,6 +70,11 @@ img, video {
     font-size: 18px!important;
 }
 
+.nav-tabs .nav-link {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
 .sidebar-help {
     background: white;
     border-radius: 10px;
@@ -78,7 +83,7 @@ img, video {
 }
 
 .alert, .card {
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
 }
 
 .nav-pills .nav-link, .btn {
@@ -124,10 +129,6 @@ img, video {
     color: #000;
 }
 
-.tab-content {
-    padding-top: 20px!important
-  }
-
 .tab-pane {
     border-radius: 20px!important;
   }
@@ -138,4 +139,26 @@ img, video {
 
 .event-body {
     vertical-align: middle!important;
+}
+
+.settings-title {
+    font-size: 28px;
+    font-weight: 600;
+    padding-bottom: 6px;
+}
+
+.button-orange {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+    box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
+    height: calc(2.75rem + 2px);
+}
+
+.form-control {
+    height: calc(2.75rem + 2px);
+}
+
+.custom-select {
+    height: calc(2.75rem + 2px);
 }

@@ -8,7 +8,7 @@
         @include('messages')
 
         <!-- Search and Add Discount Section -->
-        <div class="container-fluid bg-white py-3">
+        <div class="container-fluid card bg-white py-3">
             <div class="row m-3">
                 <div class="col-md-8">
                     <form action="{{ route('discounts.index') }}" method="GET">
@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-md-3">
                                 <!-- Search button -->
-                                <button class="btn btn-warning text-white btn-block" type="submit">Search</button>
+                                <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
                             </div>
                         </div>
                     </form>

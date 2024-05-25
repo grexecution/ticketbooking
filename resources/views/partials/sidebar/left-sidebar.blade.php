@@ -15,7 +15,7 @@
                     @if(auth()->user()?->tenant?->avatar_url)
                         <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded w-100" alt="User Image">
                     @else
-                        <img src="{{ asset('/img/thegreg_emoji_dev.png') }}" class="elevation-2 rounded" alt="User Image">
+                        <img src="{{ asset('/img/default_stage.jpg') }}" class="elevation-2 rounded w-100" alt="User Image">
                     @endif
                 </div>
                 <div class="info pt-3">
