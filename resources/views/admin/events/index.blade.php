@@ -19,7 +19,7 @@
                             </div>
                             <div class="col-md-3">
                                 <!-- Search select input -->
-                                <select class="custom-select mb-2" name="status">
+                                <select class="custom-select" name="status">
                                     <option value="">Filter by status</option>
                                     <option value="live" {{ old('status', request()->get('status')) == "live" ? 'selected' : '' }}>Live</option>
                                     <option value="hidden" {{ old('status', request()->get('status')) == "hidden" ? 'selected' : '' }}>Hidden</option>
@@ -81,13 +81,13 @@
                                                 Start: {{ $event->start_time?->format('g:i a') ?? '' }}
                                             </div>
                                         </td>
-                                        <td class="col-md-1 event-body">
-                                            <div>0 / 200</div>
-                                            <div class="progress mb-3">
+                                        <td class="col-md-1 event-body text-center">
+                                            <div class="progress">
                                                 <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
                                                     <span class="sr-only">0% Complete (warning)</span>
                                                 </div>
                                             </div>
+                                            <small>0 / 200</small>
                                         </td>
                                         @php
                                         $btnClass = match($event->status) {

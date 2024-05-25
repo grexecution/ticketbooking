@@ -429,7 +429,7 @@
                                             <div class="form-group col-md-4">
                                                 <label for="logo">Event Picture</label>
                                                 <div
-                                                    class="p-0 border-0 rounded dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
+                                                    class="dropzone {{ $errors->has('file') ? 'is-invalid' : '' }}"
                                                     id="logo">
                                                 </div>
                                                 @error('logo')

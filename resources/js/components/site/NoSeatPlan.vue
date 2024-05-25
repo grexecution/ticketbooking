@@ -11,7 +11,7 @@ export default {
 <template>
     <div class="">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 d-flex flex-row align-items-center justify-content-between">
                 <h5>1. Please choose how many tickets:</h5>
                 <div class="quantity-selector my-3">
                     <button type="button" class="btn">-</button>
@@ -23,20 +23,23 @@ export default {
         <hr>
         <div class="row">
             <div class="col-12">
-                <h5>2. Please choose seating category:</h5>
+                <h5 class="pt-4 pb-4">2. Please choose seating category:</h5>
                 <div class="category-card mb-3">
-                    <div class="custom-radio">
+                    <div class="col-md-3 d-flex flex-row align-items-center">
+                        <div class="custom-radio">
                         <input type="radio" id="categoryA" name="category" checked>
+                        </div>
+                        <div class="description ml-2">
+                            <h6>Category A</h6>
+                            <p>Category Description</p>
+                        </div>
                     </div>
-                    <div class="description">
-                        <h6>Category A</h6>
-                        <p>Category Description</p>
-                    </div>
+                    
                     <select class="custom-select mr-3">
                         <option selected>Regular Price</option>
                         <!-- Add more options here if needed -->
                     </select>
-                    <div class="price">€ 28,00</div>
+                    <div class="col-md-2 price text-right">€ 28,00</div>
                 </div>
                 <div class="category-card">
                     <div class="custom-radio">

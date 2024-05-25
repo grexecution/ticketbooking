@@ -100,7 +100,7 @@
         </div>
     </div>
 
-@elseif($event->seat_type === 'no_seat_plan' )<div class="container mt-5">
+@elseif($event->seat_type === 'no_seat_plan' )<div class="container card bg-white mt-5">
     <no-seat-plan></no-seat-plan>
 @else
     <div class="main-bg">
