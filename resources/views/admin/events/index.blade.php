@@ -85,7 +85,17 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="event-body text-center">{{ $event->status }}</td>
+                                        @php
+                                        $btnClass = match($event->status) {
+                                                'live' => 'btn-success',
+                                                'hidden' => 'btn-secondary',
+                                                'preview' => 'btn-warning',
+                                                'ended' => 'btn-dark',
+                                            }
+                                        @endphp
+                                        <td class="event-body {{ $btnClass }} text-center">
+                                            {{ ucfirst($event->status) }}
+                                        </td>
                                         <td class="text-right col-md-2 event-body">
                                             <div class="d-flex justify-content-end gap-1">
                                                 <!-- View Event Button -->
