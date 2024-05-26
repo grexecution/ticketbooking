@@ -12,21 +12,22 @@ export default {
     <div class="container px-10 py-2 card">
         <div class="row">
             <div class="col-12 pb-3">
-                <h3 class="pt-4 pb-4 question-styling">Please choose seating category:</h3>
-                <div class="category-card mb-3 d-flex justify-content-between">
-                    <div class="col-md-6 d-flex flex-row align-items-center">
-                        <div class="d-flex flex-col w-75">
+                <h3 class="pt-4 pb-3 question-styling">Please choose seating category:</h3>
+                <div class="category-card mb-3 d-flex align-items-start">
+                    <div class="col-md-3 d-flex">
+                        <div class="d-flex flex-col">
                             <h6 class="category-title">Category A</h6>
                             <p class="category-desc">Category A Description</p>
                         </div>
-                        <select class="custom-select mr-3">
-                        <option selected>Regular Price</option>
-                        <!-- Add more options here if needed -->
-                        </select>
                     </div>
-                    <div class="col-md-4 d-flex d-row justify-content-end align-items-center">
-                       <div class="price text-right">
-                            <p class="category-title">€ 28,00</p>
+
+                    <div class="col-md-9 d-flex d-row justify-content-end align-items-center">
+                        <div class="d-flex flex-col w-100">
+                            <p>Regular Price</p>
+                            <small class="" style="color:#ffc107; text-decoration: underline;">Show more price options</small>
+                        </div>
+                       <div class="price text-right d-flex">
+                            <p class="category-title text-nowrap">€ 28,00</p>
                         </div>
                         <div class="quantity-selector">
                             <button type="button" class="btn">-</button>
@@ -34,30 +35,47 @@ export default {
                             <button type="button" class="btn">+</button>
                         </div>
                     </div>
-                    
                 </div>
                 <div class="category-card mb-3 d-flex justify-content-between">
-                    <div class="col-md-6 d-flex flex-row align-items-center">
-                        <div class="d-flex flex-col w-75">
+                    <div class="col-md-3 d-flex flex-row align-items-center">
+                        <div class="d-flex flex-col">
                             <h6 class="category-title">Category B</h6>
                             <p class="category-desc">Category B Description</p>
                         </div>
-                        <select class="custom-select mr-3">
-                        <option selected>Regular Price</option>
-                        <!-- Add more options here if needed -->
-                        </select>
                     </div>
-                    <div class="col-md-4 d-flex d-row justify-content-end align-items-center">
-                       <div class="price text-right">
-                            <p class="category-title">€ 28,00</p>
+
+                    <div class="col-md-9 d-flex flex-col gap-4">
+                        <div class="d-flex flex-row w-100 align-items-center">
+                            <div class="d-flex flex-col w-100">
+                            <p>Regular Price</p>
+                            </div>
+                            <div class="price text-right d-flex">
+                                <p class="category-title text-nowrap">€ 28,00</p>
+                            </div>
+                            <div class="quantity-selector">
+                                <button type="button" class="btn">-</button>
+                                <span class="px-3">0</span>
+                                <button type="button" class="btn">+</button>
+                            </div>
                         </div>
-                        <div class="quantity-selector">
-                            <button type="button" class="btn">-</button>
-                            <span class="px-3">0</span>
-                            <button type="button" class="btn">+</button>
+                        <hr>
+                        <div class="d-flex flex-row w-100 d-flex flex-row w-100 align-items-center">
+                            <div class="d-flex flex-col w-100">
+                            <p>Senior Price</p>
+                            </div>
+                            <div class="price text-right d-flex">
+                                <p class="category-title text-nowrap">€ 22,00</p>
+                            </div>
+                            <div class="quantity-selector">
+                                <button type="button" class="btn">-</button>
+                                <span class="px-3">0</span>
+                                <button type="button" class="btn">+</button>
+                            </div>
                         </div>
+                        <small class="text-start" style="color:#ffc107; text-decoration: underline;">Show less options</small>
+
+                        
                     </div>
-                    
                 </div>
                 <div class="text-right">
                     <a href="/checkout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
@@ -72,7 +90,7 @@ export default {
 <style scoped>
     .category-card {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         padding: 25px 20px;
         border: 1px solid #e0e0e0;
         border-radius: 5px;

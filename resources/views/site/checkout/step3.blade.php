@@ -7,7 +7,7 @@
     <div class="container mt-5">
         <div class="step-indicator">
             <div class="active">1. Information</div>
-            <div class="active">2. Pay</div>
+            <div class="active">2. Payment</div>
             <div class="active">3. Confirmation</div>
         </div>
 
