@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'stripe_connect' => [
+        'key' => env('STRIPE_PUBLIC'),
+        'secret' => env('STRIPE_SECRET'),
+        'client_id' => env('STRIPE_CLIENT_ID'),
+    ],
+
 ];

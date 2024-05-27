@@ -27,4 +27,5 @@ yarn-error.log
 _ide_helper.php
 _ide_helper_models.php
 changelog.txt
-public/mix-manifest.json
+/public/mix-manifest.json
+/storage/debugbar/*

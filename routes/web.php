@@ -13,9 +13,11 @@ use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
+use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Site\TicketScannerController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StripeConnectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +101,9 @@ Route::post('admin/support', [SupportController::class, 'supportRequest'])->name
 
 // Media
 Route::post('media/file', [MediaController::class, 'uploadFile'])->name('media.upload_file');
+
+// Payments
+Route::get('/connect-account', [StripeConnectController::class, 'connectAccount'])->name('stripe.connect.connectAccount');
+Route::get('/check-connection', [StripeConnectController::class, 'checkConnection'])->name('stripe.connect.checkConnection');
+Route::post('/handle-payment', [StripeConnectController::class, 'handlePayment'])->name('stripe.connect.payment');
+Route::post('/webhook', [StripeConnectController::class, 'handleWebhook'])->name('stripe.connect.webhook');
