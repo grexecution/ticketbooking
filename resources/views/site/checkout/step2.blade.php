@@ -5,7 +5,7 @@
 @section('content')
     <!-- Step 2: Pay -->
 <div class="py-5" style="background-color: #F1F5F8">
-    <div class="container mt-5">
+    <div class="container">
         <div class="step-indicator">
             <div class="active">1. Information</div>
             <div class="active">2. Payment</div>

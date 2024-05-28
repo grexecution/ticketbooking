@@ -6,7 +6,7 @@
 {{--    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>--}}
 <div class="bg-white border-bottom py-14">
     <div class="container">
-        <div class="row mt-5 mb-5">
+        <div class="row my-3">
             <!-- Event Banner -->
             <div class="col-lg-8">
                 <div class="event-banner">
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-@elseif($event->seat_type === 'no_seat_plan' )<div class="py-5" style="background: #F1F5F8">
+@elseif($event->seat_type === 'no_seat_plan' )<div class="pt-5 pb-20" style="background: #F1F5F8">
     <no-seat-plan></no-seat-plan>
 @else
     <div class="main-bg">

@@ -9,8 +9,8 @@ export default {
 </script>
 
 <template>
-    <div class="container px-10 py-2 card">
-        <div class="row">
+    <div class="container">
+        <div class="px-6 py-2 card">
             <div class="col-12 pb-3">
                 <h3 class="pt-4 pb-3 question-styling">Please choose seating category:</h3>
                 <div class="category-card mb-3 d-flex align-items-start">
@@ -81,9 +81,7 @@ export default {
                     <a href="/checkout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
                 </div>
             </div>
-            
         </div>
-        
     </div>
 </template>
 

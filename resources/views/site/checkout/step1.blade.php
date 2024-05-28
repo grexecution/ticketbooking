@@ -12,8 +12,8 @@
             <div>3. Confirmation</div>
         </div>
 
-        <div class="container card d-flex flex-row p-4">
-            <div class="col-md-7">
+        <div class="container card d-flex flex-row justify-content-between p-4">
+            <div class="col-md-6">
                 <h4 class="checkout-subtitle">Ticket type</h4>
                 <div class="form-check d-flex flex-row align-items-center mt-3">
                     <input class="form-check-input" type="radio" name="ticketType" id="digitalTicket" checked>
