@@ -181,31 +181,40 @@
                                         @csrf
 
                                         <!-- First Row -->
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="stripe_key">Stripe Key</label>
-                                                <input type="password" class="form-control" name="stripe_key" id="stripe_key" placeholder="Enter Stripe Key" value="{{ old('stripe_key', $user?->tenant?->stripe_key) }}">
-                                                @error('stripe_key')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="stripe_secret">Stripe Secret</label>
-                                                <input type="password" class="form-control" name="stripe_secret" id="stripe_secret" placeholder="Enter Stripe Secret" value="{{ old('stripe_secret', $user?->tenant?->stripe_secret) }}">
-                                                @error('stripe_secret')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
+{{--                                        <div class="form-row">--}}
+{{--                                            <div class="form-group col-md-6">--}}
+{{--                                                <label for="stripe_key">Stripe Key</label>--}}
+{{--                                                <input type="password" class="form-control" name="stripe_key" id="stripe_key" placeholder="Enter Stripe Key" value="{{ old('stripe_key', $user?->tenant?->stripe_key) }}">--}}
+{{--                                                @error('stripe_key')--}}
+{{--                                                <span class="text-danger">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
+{{--                                            <div class="form-group col-md-6">--}}
+{{--                                                <label for="stripe_secret">Stripe Secret</label>--}}
+{{--                                                <input type="password" class="form-control" name="stripe_secret" id="stripe_secret" placeholder="Enter Stripe Secret" value="{{ old('stripe_secret', $user?->tenant?->stripe_secret) }}">--}}
+{{--                                                @error('stripe_secret')--}}
+{{--                                                <span class="text-danger">{{ $message }}</span>--}}
+{{--                                                @enderror--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                         <!-- Second Row -->
-                                        <div class="form-group">
-                                            <a href="#" class="btn btn-dark">
-                                                <i class="fas fa-plug ml-2"></i>
-                                                Check connection
-                                            </a>
-                                        </div>
-
+                                        @if (auth()->user()->tenant?->stripe_connected)
+                                            <div class="form-group">
+                                                <a href="{{ route('stripe.connect.checkConnection') }}" class="btn btn-dark">
+                                                    <i class="fas fa-plug ml-2"></i>
+                                                    Check Connection
+                                                </a>
+                                            </div>
+                                            <div class="green">Connected</div>
+                                        @else
+                                            <div class="form-group">
+                                                <a href="{{ route('stripe.connect.connectAccount') }}" class="btn btn-dark">
+                                                    <i class="fas fa-plug ml-2"></i>
+                                                    Connect
+                                                </a>
+                                            </div>
+                                        @endif
                                         <br>
                                         <br>
 

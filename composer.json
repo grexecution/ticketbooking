@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "ext-curl": "*",
+        "barryvdh/laravel-debugbar": "^3.13",
         "dompdf/dompdf": "^3.0",
         "endroid/qr-code": "^5.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -17,7 +18,8 @@
         "laravel/ui": "^4.4",
         "pragmarx/google2fa-laravel": "^2.2",
         "spatie/image": "^3.3",
-        "spatie/laravel-medialibrary": "^11.4"
+        "spatie/laravel-medialibrary": "^11.4",
+        "stripe/stripe-php": "^14.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.15",

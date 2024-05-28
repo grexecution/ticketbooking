@@ -21,6 +21,8 @@ class Tenant extends Model implements HasMedia
         'company',
         'stripe_key',
         'stripe_secret',
+        'stripe_account_id',
+        'stripe_connected',
         'stripe_fee',
     ];
 
