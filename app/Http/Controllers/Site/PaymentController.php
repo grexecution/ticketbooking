@@ -16,7 +16,7 @@ class PaymentController extends Controller
     public function __construct(StripeConnectApi $api)
     {
         $this->api = $api;
-        $this->middleware(['auth']);
+//        $this->middleware(['auth']);
     }
 
     public function createCheckoutSession(Request $request) : JsonResponse
@@ -69,7 +69,7 @@ class PaymentController extends Controller
             $session = $this->api->getStripeClient()->checkout->sessions->create($payload);
 
             StripeCallback::query()->create([
-                'user_id' => auth()->id(),
+                'user_id' => auth()?->id(),
                 'event_id' => $event->id,
                 'endpoint' => '/v1/checkout/sessions',
                 'payload' => $payload,
