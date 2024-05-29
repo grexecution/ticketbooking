@@ -29,3 +29,8 @@ npm run watch
 ```bash
 npm run prod
 ```
+
+#### To add new seat plan need to update `database/seeders/SeatPlanSeeder.php` file and run seeder:
+```bash
+php artisan db:seed --class=SeatPlanSeeder
+```
