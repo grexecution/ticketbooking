@@ -41,8 +41,8 @@ class StripeConnectApi
     public function createAccount(User $user) : string
     {
         $account = $this->stripe->accounts->create([
-            'type' => 'standard',
-            'country' => 'US',
+            'type' => 'express',
+            'country' => 'AT',  // Austria country code
             'email' => $user->email,
         ]);
 
