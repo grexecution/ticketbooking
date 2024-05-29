@@ -21,9 +21,12 @@ class StripeConnectController extends Controller
     public function connectAccount(Request $request) : RedirectResponse
     {
         /** @var User $user */
-        $user = auth()->user();
+        $user = $request->input('tenant_id')
+            ? User::query()->where('tenant_id', $request->input('tenant_id'))->firstOrFail()
+            : auth()->user();
+
         $accountId = $user->tenants?->stripe_account_id ?: $this->api->createAccount($user);
-        $url = $this->api->createAccountLink($accountId);
+        $url = $this->api->createAccountLink($accountId, $request->input('tenant_id') ? $user->tenant : null);
 
         return redirect($url);
     }
@@ -31,7 +34,10 @@ class StripeConnectController extends Controller
     public function checkConnection(Request $request) : RedirectResponse
     {
         /** @var User $user */
-        $user = auth()->user();
+        $user = $request->input('tenant_id')
+            ? User::query()->where('tenant_id', $request->input('tenant_id'))->firstOrFail()
+            : auth()->user();
+
         $connected = $this->api->checkConnection($user->tenant?->stripe_account_id);
 
         if (! $connected) {

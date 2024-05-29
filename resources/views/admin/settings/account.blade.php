@@ -199,14 +199,16 @@
 {{--                                        </div>--}}
 
                                         <!-- Second Row -->
-                                        @if (auth()->user()->tenant?->stripe_connected)
+                                        @if (auth()->user()->tenant?->stripe_account_id)
                                             <div class="form-group">
                                                 <a href="{{ route('stripe.connect.checkConnection') }}" class="btn btn-dark">
                                                     <i class="fas fa-plug ml-2"></i>
                                                     Check Connection
                                                 </a>
                                             </div>
-                                            <div class="green">Connected</div>
+                                        @if(auth()->user()->tenant?->stripe_connected)
+                                            <div style="color: green;">Connected</div>
+                                        @endif
                                         @else
                                             <div class="form-group">
                                                 <a href="{{ route('stripe.connect.connectAccount') }}" class="btn btn-dark">

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\StripeCallback;
+use App\Models\Tenant;
 use App\Models\User\User;
 use Stripe\Collection;
 use Stripe\PaymentIntent;
@@ -25,7 +27,15 @@ class StripeConnectApi
     public function checkConnection(string $accountId) : bool
     {
         try {
-            $this->stripe->accounts->retrieve($accountId);
+            $account = $this->stripe->accounts->retrieve($accountId);
+
+            StripeCallback::query()->create([
+                'user_id' => auth()?->id(),
+                'endpoint' => '/v1/accounts/' . $accountId,
+                'payload' => $accountId,
+                'response' => $account,
+            ]);
+
             return true;
 
         } catch (\Exception $e) {
@@ -40,10 +50,19 @@ class StripeConnectApi
 
     public function createAccount(User $user) : string
     {
-        $account = $this->stripe->accounts->create([
+        $payload = [
             'type' => 'standard',
             'country' => 'AT',  // Austria country code
             'email' => $user->email,
+        ];
+
+        $account = $this->stripe->accounts->create($payload);
+
+        StripeCallback::query()->create([
+            'user_id' => auth()?->id(),
+            'endpoint' => '/v1/accounts',
+            'payload' => $payload,
+            'response' => $account,
         ]);
 
         $user->tenant()->update(['stripe_account_id' => $account->id]);
@@ -56,13 +75,25 @@ class StripeConnectApi
         return $this->stripe->accountLinks->all();
     }
 
-    public function createAccountLink(string $accountId) : string
+    public function createAccountLink(string $accountId, ?Tenant $tenant = null) : string
     {
-        $accountLink = $this->stripe->accountLinks->create([
+        $refreshRoute = $tenant ? route('tenants.edit', $tenant->id) : route('settings');
+        $returnRoute = $tenant ? route('tenants.edit', $tenant->id) : route('settings');
+
+        $payload = [
             'account' => $accountId,
-            'refresh_url' => route('settings') . '?error=stripe_refresh',  // critical error
-            'return_url' => route('settings') . '?error=stripe_return',    // unfinished flow
+            'refresh_url' => $refreshRoute . '?error=stripe_refresh',  // critical error
+            'return_url' => $returnRoute . '?error=stripe_return',     // unfinished flow
             'type' => 'account_onboarding',
+        ];
+
+        $accountLink = $this->stripe->accountLinks->create($payload);
+
+        StripeCallback::query()->create([
+            'user_id' => auth()?->id(),
+            'endpoint' => '/v1/account_links',
+            'payload' => $payload,
+            'response' => $accountLink,
         ]);
 
         return $accountLink->url;
