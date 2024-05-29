@@ -99,7 +99,7 @@
                 },
                 body: JSON.stringify({
                     event_id: '{{ request()->get('event_id') }}',
-                    amount: 12000, // Amount in cents (120.00)
+                    amount: 120,
                 }),
             })
                 .then(response => response.json())
