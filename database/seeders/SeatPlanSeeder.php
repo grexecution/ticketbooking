@@ -129,12 +129,12 @@ class SeatPlanSeeder extends Seeder
 
             foreach ($categories as $category) {
                 if (SeatPlanCategory::query()
-                    ->where('saat_plan_id', $seatPlan->id)
+                    ->where('seat_plan_id', $seatPlan->id)
                     ->where('name', $category['name'])
                     ->exists()) {
                     continue;
                 }
-                $category['saat_plan_id'] = $seatPlan->id;
+                $category['seat_plan_id'] = $seatPlan->id;
                 SeatPlanCategory::query()->create($category);
             }
         }

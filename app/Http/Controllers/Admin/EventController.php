@@ -12,6 +12,7 @@ use App\Models\Artist;
 use App\Models\Discount;
 use App\Models\Event;
 use App\Models\Program;
+use App\Models\SeatPlan\SeatPlan;
 use App\Models\Venue;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
@@ -161,6 +162,16 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         return response()->json($event);
+    }
+
+    public function getDefaultSeatPlans(Request $request) : JsonResponse
+    {
+        $seatPlans = SeatPlan::query()
+            ->where('is_active', true)
+            ->with('seatPlanCategories')
+            ->get();
+
+        return response()->json($seatPlans);
     }
 
     private function handleArtists(StoreEventRequest|UpdateEventRequest $request, Event $event) : void

@@ -64,6 +64,7 @@ Route::post('admin/tenants/superAdminLogin', [TenantController::class, 'superAdm
 Route::resource('admin/tenants', TenantController::class)->except('show', 'destroy');
 
 // Events
+Route::post('admin/event/getDefaultSeatPlans', [EventController::class, 'getDefaultSeatPlans'])->name('events.getDefaultSeatPlans');
 Route::post('admin/event/getData/{id}', [EventController::class, 'getData'])->name('events.getData');
 Route::get('admin/events/{eventId}/status/{status}', [EventController::class, 'status'])->name('events.status');
 Route::get('admin/events/delete/{eventId}', [EventController::class, 'destroy'])->name('events.destroy');
