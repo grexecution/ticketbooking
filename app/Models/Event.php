@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -26,6 +27,7 @@ class Event extends Model implements HasMedia
     protected $table = 'events';
 
     protected $fillable = [
+        'user_id',
         'program_id',
         'venue_id',
         'name',
@@ -113,6 +115,11 @@ class Event extends Model implements HasMedia
     public function getLogoEventUrlAttribute() : ? string
     {
         return $this->getMedia('logo')->last()?->getFullUrl('event-show');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function venue(): BelongsTo

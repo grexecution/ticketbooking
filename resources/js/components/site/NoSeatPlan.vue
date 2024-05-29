@@ -1,6 +1,9 @@
 <script>
 export default {
     name: "NoSeatPlan",
+    props: {
+        eventId: String
+    },
     data() {
         return {
         }
@@ -74,11 +77,11 @@ export default {
                         </div>
                         <small class="text-start" style="color:#ffc107; text-decoration: underline;">Show less options</small>
 
-                        
+
                     </div>
                 </div>
                 <div class="text-right">
-                    <a href="/checkout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
+                    <a :href="'/checkout?event_id=' + eventId" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
                 </div>
             </div>
         </div>
@@ -121,7 +124,7 @@ export default {
         margin: 0 5px;
         background-color: #ffc107;
         border-color: #ffc107;
-        -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+        -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
         box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
         height: calc(2.75rem + 2px);
     }
@@ -136,7 +139,7 @@ export default {
     .btn-orange {
         background-color: #ffc107;
         border-color: #ffc107;
-        -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+        -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
         box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
         height: calc(2.75rem + 2px);
     }

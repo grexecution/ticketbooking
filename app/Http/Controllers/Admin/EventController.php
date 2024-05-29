@@ -79,6 +79,7 @@ class EventController extends Controller
             'artist_ids', 'program_id',
         ])->toArray();
 
+        $toCreate['user_id'] = auth()->id();
         $toCreate['price'] = PriceHelper::fromStrToFloat($toCreate['price']);
 
         $event = Event::query()->create($toCreate);

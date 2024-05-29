@@ -24,7 +24,7 @@
                             <img src="https://img.icons8.com/color/48/000000/mastercard.png"/>
                             <img src="https://img.icons8.com/color/48/000000/discover.png"/>
                         </div>
-                        
+
                         <p style="font-size: 14px; line-height: 14px; color: white">Pay via our payment partner Stripe</p>
                     </div>
                     <div class="payment-box disabled">
@@ -47,7 +47,7 @@
                                 <p class="co-price-text">3 x Flo & Wisch “Humorwürmer”</p>
                                 <p class="co-price-details">23.11.2023 | 20:00</p>
                                 <p class="co-price-details">Oggau, Burgenland</p>
-                                <p class="co-price-details">Category: A | Ticket: Regular</p>  
+                                <p class="co-price-details">Category: A | Ticket: Regular</p>
                             </div>
                           <p>€65,00</p>
                         </div>
@@ -57,8 +57,8 @@
                             <div>
                                 <p class="co-price-text">1 x Flo & Wisch “Humorwürmer</p>
                                 <p class="co-price-details">23.11.2023 | 20:00</p>
-                                <p class="co-price-details">Oggau, Burgenland</p>  
-                                <p class="co-price-details">Category: A | Ticket: Senior</p>  
+                                <p class="co-price-details">Oggau, Burgenland</p>
+                                <p class="co-price-details">Category: A | Ticket: Senior</p>
                             </div>
                           <p>€65,00</p>
                         </div>
@@ -68,16 +68,48 @@
                         <h5 style="font-weight:700">Total:</h5>
                         <h5 style="font-weight:700">€120,00</h5>
                     </div>
-                    <form action="{{ route('checkout.step3') }}" method="get">
-                    <button type="submit" class="btn btn-continue btn-block mt-3">Buy now</button>
+                    <form id="payment-form" action="{{ route('checkout.step3') }}" method="get">
+                        <button type="submit" class="btn btn-continue btn-block mt-3">Buy now</button>
                     </form>
                     <div class="d-flex justify-content-center">
                         <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('{{ config('services.stripe_connect.key') }}');
+        const form = document.getElementById('payment-form');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            fetch('/stripe/session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    event_id: '{{ request()->get('event_id') }}',
+                    amount: 12000, // Amount in cents (120.00)
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        stripe.redirectToCheckout({ sessionId: data.sessionId });
+                    } else {
+                        console.error('Payment failed:', data.message);
+                    }
+                });
+        });
+    </script>
+@endpush

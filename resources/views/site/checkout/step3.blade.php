@@ -12,7 +12,11 @@
         </div>
 
         <div class="confirmation">
-            <h4>Order successful</h4>
+            @if(request()->get('canceled'))
+                <h4 style="color: red;">Order cancelled</h4>
+            @else
+                <h4 style="color: green;">Order successful</h4>
+            @endif
             <p>Order number: #22322</p>
             <p>Program: Flo & Wisch “Humor Worms”</p>
             <p>Venue: Orpheum Wien</p>

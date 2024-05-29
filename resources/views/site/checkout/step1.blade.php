@@ -19,11 +19,11 @@
                     <input class="form-check-input" type="radio" name="ticketType" id="digitalTicket" checked>
                     <div class="d-flex flex-col">
                        <label class="form-check-label" for="digitalTicket">
-                        Digital ticket 
-                        </label> 
+                        Digital ticket
+                        </label>
                         <small class="text-muted">Presentation via Smartphone or Print at home</small>
                     </div>
-                    
+
                 </div>
 
                 <h4 class="mt-4 checkout-subtitle">Customer data</h4>
@@ -78,7 +78,7 @@
                                 <p class="co-price-text">3 x Flo & Wisch “Humorwürmer”</p>
                                 <p class="co-price-details">23.11.2023 | 20:00</p>
                                 <p class="co-price-details">Oggau, Burgenland</p>
-                                <p class="co-price-details">Category: A | Ticket: Regular</p>  
+                                <p class="co-price-details">Category: A | Ticket: Regular</p>
                             </div>
                           <p>€65,00</p>
                         </div>
@@ -88,8 +88,8 @@
                             <div>
                                 <p class="co-price-text">1 x Flo & Wisch “Humorwürmer</p>
                                 <p class="co-price-details">23.11.2023 | 20:00</p>
-                                <p class="co-price-details">Oggau, Burgenland</p>  
-                                <p class="co-price-details">Category: A | Ticket: Senior</p>  
+                                <p class="co-price-details">Oggau, Burgenland</p>
+                                <p class="co-price-details">Category: A | Ticket: Senior</p>
                             </div>
                           <p>€65,00</p>
                         </div>
@@ -100,13 +100,14 @@
                         <h5 style="font-weight:700">€120,00</h5>
                     </div>
                     <form action="{{ route('checkout.step2') }}" method="get">
-                    <button type="submit" class="btn btn-continue btn-block mt-3">Select Payment</button>
+                        <input type="hidden" name="event_id" value="{{ request()->get('event_id') }}">
+                        <button type="submit" class="btn btn-continue btn-block mt-3">Select Payment</button>
                     </form>
                     <div class="d-flex justify-content-center">
                         <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

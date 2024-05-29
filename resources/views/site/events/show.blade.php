@@ -101,7 +101,9 @@
     </div>
 
 @elseif($event->seat_type === 'no_seat_plan' )<div class="pt-5 pb-20" style="background: #F1F5F8">
-    <no-seat-plan></no-seat-plan>
+    <no-seat-plan
+        event-id="{{ $event->id }}"
+    ></no-seat-plan>
 @else
     <div class="main-bg">
         <div class="row py-6 mb-5 container m-auto">

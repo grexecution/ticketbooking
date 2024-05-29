@@ -3,21 +3,22 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\Site\CheckoutController;
+use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\StripeConnectController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
-use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Site\TicketScannerController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StripeConnectController;
+use App\Http\Controllers\Site\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('c
 Route::post('/checkout/step2', [CheckoutController::class, 'postStep2']);
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
 Route::post('/checkout/step3', [CheckoutController::class, 'postStep3']);
+
+// Payments
+Route::post('/stripe/session', [PaymentController::class, 'createCheckoutSession'])->name('stripe.session');
+Route::post('/stripe/webhook', [PaymentController::class, 'handleWebhook'])->name('stripe.webhook');
 
 // Scanner
 Route::get('/scanner', [TicketScannerController::class, 'show'])->name('site.scanner');
@@ -105,5 +110,3 @@ Route::post('media/file', [MediaController::class, 'uploadFile'])->name('media.u
 // Payments
 Route::get('/connect-account', [StripeConnectController::class, 'connectAccount'])->name('stripe.connect.connectAccount');
 Route::get('/check-connection', [StripeConnectController::class, 'checkConnection'])->name('stripe.connect.checkConnection');
-Route::post('/handle-payment', [StripeConnectController::class, 'handlePayment'])->name('stripe.connect.payment');
-Route::post('/webhook', [StripeConnectController::class, 'handleWebhook'])->name('stripe.connect.webhook');

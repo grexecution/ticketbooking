@@ -4,11 +4,17 @@ namespace App\Services;
 
 use App\Models\User\User;
 use Stripe\Collection;
+use Stripe\PaymentIntent;
 use Stripe\StripeClient;
 
 class StripeConnectApi
 {
     protected StripeClient $stripe;
+
+    public function getStripeClient(): StripeClient
+    {
+        return $this->stripe;
+    }
 
     public function __construct()
     {
@@ -60,6 +66,30 @@ class StripeConnectApi
         ]);
 
         return $accountLink->url;
+    }
+
+    public function handlePayment(string $accountId, float $amount, string $paymentMethodId) : PaymentIntent
+    {
+        // Amount in cents
+        $amount = $amount * 100;
+        // Calculate 2% application fee
+        $applicationFeeAmount = round($amount * 0.02);
+
+        $data = [
+            'amount' => $amount,
+            'currency' => 'eur',
+            'payment_method_types' => ['card'],
+            'application_fee_amount' => $applicationFeeAmount,
+            'confirmation_method' => 'automatic',
+            'payment_method' => $paymentMethodId,
+            'confirm' => true,
+            'transfer_data' => [
+                'destination' => $accountId,
+            ],
+        ];
+
+        return $this->stripe->paymentIntents->create($data);
+//        return $this->stripe->paymentIntents->retrieve($paymentIntent->id);
     }
 
 }
