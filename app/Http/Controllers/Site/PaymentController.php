@@ -95,14 +95,6 @@ class PaymentController extends Controller
         $sig_header = $request->header('Stripe-Signature');
         $endpoint_secret = config('services.stripe_connect.client_webhook_secret');
 
-        info($request->headers);
-        info($payload);
-
-        StripeCallback::query()->create([
-            'endpoint' => 'webhook',
-            'payload' => $payload,
-        ]);
-
         try {
             $event = \Stripe\Webhook::constructEvent(
                 $payload, $sig_header, $endpoint_secret
@@ -122,10 +114,15 @@ class PaymentController extends Controller
                     info('Received unknown event type ' . $event->type);
             }
 
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['status' => 'success']]);
             return response()->json(['status' => 'success']);
+
         } catch (\UnexpectedValueException $e) {
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['error' => 'Invalid payload']]);
             return response()->json(['error' => 'Invalid payload'], 400);
+
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
     }
