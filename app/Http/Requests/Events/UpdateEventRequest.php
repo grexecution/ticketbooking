@@ -26,6 +26,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property array partners
  * @property array partners_origin_names
  * @property array partners_sizes
+ * @property string categories_json
  */
 class UpdateEventRequest extends FormRequest
 {
@@ -65,6 +66,7 @@ class UpdateEventRequest extends FormRequest
             'partners' => 'sometimes|nullable|array',
             'partners_origin_names' => 'sometimes|nullable|array',
             'partners_sizes' => 'sometimes|nullable|array',
+            'categories_json' => 'sometimes|nullable|string',
         ];
     }
 }

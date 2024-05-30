@@ -115,7 +115,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">€</span>
                                         </div>
-                                        <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}">
+                                        <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}" required>
                                         @error('price')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror

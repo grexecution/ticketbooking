@@ -12,9 +12,11 @@ use App\Models\Artist;
 use App\Models\Discount;
 use App\Models\Event;
 use App\Models\Program;
+use App\Models\SeatPlan\EventSeatPlanCategory;
 use App\Models\SeatPlan\SeatPlan;
 use App\Models\Venue;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -77,7 +79,7 @@ class EventController extends Controller
         $toCreate = collect($request->validated())->except([
             'logo', 'logo_origin_names', 'logo_sizes',
             'partners', 'partners_origin_names', 'partners_sizes',
-            'artist_ids', 'program_id',
+            'artist_ids', 'program_id', 'categories_json',
         ])->toArray();
 
         $toCreate['user_id'] = auth()->id();
@@ -87,6 +89,7 @@ class EventController extends Controller
         $event->discounts()->sync($toCreate['discount_ids'] ?? []);
         $this->handleArtists($request, $event);
         $this->handleProgram($request, $event);
+        $this->handleSeatPlanCategories($request, $event);
 
         MediaHelper::handleMedia($event, 'logo', $request->logo);
         MediaHelper::handleMediaCollect($event, 'partners', $request->partners);
@@ -100,6 +103,7 @@ class EventController extends Controller
     public function edit(Event $event) : View
     {
         abort_if(Gate::denies('event_access'), Response::HTTP_FORBIDDEN);
+        $event->load('seatPlanCategories');
         return view('admin.events.edit', [
             'event' => $event,
             'venues' => Venue::all(),
@@ -136,6 +140,7 @@ class EventController extends Controller
         $event->discounts()->sync($request->discount_ids);
         $this->handleArtists($request, $event);
         $this->handleProgram($request, $event);
+        $this->handleSeatPlanCategories($request, $event);
 
         return redirect()->route('events.index')->with('success', 'Operation successful!');
     }
@@ -160,7 +165,9 @@ class EventController extends Controller
 
     public function getData(Request $request, int $id): JsonResponse
     {
-        $event = Event::find($id);
+        $event = Event::query()->with(['seatPlanCategories'])->find($id);
+        $event->loadSeatPlanWithCategories();
+
         return response()->json($event);
     }
 
@@ -199,5 +206,26 @@ class EventController extends Controller
         } else {
             $event->update(['program_id' => $request->program_id]);
         }
+    }
+
+    private function handleSeatPlanCategories(StoreEventRequest|UpdateEventRequest $request, Event $event) : void
+    {
+        if (! $request->categories_json) {
+            return;
+        }
+
+        DB::table('event_seat_plan_categories')->where('event_id', $event->id)->delete();
+        $categoriesData = json_decode($request->categories_json);
+
+        collect($categoriesData->seat_plan_categories)->each(function (\stdClass $category) use ($categoriesData, $event) {
+            EventSeatPlanCategory::query()->create([
+                'seat_plan_id' => $categoriesData->id,
+                'event_id' => $event->id,
+                'name' => $category->name,
+                'price' => $category->price,
+                'places' => $category->places,
+                'description' => $category->description,
+            ]);
+        });
     }
 }

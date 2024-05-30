@@ -456,8 +456,8 @@
                                 </div>
                                 <seat-plan
                                     :init-seat-type="'{{ old('seat_type', $event->seat_type) }}'"
-                                    :init-seat-amount="'{{ old('seat_amount', $event->seat_amount) }}'"
                                     :status="'{{ $event->status }}'"
+                                    :event-id="'{{ $event->id }}'"
                                 ></seat-plan>
                                 <!-- Discounts -->
                                 <div class="row mt-4">

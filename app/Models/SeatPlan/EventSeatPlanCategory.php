@@ -2,15 +2,17 @@
 
 namespace App\Models\SeatPlan;
 
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SeatPlanCategory extends Model
+class EventSeatPlanCategory extends Model
 {
-    protected $table = 'seat_plan_categories';
+    protected $table = 'event_seat_plan_categories';
 
     protected $fillable = [
         'seat_plan_id',
+        'event_id',
         'name',
         'price',
         'places',
@@ -23,5 +25,13 @@ class SeatPlanCategory extends Model
     public function seatPlan() : BelongsTo
     {
         return $this->belongsTo(SeatPlan::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function event() : BelongsTo
+    {
+        return $this->belongsTo(Event::class);
     }
 }

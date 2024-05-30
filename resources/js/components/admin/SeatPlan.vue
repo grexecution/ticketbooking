@@ -4,13 +4,12 @@ import axios from "axios";
 export default {
     props: {
         initSeatType: String,
-        initSeatAmount: Number,
         status: String,
+        eventId: '',
     },
     data() {
         return {
             seatType: this.initSeatType,
-            seatAmount: this.initSeatAmount,
             bookingCount: 0,
             disabled: false,
             defaultSeatPlans: [],
@@ -25,6 +24,10 @@ export default {
         }
 
         this.fetchSeatPlans()
+
+        if (this.eventId) {
+            this.fetchEventData(this.eventId)
+        }
     },
     watch: {
         seatType: {
@@ -64,6 +67,17 @@ export default {
                 this.customSeatPlan = response.data.find(seatPlan => seatPlan.is_custom)
                 this.defaultSeatPlans = response.data.filter(seatPlan => ! seatPlan.is_custom)
                 this.activeSeatPlan = this.customSeatPlan
+            }).catch(error=>{
+                console.log(error)
+            })
+        },
+        fetchEventData(id) {
+            axios.post(`/admin/event/getData/${id}`).then(response=>{
+                this.activeSeatPlan = response.data.seat_plan
+                this.activeSeatPlan.seat_plan_categories = response.data.seat_plan_categories
+                if (! this.activeSeatPlan.is_custom) {
+                    this.selectedSeatPlanId = this.activeSeatPlan.id
+                }
             }).catch(error=>{
                 console.log(error)
             })
@@ -108,6 +122,7 @@ export default {
                     </div>
                 </div>
             </div>
+            <input name="categories_json" :value="JSON.stringify(activeSeatPlan)" type="hidden"/>
             <!-- Second Row - Pricing Table -->
             <div v-if="seatType === 'seat_plan'" class="row">
                 <div class="col-md-12">
@@ -118,29 +133,15 @@ export default {
                             <th>Description</th>
                             <th>Places</th>
                             <th>Price (€)</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="category in activeSeatPlan.seat_plan_categories" :key="category.id">
-                            <td><input type="text" class="form-control" :value="category.name" :disabled="disabled"></td>
-                            <td><input type="text" class="form-control" :value="category.description" placeholder="Enter description text" :disabled="disabled"></td>
+                            <td><input type="text" class="form-control" v-model="category.name" :disabled="disabled"></td>
+                            <td><input type="text" class="form-control" v-model="category.description" placeholder="Enter description text" :disabled="disabled"></td>
                             <td>{{ category.places }}</td>
-                            <td><input type="number" class="form-control" :value="category.price" :disabled="disabled" min="0.1" step="0.1"></td>
-                            <td>
-                                <a @click="handleDeleteCategory(category.id)" class="btn btn-danger mx-2 delete-record">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
+                            <td><input type="number" class="form-control" v-model="category.price" :disabled="disabled" min="0.1" step="0.1"></td>
                         </tr>
-                        <tr>
-                            <td colspan="5" style="text-align: right;">
-                                <a @click="handleAddCategory" class="btn btn-success mx-2">
-                                    <i class="fas fa-plus"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <!-- Add more rows as needed -->
                         </tbody>
                     </table>
                 </div>
@@ -159,10 +160,10 @@ export default {
                         </thead>
                         <tbody>
                         <tr v-for="category in activeSeatPlan.seat_plan_categories" :key="category.id">
-                            <td><input type="text" class="form-control" :value="category.name" :disabled="disabled"></td>
-                            <td><input type="text" class="form-control" :value="category.description" placeholder="Enter description text" :disabled="disabled"></td>
-                            <td><input type="number" class="form-control" :value="category.places" :disabled="disabled" min="1" step="1"></td>
-                            <td><input type="number" class="form-control" :value="category.price" :disabled="disabled" min="0.1" step="0.1"></td>
+                            <td><input type="text" class="form-control" v-model="category.name" :disabled="disabled"></td>
+                            <td><input type="text" class="form-control" v-model="category.description" placeholder="Enter description text" :disabled="disabled"></td>
+                            <td><input type="number" class="form-control" v-model="category.places" :disabled="disabled" min="1" step="1"></td>
+                            <td><input type="number" class="form-control" v-model="category.price" :disabled="disabled" min="0.1" step="0.1"></td>
                             <td>
                                 <a @click="handleDeleteCategory(category.id)" class="btn btn-danger mx-2 delete-record">
                                     <i class="fas fa-trash"></i>

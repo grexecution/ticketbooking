@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\SeatPlan\EventSeatPlanCategory;
+use App\Models\SeatPlan\SeatPlan;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -155,5 +158,21 @@ class Event extends Model implements HasMedia
     public function artists() : BelongsToMany
     {
         return $this->belongsToMany(Artist::class, 'event_artist', 'event_id', 'artist_id');
+    }
+
+    public function seatPlanCategories() : HasMany
+    {
+        return $this->hasMany(EventSeatPlanCategory::class);
+    }
+
+    public function loadSeatPlanWithCategories() : void
+    {
+        $this->load(['seatPlanCategories']);
+        if ($this->seatPlanCategories->count() > 0) {
+            $seatPlainId = $this->seatPlanCategories->first()->seat_plan_id;
+            $seatPlan = SeatPlan::query()->find($seatPlainId);
+            $seatPlan->seat_plan_categories = $this->seat_plan_categories;
+            $this->seat_plan = $seatPlan;
+        }
     }
 }
