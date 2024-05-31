@@ -138,7 +138,7 @@ export default {
             return moment(date).format('HH:mm');
         },
         convertPriceToFloat(price) {
-            return parseFloat(price.replace('.', ',').replace(',', ''));
+            return parseFloat(price.replace(',', ''))
         },
     }
 };
