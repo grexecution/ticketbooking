@@ -70,44 +70,11 @@
             </div>
 
             <div class="col-md-5">
-                <div class="order-summary">
-                    <div class="ticket-warning">Tickets are still available for: 09:48 min.</div>
-                    <div class="mt-3">
-                        <div class="d-flex flex-row justify-content-between">
-                            <div>
-                                <p class="co-price-text">3 x Flo & Wisch “Humorwürmer”</p>
-                                <p class="co-price-details">23.11.2023 | 20:00</p>
-                                <p class="co-price-details">Oggau, Burgenland</p>
-                                <p class="co-price-details">Category: A | Ticket: Regular</p>
-                            </div>
-                          <p>€65,00</p>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div class="d-flex flex-row justify-content-between">
-                            <div>
-                                <p class="co-price-text">1 x Flo & Wisch “Humorwürmer</p>
-                                <p class="co-price-details">23.11.2023 | 20:00</p>
-                                <p class="co-price-details">Oggau, Burgenland</p>
-                                <p class="co-price-details">Category: A | Ticket: Senior</p>
-                            </div>
-                          <p>€65,00</p>
-                        </div>
-                    </div>
-                    <hr class="my-3">
-                    <div class="d-flex flex-row justify-content-between">
-                        <h5 style="font-weight:700">Total:</h5>
-                        <h5 style="font-weight:700">€120,00</h5>
-                    </div>
-                    <form action="{{ route('checkout.step2') }}" method="get">
-                        <input type="hidden" name="event_id" value="{{ request()->get('event_id') }}">
-                        <button type="submit" class="btn btn-continue btn-block mt-3">Select Payment</button>
-                    </form>
-                    <div class="d-flex justify-content-center">
-                        <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
-                    </div>
-                </div>
-
+                <order-summary
+                    :action-url="'{{ route('checkout.step2') }}'"
+                    :event-id="'{{ request()->get('event_id') }}'"
+                    :is-payment-form="false"
+                /></order-summary>
             </div>
         </div>
     </div>

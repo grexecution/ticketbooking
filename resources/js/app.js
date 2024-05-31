@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import SubscriptionEvents from "./components/admin/SubscriptionEvents";
 import SeatPlan from "./components/admin/SeatPlan.vue";
 import NoSeatPlan from "./components/site/NoSeatPlan.vue";
+import OrderSummary from "./components/site/OrderSummary.vue";
 
 // Admin components
 const adminApp = createApp({})
@@ -13,4 +14,5 @@ adminApp.mount('#app')
 // Site components
 const siteApp = createApp({});
 siteApp.component('no-seat-plan', NoSeatPlan);
+siteApp.component('order-summary', OrderSummary);
 siteApp.mount('#site-app');
