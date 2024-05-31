@@ -105,16 +105,16 @@ export default {
                 return [regularTicket, ...discountTickets].filter(ticket => ticket.count > 0);
             });
         },
-        convertPriceToFloat(price) {
-            return parseFloat(price.replace('.', ',').replace(',', ''));
-        },
         calculateTotal(filteredData) {
             const amount = filteredData.reduce((total, item) => {
-                const price = parseFloat(item.price.replace('.', ',').replace(',', ''));
+                const price = this.convertPriceToFloat(item.price);
                 return total + (item.count * price);
             }, 0);
 
             return this.formatPrice(amount)
+        },
+        convertPriceToFloat(price) {
+            return parseFloat(price.replace(',', ''))
         },
         proceedToCheckout() {
             const tickets = this.filterTickets();
