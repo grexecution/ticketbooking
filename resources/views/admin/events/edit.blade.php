@@ -249,37 +249,47 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="">
-                                            <td>
-                                                <span>#22398</span>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    Gregor Wallner
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>A1, A2, A3, A5, D6</div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    30.06.2024
-                                                </div>
-                                                <div>
-                                                    16:31
-                                                </div>
-                                            </td>
-                                            <td>€ 133,00</td>
-                                            <td>
-                                                <a href="#" class="btn btn-dark mx-2">Completed</a>
-                                            </td>
-                                            <td class="text-right">
-                                                <a href="{{ route('orders.show', 1) }}" class="btn btn-warning mx-2">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                    More
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @foreach($event->orders as $order)
+                                            <tr class="">
+                                                <td>
+                                                    <span>#{{ $order->id }}</span>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        {{ $order->first_name }} {{ $order->last_name }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        @if($event->seat_type === 'no_seat_plan')
+                                                            Free choice of seats
+                                                        @else
+                                                            ...
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        {{ \Carbon\Carbon::parse($order->order_date)->format('d.m.Y') }}
+                                                    </div>
+                                                    <div>
+                                                        {{ \Carbon\Carbon::parse($order->order_date)->format('H:i') }}
+                                                    </div>
+                                                </td>
+                                                <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-dark mx-2">
+                                                        {{ ucfirst($order->order_status) }}
+                                                    </a>
+                                                </td>
+                                                <td class="text-right">
+                                                    <a href="{{ route('orders.show', $order->id) }}" class="btn btn-warning mx-2">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                        More
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

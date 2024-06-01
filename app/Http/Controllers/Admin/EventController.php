@@ -103,7 +103,8 @@ class EventController extends Controller
     public function edit(Event $event) : View
     {
         abort_if(Gate::denies('event_access'), Response::HTTP_FORBIDDEN);
-        $event->load('seatPlanCategories');
+        $event->load(['seatPlanCategories', 'orders.tickets']);
+
         return view('admin.events.edit', [
             'event' => $event,
             'venues' => Venue::all(),

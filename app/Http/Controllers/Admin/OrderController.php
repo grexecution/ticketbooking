@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class OrderController extends Controller
@@ -37,9 +37,11 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id) : View
+    public function show(Order $order) : View
     {
-        return view('admin.orders.show');
+        $order->load(['event', 'tickets']);
+
+        return view('admin.orders.show', compact('order'));
     }
 
     /**

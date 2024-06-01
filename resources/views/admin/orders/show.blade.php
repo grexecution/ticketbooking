@@ -19,10 +19,10 @@
                             <p class="text-wrap">Order status:</p>
                         </div>
                         <div class="col-6">
-                            <p class="text-wrap"><strong>Gregor Wallner</strong></p>
-                            <p class="text-wrap"><strong>greg.wallner@gmail.com</strong></p>
-                            <p class="text-wrap"><strong>02/12/3024 | 16:23</strong></p>
-                            <p class="text-wrap"><strong class="text-success">Completed</strong></p>
+                            <p class="text-wrap"><strong>{{ $order->first_name }} {{ $order->last_name }}</strong></p>
+                            <p class="text-wrap"><strong>{{ $order->email }}</strong></p>
+                            <p class="text-wrap"><strong>{{ \Carbon\Carbon::parse($order->order_date)->format('m/d/Y') }} | {{ \Carbon\Carbon::parse($order->order_date)->format('H:iß') }}</strong></p>
+                            <p class="text-wrap"><strong class="text-success">{{ ucfirst($order->order_status) }}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -36,10 +36,10 @@
                             <p class="text-wrap">Stripe link:</p>
                         </div>
                         <div class="col-6">
-                            <p class="text-wrap"><strong>Burgasse 83a/16, 1070 Vienna</strong></p>
-                            <p class="text-wrap"><strong>Customer order</strong></p>
+                            <p class="text-wrap"><strong>{{ $order->address }}, {{ $order->zip_code }} {{ $order->city }}</strong></p>
+                            <p class="text-wrap"><strong>{{ ucfirst($order->order_type) }} order</strong></p>
                             <p class="text-wrap"><strong>Credit card</strong></p>
-                            <p class="text-wrap"><a href="https://stripe.com/booking...">https://stripe.com/booking...</a></p>
+{{--                            <p class="text-wrap"><a href="https://stripe.com/booking...">https://stripe.com/booking...</a></p>--}}
                         </div>
                     </div>
                 </div>
@@ -51,8 +51,8 @@
                             <p class="text-wrap">Date:</p>
                         </div>
                         <div class="col-6">
-                            <p class="text-wrap"><strong>Flo & Wisch - Washmen</strong></p>
-                            <p class="text-wrap"><strong>16.03.2023</strong></p>
+                            <p class="text-wrap"><strong>{{ $order->event->name }}</strong></p>
+                            <p class="text-wrap"><strong>{{ \Carbon\Carbon::parse($order->event->start_date)->format('d.m.Y') }}</strong></p>
                         </div>
                     </div>
                     <div class="order-actions">
@@ -97,70 +97,35 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>#6548</td>
-                    <td>Apple iPhone 13</td>
-                    <td>$999.29</td>
-                    <td>5%</td>
-                    <td>$949.32</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="cancelDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="cancelDropdown">
-                                <button class="dropdown-item" type="button">Cancel with refund</button>
-                                <button class="dropdown-item" type="button">Cancel without refund</button>
+                @foreach($order->tickets as $ticket)
+                    <tr>
+                        <td>#{{ $ticket->id }}</td>
+                        <td>{{ $ticket->name }}</td>
+                        <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->price) }}</td>
+                        <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->total) }}</td>
+                        <td>$949.32</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="cancelDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="cancelDropdown">
+                                    <button class="dropdown-item" type="button">Cancel with refund</button>
+                                    <button class="dropdown-item" type="button">Cancel without refund</button>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>#6548</td>
-                    <td>Apple iPhone 13</td>
-                    <td>$999.29</td>
-                    <td>5%</td>
-                    <td>$949.32</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="cancelDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="cancelDropdown">
-                                <button class="dropdown-item" type="button">Cancel with refund</button>
-                                <button class="dropdown-item" type="button">Cancel without refund</button>
-                            </div>
-                        </div>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>#6548</td>
-                    <td>Apple iPhone 13</td>
-                    <td>$999.29</td>
-                    <td>5%</td>
-                    <td>$949.32</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="cancelDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ...
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="cancelDropdown">
-                                <button class="dropdown-item" type="button">Cancel with refund</button>
-                                <button class="dropdown-item" type="button">Cancel without refund</button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 
             <div class="order-footer">
                 <div>
-                    <p>Subtotal: <strong>$2,847.96</strong></p>
-                    <p>Discount: <strong>$5.50</strong></p>
-                    <p>VAT: <strong>$150.32</strong></p>
-                    <p>Total: <strong>$2,647.32</strong></p>
+                    <p>Subtotal: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->price) }}</strong></p>
+                    <p>Discount: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->discount) }}</strong></p>
+                    <p>VAT: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->vat) }}</strong></p>
+                    <p>Total: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</strong></p>
                 </div>
             </div>
 

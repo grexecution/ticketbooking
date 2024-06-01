@@ -165,6 +165,11 @@ class Event extends Model implements HasMedia
         return $this->hasMany(EventSeatPlanCategory::class);
     }
 
+    public function orders() : HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function loadSeatPlanWithCategories() : void
     {
         $this->load(['seatPlanCategories']);
