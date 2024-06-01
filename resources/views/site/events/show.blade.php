@@ -105,10 +105,13 @@
         event-id="{{ $event->id }}"
     ></no-seat-plan>
 @else
-    <div class="main-bg">
+    <div class="main-bg py-6">
         <div class="row py-6 mb-5 container m-auto">
-            <div class="col">
-              <div class="text-center mb-2 bg-white py-6">STAGE</div>
+            <div class="container card mb-4">
+              <div class="text-center bg-white py-6">STAGE</div>
+            </div>
+            <div class="container card py-6">
+                <seat-map></seat-map> <!-- Seatmap -->
             </div>
         </div>
     </div>
