@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\StripeCallback;
+use App\Services\OrderService;
 use App\Services\StripeConnectApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -16,13 +18,13 @@ class PaymentController extends Controller
     public function __construct(StripeConnectApi $api)
     {
         $this->api = $api;
-//        $this->middleware(['auth']);
     }
 
     public function createCheckoutSession(Request $request) : JsonResponse
     {
-        $request->validate([
+        $ticketsData = $request->validate([
             'event_id' => 'required|exists:events,id',
+            'tickets' => 'required|array',
             'amount' => 'required|numeric',
         ]);
 
@@ -34,6 +36,8 @@ class PaymentController extends Controller
                 'message' => 'Invalid event',
             ], 500);
         }
+
+        $order = app(OrderService::class)->createOrder($ticketsData, Session::get('customer_data'));
 
         $amount = (float) $request->input('amount') * 100; // Amount in cents
         $currency = $request->input('currency', 'eur');
@@ -54,9 +58,13 @@ class PaymentController extends Controller
                     ],
                     'quantity' => 1,
                 ]],
+                'metadata' => [
+                    'event_id' => $event->id,
+                    'order_id' => $order->id,
+                ],
                 'mode' => 'payment',
-                'success_url' => route('checkout.step3') . '?successfully=1',
-                'cancel_url' => route('checkout.step3') . '?canceled=1',
+                'success_url' => route('checkout.step3') . '?successfully=1&order_id=' . $order->id,
+                'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $order->id,
                 'payment_intent_data' => [
                     'application_fee_amount' => $applicationFeeAmount,
                     'transfer_data' => [
@@ -75,6 +83,8 @@ class PaymentController extends Controller
                 'payload' => $payload,
                 'response' => $session,
             ]);
+
+            Session::forget('customer_data');
 
             return response()->json([
                 'status' => 'success',
@@ -114,15 +124,15 @@ class PaymentController extends Controller
                     info('Received unknown event type ' . $event->type);
             }
 
-            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['status' => 'success']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => $request->all(), 'event' => $event ?? null], 'response' => ['status' => 'success']]);
             return response()->json(['status' => 'success']);
 
         } catch (\UnexpectedValueException $e) {
-            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['error' => 'Invalid payload']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid payload']]);
             return response()->json(['error' => 'Invalid payload'], 400);
 
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
-            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => $payload, 'response' => ['error' => 'Invalid signature']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
     }

@@ -17,12 +17,12 @@
             @else
                 <h4 style="color: green;">Order successful</h4>
             @endif
-            <p>Order number: #22322</p>
-            <p>Program: Flo & Wisch “Humor Worms”</p>
-            <p>Venue: Orpheum Wien</p>
-            <p>Date: November 23rd, 2023 at 8:00 p.m</p>
-            <p>Total: €120</p>
-            <p>Number of tickets: 3</p>
+            <p>Order number: #{{ $order->id }}</p>
+            <p>Program: {{ $order->event->name }}</p>
+            <p>Venue: {{ $order->event->venue->address }}</p>
+            <p>Date: {{ \Carbon\Carbon::parse($order->event->start_date)->format('F jS, Y') }} at {{ \Carbon\Carbon::parse($order->event->start_time)->format('g:i a') }}</p>
+            <p>Total: €{{ $order->total }}</p>
+            <p>Number of tickets: {{ $order->tickets->count() }}</p>
             <p>Email: delivered</p>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary">
@@ -34,7 +34,7 @@
                     View invoice
                 </button>
             </div>
-            <button type="button" class="btn btn-dark btn-continue">← Back to the admin area</button>
+            <a href="{{ route('site.event', $order->event->id) }}" type="button" class="btn btn-dark btn-continue">← Back to the event</a>
         </div>
     </div>
 @endsection

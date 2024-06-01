@@ -17,10 +17,14 @@
             <h5 style="font-weight:700">Total:</h5>
             <h5 style="font-weight:700">€{{ total }}</h5>
         </div>
-        <form :action="actionUrl" :class="{ 'stripe-payment-form': isPaymentForm }" method="get">
+        <form v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">
             <input type="hidden" name="event_id" :value="eventId">
-            <button type="submit" class="btn btn-continue btn-block mt-3">{{ isPaymentForm ? 'Buy Now' : 'Select Payment' }}</button>
+            <button type="submit" class="btn btn-continue btn-block mt-3">Buy Now</button>
+            <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
         </form>
+        <div v-else>
+            <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Select Payment</button>
+        </div>
         <div class="d-flex justify-content-center">
             <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
         </div>
@@ -59,7 +63,8 @@ export default {
             eventName: '',
             eventDate: '',
             eventTime: '',
-            eventLocation: ''
+            eventLocation: '',
+            errorMsg: '',
         };
     },
     mounted() {
@@ -70,6 +75,10 @@ export default {
         }
     },
     methods: {
+        sendCustomerData() {
+            const form = document.getElementById('customer-data-form');
+            form.submit();
+        },
         async fetchEvent(eventId) {
             try {
                 const response = await axios.post(`/api/events/${eventId}`);
@@ -106,11 +115,12 @@ export default {
 
             if (form) {
                 form.addEventListener('submit', async (event) => {
+                    this.errorMsg = null
                     event.preventDefault();
-
                     try {
                         const response = await axios.post('/stripe/session', {
                             event_id: this.eventId,
+                            tickets: this.tickets,
                             amount: this.convertPriceToFloat(this.total),
                         });
 
@@ -120,9 +130,11 @@ export default {
                             stripe.redirectToCheckout({ sessionId: data.sessionId });
                         } else {
                             console.error('Payment failed:', data.message);
+                            this.errorMsg = 'Something went wrong. Please try again.'
                         }
                     } catch (error) {
                         console.error('Error during payment:', error);
+                        this.errorMsg = 'Something went wrong. Please try again.'
                     }
                 });
             }

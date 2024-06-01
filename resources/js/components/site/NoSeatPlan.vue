@@ -89,6 +89,7 @@ export default {
                     name: category.regularPrice.name,
                     price: category.regularPrice.price,
                     total: this.formatPrice(this.convertPriceToFloat(category.regularPrice.price) * category.regularPrice.count),
+                    categoryId: category.id,
                     categoryName: category.name
                 };
 
@@ -99,6 +100,7 @@ export default {
                         name: discountPrice.name,
                         price: discountPrice.price,
                         total: this.formatPrice(this.convertPriceToFloat(discountPrice.price) * discountPrice.count),
+                        categoryId: category.id,
                         categoryName: category.name
                     }));
 

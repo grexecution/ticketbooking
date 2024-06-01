@@ -27,44 +27,70 @@
                 </div>
 
                 <h4 class="mt-4 checkout-subtitle">Customer data</h4>
-                <form action="{{ route('checkout.step2') }}" method="get">
+                <form id="customer-data-form" action="{{ route('checkout.step2') }}" method="get">
+                    <input type="hidden" name="event_id" value="{{ request()->get('event_id') }}">
+                    @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First name">
+                            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ old('first_name') }}" placeholder="First name">
+                            @error('first_name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-6">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Last name">
+                            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ old('last_name') }}" placeholder="Last name">
+                            @error('last_name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address">
+                            <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Address">
+                            @error('address')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="address">Zip Code</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address">
+                            <label for="zip_code">Zip Code</label>
+                            <input type="text" class="form-control" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" placeholder="Zip Code">
+                            @error('zip_code')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="address">City</label>
-                            <input type="text" class="form-control" id="address" placeholder="Address">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" placeholder="City">
+                            @error('city')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail address</label>
-                        <input type="email" class="form-control" id="email" placeholder="E-mail address">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="E-mail address">
+                        @error('email')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone" placeholder="Phone">
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" placeholder="Phone">
+                        @error('phone')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-check my-3">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input name="is_subscribed" type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">
                             <p style="font-size: 14px; line-height: 14px">I accept to receive marketing material based on the <a href="#">Terms & Conditions</a> written down here.</p>
                         </label>
+                        @error('is_subscribed')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </form>
             </div>

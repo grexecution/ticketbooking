@@ -3,51 +3,33 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Site\CustomerDataRequest;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CheckoutController extends Controller
 {
-    public function showStep1()
+    public function showStep1() : View
     {
         return view('site.checkout.step1');
     }
 
-    public function postStep1(Request $request)
+    public function showStep2(CustomerDataRequest $request) : View
     {
-//        $request->validate([
-//            'first_name' => 'required',
-//            'last_name' => 'required',
-//            'address' => 'required',
-//            'email' => 'required|email',
-//            'phone' => 'required',
-//        ]);
+        $validatedData = $request->validated();
+        Session::put('customer_data', $validatedData);
 
-        // Save data to session or database
-
-        return redirect('/checkout/step2');
-    }
-
-    public function showStep2()
-    {
         return view('site.checkout.step2');
     }
 
-    public function postStep2(Request $request)
+    public function showStep3(Request $request) : View
     {
-        // Handle payment method
+        $order = Order::query()
+            ->with(['event.venue', 'tickets'])
+            ->findOrFail($request->order_id);
 
-        return redirect('/checkout/step3');
-    }
-
-    public function showStep3()
-    {
-        return view('site.checkout.step3');
-    }
-
-    public function postStep3(Request $request)
-    {
-        // Finalize order
-
-        return redirect('/checkout/confirmation');
+        return view('site.checkout.step3', compact('order'));
     }
 }
