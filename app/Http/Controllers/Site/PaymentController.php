@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Order;
 use App\Models\StripeCallback;
 use App\Services\OrderService;
 use App\Services\StripeConnectApi;
@@ -70,6 +71,10 @@ class PaymentController extends Controller
                     'transfer_data' => [
                         'destination' => $accountId,
                     ],
+                    'metadata' => [
+                        'event_id' => $event->id,
+                        'order_id' => $order->id,
+                    ],
                 ],
             ];
 
@@ -113,12 +118,10 @@ class PaymentController extends Controller
             switch ($event->type) {
                 case 'payment_intent.canceled':
                 case 'payment_intent.payment_failed':
-                    $paymentIntent = $event->data->object;
-                    // Todo set fail order
+                    $this->handlePaymentIntentFailed($event->data->object);
                     break;
                 case 'payment_intent.succeeded':
-                    $paymentIntent = $event->data->object;
-                    // Todo set success order
+                    $this->handlePaymentIntentSucceeded($event->data->object);
                     break;
                 default:
                     info('Received unknown event type ' . $event->type);
@@ -135,6 +138,30 @@ class PaymentController extends Controller
             StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
+    }
+
+    protected function handlePaymentIntentSucceeded($paymentIntent) : void
+    {
+        $orderId = $paymentIntent->metadata?->order_id;
+        $order = Order::query()->find($orderId)->first();
+
+        if ($order) {
+            $order->update(['order_status' => $paymentIntent->status]);
+        }
+
+        info('Payment intent succeeded for order: ' . ($order ? $order->id : 'Order not found'));
+    }
+
+    protected function handlePaymentIntentFailed($paymentIntent) : void
+    {
+        $orderId = $paymentIntent->metadata?->order_id;
+        $order = Order::query()->find($orderId)->first();
+
+        if ($order) {
+            $order->update(['order_status' => $paymentIntent->status]);
+        }
+
+        info('Payment intent failed for order: ' . ($order ? $order->id : 'Order not found'));
     }
 
 //    public function handlePayment(Request $request) : JsonResponse
@@ -158,5 +185,4 @@ class PaymentController extends Controller
 //            ], 500);
 //        }
 //    }
-
 }
