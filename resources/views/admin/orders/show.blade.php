@@ -102,8 +102,8 @@
                         <td>#{{ $ticket->id }}</td>
                         <td>{{ $ticket->name }}</td>
                         <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->price) }}</td>
+                        <td>{{ $ticket->discount ?: '---' }}</td>
                         <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->total) }}</td>
-                        <td>$949.32</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="cancelDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -122,7 +122,7 @@
 
             <div class="order-footer">
                 <div>
-                    <p>Subtotal: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->price) }}</strong></p>
+                    <p>Subtotal: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->subtotal) }}</strong></p>
                     <p>Discount: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->discount) }}</strong></p>
                     <p>VAT: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->vat) }}</strong></p>
                     <p>Total: <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</strong></p>
