@@ -28,23 +28,23 @@
                 </div>
                 <!-- Second column with buttons -->
                 <div class="col-md-4 d-flex justify-end">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <button class="btn btn-orange btn-warning text-white" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
+                    <div class="row gap-2">
+                        <div class="">
+                            <button class="btn btn-orange btn-warning text-white" style="width: 50px;" id="qrCodeButton" data-toggle="modal" data-target="#qrCodeModal">
                                 <i class="fas fa-qrcode"></i>
                             </button>
                         </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-blackish btn-dark" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
+                        <div class="">
+                            <button class="btn btn-blackish btn-dark" style="width: 50px;" onclick="printHtmlContent()"><i class="fas fa-print"></i></button>
                         </div>
                         @if($event->status !== \App\Models\Event::STATUS_HIDDEN)
-                            <div class="col-md-2">
-                                <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" class="btn btn-greyish btn-secondary">
+                            <div class="">
+                                <a href="{{ route('site.event', $event->id) }}?preview=1" target="_blank" type="button" style="width: 50px;" class="btn btn-greyish btn-secondary">
                                     <i class="fas fa-link"></i>
                                 </a>
                             </div>
                         @endif
-                        <div class="col-md-2">
+                        <div class="">
                             <div class="dropdown">
                                 @php
                                 $btnClass = match($event->status) {

@@ -212,3 +212,12 @@ img, video {
     padding: 20px 20px;
     border-radius: 20px;
 }
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover {
+    background-color: #ffc107;
+}
