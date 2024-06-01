@@ -124,15 +124,15 @@ class PaymentController extends Controller
                     info('Received unknown event type ' . $event->type);
             }
 
-            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => ['input' => $request->all(), 'event' => $event ?? null]], 'response' => ['status' => 'success']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['status' => 'success']]);
             return response()->json(['status' => 'success']);
 
         } catch (\UnexpectedValueException $e) {
-            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => ['input' => $request->all(), 'event' => $event ?? null]], 'response' => ['error' => 'Invalid payload']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid payload']]);
             return response()->json(['error' => 'Invalid payload'], 400);
 
         } catch (\Stripe\Exception\SignatureVerificationException $e) {
-            StripeCallback::query()->create(['endpoint' => 'webhook', ['payload' => ['input' => $request->all(), 'event' => $event ?? null]], 'response' => ['error' => 'Invalid signature']]);
+            StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
     }
