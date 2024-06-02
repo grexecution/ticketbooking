@@ -54,7 +54,7 @@
                                     <tr class="">
                                         <td class="d-flex align-items-center border-0">
                                             @if($subscription->logo_thumb_index_url)
-                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($subscription->logo_thumb_index_url) }}" alt="Tenant img" />
+                                                <img class="h-100 img-fluid img-thumbnail" src="{{ asset($subscription->logo_thumb_index_url) }}" alt="Subscription img" />
                                             @endif
                                             <p class="font-weight-bold ml-2">{{ $subscription->name }}</p>
                                         </td>
@@ -69,7 +69,7 @@
                                         </td>
                                         <td class="text-right">
                                             <!-- View Subscription Button -->
-                                            <a href="#" target="_blank" type="button" class="btn btn-dark text-white mx-2">
+                                            <a href="{{ route('subscriptions.show', $subscription->id) }}" target="_blank" type="button" class="btn btn-dark text-white mx-2">
                                                 <i class="fas fa-link"></i>
                                             </a>
                                             <!-- Edit Subscription Button -->

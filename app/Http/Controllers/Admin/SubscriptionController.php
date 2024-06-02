@@ -27,6 +27,16 @@ class SubscriptionController extends Controller
         $this->middleware(['auth', '2fa']);
     }
 
+    /*
+     * Show the Subscription on the site.
+     */
+    public function show($id)
+    {
+        $subscription = Subscription::with('events')->find($id);
+
+        return view('site.events.subscription', compact('subscription'));
+    }
+
     /**
      * Show the application dashboard.
      *

@@ -44,6 +44,11 @@ class Subscription extends Model implements HasMedia
             ->width(120)
             ->height(120)
             ->sharpen(10);
+
+        $this->addMediaConversion('sub-show')
+            ->width(350)
+            ->height(218)
+            ->sharpen(10);
     }
 
     /**
@@ -68,6 +73,11 @@ class Subscription extends Model implements HasMedia
     public function getLogoThumbEditUrlAttribute() : ? string
     {
         return $this->getMedia('logo')->last()?->getFullUrl('thumb-edit');
+    }
+
+    public function getLogoSubUrlAttribute() : ? string
+    {
+        return $this->getMedia('logo')->last()?->getFullUrl('sub-show');
     }
 
     public function events() : BelongsToMany

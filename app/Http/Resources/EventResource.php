@@ -19,7 +19,9 @@ class EventResource extends JsonResource
             'name' => $this->name,
             'seat_type' => $this->seat_type,
             'discounts' => $this->discounts,
-            'categories' => SeatCategoryResource::collection($this->seat_plan_categories),
+            'categories' => $this->seat_plan_categories
+                ? SeatCategoryResource::collection($this->seat_plan_categories)
+                : [], // return an empty array if seat_plan_categories is null
         ];
     }
 }

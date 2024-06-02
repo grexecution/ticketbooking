@@ -151,7 +151,7 @@ img, video {
 .btn-orange {
     background-color: #ffc107;
     border-color: #ffc107;
-    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     height: calc(2.75rem + 2px);
 }
@@ -159,7 +159,7 @@ img, video {
 .btn-blackish {
     background-color: #000;
     border-color: #000;
-    -webkit-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3); 
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
     height: calc(2.75rem + 2px);
     display: flex;
@@ -200,6 +200,13 @@ img, video {
 
 .dropzone .dz-preview .dz-image {
     height: auto!important;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dropzone .dz-preview .dz-error-mark {
+    position: relative;
+    margin-top: 20px;
 }
 
 .dropzone .dz-preview.dz-image-preview {

@@ -83,6 +83,7 @@ Route::get('admin/venues/delete/{venueId}', [VenueController::class, 'destroy'])
 // Subscriptions
 Route::resource('admin/subscriptions', SubscriptionController::class)->except('show', 'destroy');
 Route::get('admin/subscriptions/delete/{voucherId}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
+Route::get('/subscriptions/{id}', [SubscriptionController::class, 'show'])->name('subscriptions.show');
 
 // Discounts
 Route::resource('admin/discounts', DiscountController::class)->except('show', 'destroy');

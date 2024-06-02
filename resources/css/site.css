@@ -125,6 +125,16 @@
     font-weight: 700;
 }
 
+.sub-event-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.sub-subheadline{
+    font-size: 18px;
+    font-weight: 600;
+}
+
 .event-banner {
     display: flex;
     flex-direction: column;
@@ -228,7 +238,7 @@ label {
     background-color: #ffc107;
     color: #fff;
     border-color: #ffc107;
-    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
 }
 .order-summary {
@@ -275,7 +285,7 @@ label {
     border: none;
     background-color: #ffc107;
     border-color: #ffc107;
-    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3); 
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
     height: calc(2.75rem + 2px);
 }
