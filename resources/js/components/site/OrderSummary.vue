@@ -1,6 +1,9 @@
 <template>
     <div class="order-summary">
-        <div class="ticket-warning">Tickets are still available for: 09:48 min.</div>
+        <!-- Checkout Timer-->
+        <div v-if="!isCartEmpty" class="ticket-warning">Tickets are reserved for: {{ minutes }}:{{ secondsFormatted }} Min</div>
+        <div v-else class="ticket-warning">Your cart is empty. Please add something.</div>
+        <time-up-modal v-if="timeIsUp" @close="goHome"></time-up-modal>
         <div class="mt-3" v-for="(item, index) in tickets" :key="index">
             <div class="d-flex flex-row justify-content-between">
                 <div>
@@ -35,6 +38,8 @@
 import Cookies from 'js-cookie';
 import axios from "axios";
 import moment from "moment";
+import TimeUpModal from './TimeUpModal.vue';
+
 
 export default {
     name: 'OrderSummary',
@@ -56,6 +61,9 @@ export default {
             required: false
         }
     },
+    components: {
+        TimeUpModal,
+    },
     data() {
         return {
             tickets: [],
@@ -65,7 +73,24 @@ export default {
             eventTime: '',
             eventLocation: '',
             errorMsg: '',
+            time: 1 * 60, // 10 minutes in seconds
+            timeIsUp: false,
+            startTime: null,
         };
+    },
+    computed: {
+        minutes() {
+            return Math.floor(this.time / 60);
+        },
+        seconds() {
+            return this.time % 60;
+        },
+        secondsFormatted() {
+            return this.seconds < 10 ? '0' + this.seconds : this.seconds;
+        },
+        isCartEmpty() {
+            return this.tickets.length === 0;
+        },
     },
     mounted() {
         this.fetchEvent(this.eventId);
@@ -73,8 +98,37 @@ export default {
         if (this.isPaymentForm) {
             this.loadStripeScript();
         }
+        if (!this.isCartEmpty) {
+            this.loadStartTime();
+            this.startTimer();
+        }
     },
     methods: {
+        startTimer() {
+            const interval = setInterval(() => {
+                if (this.time === 0) {
+                    clearInterval(interval);
+                    this.timeIsUp = true;
+                    this.clearCookies();
+                } else {
+                    this.time--;
+                }
+            }, 1000);
+        },
+        loadStartTime() {
+            const startTime = Cookies.get('start_time');
+            if (startTime) {
+                const now = moment();
+                const start = moment(startTime);
+                const diff = now.diff(start, 'seconds');
+                this.time = this.time - diff;
+            } else {
+                Cookies.set('start_time', moment().toISOString());
+            }
+        },
+        goHome() {
+            window.location.href = '/'; // Replace with your home route
+        },
         sendCustomerData() {
             const form = document.getElementById('customer-data-form');
             form.submit();
@@ -142,6 +196,7 @@ export default {
         clearCookies() {
             Cookies.remove('cart_tickets');
             Cookies.remove('cart_total');
+            Cookies.remove('start_time');
         },
         formatDate(date) {
             return moment(date).format('DD.MM.YYYY');
