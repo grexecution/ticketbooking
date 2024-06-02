@@ -4,6 +4,7 @@
 
 @section('content')
     <div>
+        <!--Subscription Banner-->
         <div class="bg-white border-bottom py-14">
             <div class="container">
                 <div class="row my-3">
@@ -50,7 +51,7 @@
             <div class="col py-6 mb-5 container m-auto gap-2">
                 <h2 class="sub-subheadline">Events included in this Subscription:</h2>
                 @foreach($subscription->events as $event)
-                    <div class="card my-6 rounded-xl overflow-hidden">
+                    <div class="card my-3 rounded overflow-hidden">
                         <div class="d-flex">
                             <div class="col-md-3 p-0">
                                 <img src="{{ $event->logo_event_url }}" class="img-fluid event-image" alt="Event Image">
@@ -58,7 +59,7 @@
                             <div class="card-body py-6">
                                 <h5 class="mb-1 sub-event-title">{{ $event->name }}</h5>
                                 <div>
-                                    <p class="card-text">{!! $event->description !!}</p>
+                                    <p class="card-text">{!! $event->short_desc !!}</p>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col d-flex gap-6">
@@ -78,6 +79,7 @@
                     </div>
                 @endforeach
             </div>
+            <!-- No Seat Plan Component -->
             <no-seat-plan
                 event-id="{{ $event->id }}"
             ></no-seat-plan>
