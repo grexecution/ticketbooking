@@ -73,7 +73,7 @@ export default {
             eventTime: '',
             eventLocation: '',
             errorMsg: '',
-            time: 1 * 60, // 10 minutes in seconds
+            time: 10 * 60, // 10 minutes in seconds
             timeIsUp: false,
             startTime: null,
         };
@@ -209,4 +209,5 @@ export default {
         },
     }
 };
+
 </script>

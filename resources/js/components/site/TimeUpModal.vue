@@ -68,4 +68,5 @@ export default {
 .modal-container button:hover {
     background-color: #e0a800;
 }
+
 </style>
