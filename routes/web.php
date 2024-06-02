@@ -40,6 +40,7 @@ Route::post('/2fa', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 Route::get('/', [\App\Http\Controllers\Site\EventController::class, 'index']);
 Route::get('/events', [\App\Http\Controllers\Site\EventController::class, 'index'])->name('site.events');
 Route::get('/events/{eventId}', [\App\Http\Controllers\Site\EventController::class, 'show'])->name('site.event');
+Route::get('/subscriptions/{id}', 'Site\SubscriptionController@show')->name('site.subscriptions.show');
 Route::get('/checkout', [CheckoutController::class, 'showStep1']);
 Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('checkout.step2');
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
