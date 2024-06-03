@@ -60,6 +60,8 @@ class Event extends Model implements HasMedia
         'logo_thumb_index_url',
         'logo_thumb_edit_url',
         'logo_event_url',
+        'active_bookings',
+        'total_tickets',
     ];
 
     /**
@@ -118,6 +120,27 @@ class Event extends Model implements HasMedia
     public function getLogoEventUrlAttribute() : ? string
     {
         return $this->getMedia('logo')->last()?->getFullUrl('event-show');
+    }
+
+    public function getActiveBookingsAttribute() : int
+    {
+        $countBookings = 0;
+
+        $this->orders->each(function (Order $order) use (&$countBookings) {
+            $countORderTickets = $order->tickets
+                ->where('is_paid', true)
+                ->where('is_refunded', false)
+                ->where('is_cancelled', false)
+                ->count();
+            $countBookings += $countORderTickets;
+        });
+
+        return $countBookings;
+    }
+
+    public function getTotalTicketsAttribute()
+    {
+        return $this->seatPlanCategories->sum('places');
     }
 
     public function user(): BelongsTo

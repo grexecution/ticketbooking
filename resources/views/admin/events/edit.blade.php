@@ -85,7 +85,7 @@
                         <img src="{{ asset('img/booking.png') }}" alt="Bookings Image" width="91" height="70">
                         <div class="d-flex flex-col">
                             <div class="font-weight-bold">Bookings</div>
-                            <div>166 / 200</div>
+                            <div>{{ $event->active_bookings }} / {{ $event->total_tickets }}</div>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex flex-row justify-center align-items-center gap-2">

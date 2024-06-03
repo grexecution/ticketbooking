@@ -82,12 +82,17 @@
                                             </div>
                                         </td>
                                         <td class="col-md-1 event-body text-center">
+                                            <?php
+                                                $activeBookings = $event->active_bookings;
+                                                $totalTickets = $event->total_tickets;
+                                                $percentage = ($totalTickets > 0) ? ($activeBookings / $totalTickets) * 100 : 0;
+                                            ?>
                                             <div class="progress">
-                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                                    <span class="sr-only">0% Complete (warning)</span>
+                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentage }}%">
+                                                    <span class="sr-only">{{ $percentage }}% Complete (warning)</span>
                                                 </div>
                                             </div>
-                                            <small>0 / 200</small>
+                                            <small>{{ $activeBookings }} / {{ $totalTickets }}</small>
                                         </td>
                                         @php
                                         $btnClass = match($event->status) {
