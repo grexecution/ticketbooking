@@ -19,7 +19,19 @@ export default {
     mounted() {
         this.fetchEvent(this.eventId);
     },
+    computed: {
+        isCheckoutDisabled() {
+            // Check if any tickets have been selected
+            return this.filterTickets().length === 0;
+        }
+    },
     methods: {
+        showToastMessage() {
+            if (this.isCheckoutDisabled) {
+                // Replace this with your preferred method of showing a toast message
+                alert('Please select tickets to continue');
+            }
+        },
         async fetchEvent(eventId) {
             try {
                 const response = await axios.post(`/api/events/${eventId}`);
@@ -119,6 +131,11 @@ export default {
             return parseFloat(price.replace(',', ''))
         },
         proceedToCheckout() {
+            if (this.isCheckoutDisabled) {
+                this.showToastMessage();
+                return;
+            }
+
             const tickets = this.filterTickets();
             const total = this.calculateTotal(tickets);
 
@@ -178,7 +195,10 @@ export default {
                 </div>
 
                 <div class="text-right">
-                    <a @click.prevent="proceedToCheckout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
+                    <a @click.prevent="proceedToCheckout"
+                       :disabled="isCheckoutDisabled"
+                       type="button"
+                       class="btn-orange checkout-btn">Weiter zum Checkout</a>
                 </div>
             </div>
         </div>

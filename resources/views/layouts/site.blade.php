@@ -8,9 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/site.css') }}">
-    <link rel="stylesheet" href="{{ asset('dist/cjs/seatmap.canvas.css')}}" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer type="text/javascript" src="{{ asset('dist/cjs/seatmap.canvas.js') }}"></script>
     <link href="https://use.fontawesome.com/releases/v6.4.2/css/all.css" rel="stylesheet"/>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     @stack('styles')

@@ -20,4 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/events/{id}', [EventController::class, 'show']);
+Route::get('/events/{id}', [EventController::class, 'show']);
 Route::get('/events', [EventController::class, 'index']);
+Route::get('/seat_plan_categories/{seatPlanId}', [App\Http\Controllers\Api\SeatPlanController::class, 'getSeatPlanCategories']);

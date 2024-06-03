@@ -42,9 +42,7 @@
         <link rel="stylesheet" href="{{ mix(config('adminlte.laravel_mix_css_path', 'css/app.css')) }}">
     @endif
 
-    <link rel="stylesheet" href="{{ asset('dist/cjs/seatmap.canvas.css')}}" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer type="text/javascript" src="{{ asset('dist/cjs/seatmap.canvas.js') }}"></script>
     <link href="https://use.fontawesome.com/releases/v6.4.2/css/all.css" rel="stylesheet"/>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 

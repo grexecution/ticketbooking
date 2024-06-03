@@ -13,8 +13,8 @@
             <h2>Cart:</h2>
             <ul>
                 <li v-for="(seat, index) in selectedSeats" :key="index">
-                    Category: {{ seat.categoryIndex + 1 }}, Row: {{ seat.rowNumber }}, Seat: {{ seat.number }}
-                    <button @click="removeSeat(index)"></button>
+                    Category: {{ seat.categoryIndex + 1 }}, Row: {{ seat.rowNumber }}, Seat: {{ seat.number }}, Price: {{ formatPrice(seat.price) }}
+                    <button @click="removeSeat(index)" class="delete-button"></button>
                 </li>
             </ul>
         </div>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -36,9 +37,9 @@ export default {
     },
     created() {
         this.seatCategories = this.generateSeatCategories([
-            { name: 'VIP', rowCount: 3 },
-            { name: 'Category A', rowCount: 6 },
-            { name: 'Category B', rowCount: 10 },
+            { name: 'VIP', rowCount: 3, price: 100 },
+            { name: 'Category A', rowCount: 6, price: 80 },
+            { name: 'Category B', rowCount: 10, price: 60 },
             // Add more categories as needed
         ], 12, [8]); // 14 seats per row, double aisle after the 7th and 8th seats
     },
@@ -46,6 +47,7 @@ export default {
         generateSeatCategories(categories, seatCount, aislesAfter) {
             return categories.map((category, categoryIndex) => ({
                 name: category.name,
+                price: category.price,
                 rows: Array(category.rowCount).fill().map((_, rowIndex) => this.generateRow(seatCount, aislesAfter, rowIndex + 1, categoryIndex + 1))
             }));
         },
@@ -68,9 +70,9 @@ export default {
             let seat = this.seatCategories[categoryIndex].rows[rowIndex][seatIndex];
             seat.selected = !seat.selected;
             if (seat.selected) {
-                this.cart.push(seat);
+                this.cart.push({ ...seat, price: this.seatCategories[categoryIndex].price });
             } else {
-                let index = this.cart.indexOf(seat);
+                let index = this.cart.findIndex(cartSeat => cartSeat.number === seat.number && cartSeat.rowNumber === seat.rowNumber && cartSeat.categoryIndex === seat.categoryIndex);
                 if (index !== -1) {
                     this.cart.splice(index, 1);
                 }
@@ -80,7 +82,10 @@ export default {
             let seat = this.cart[index];
             seat.selected = false;
             this.cart.splice(index, 1);
-        }
+        },
+        formatPrice(price) {
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
+        },
     }
 };
 </script>
@@ -150,15 +155,24 @@ export default {
     margin-bottom: 20px;
 }
 
-.selected-seats button {
+.delete-button {
     background: none;
     border: none;
     cursor: pointer;
     color: red;
 }
 
-.selected-seats button:before {
+.delete-button:before {
     content: "\2715";
     font-size: 16px;
+}
+.checkout-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 </style>
