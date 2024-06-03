@@ -78,8 +78,8 @@ class Event extends Model implements HasMedia
             ->sharpen(10);
 
         $this->addMediaConversion('event-show')
-            ->width(350)
-            ->height(218)
+            ->width(450)
+            ->height(318)
             ->sharpen(10);
     }
 
