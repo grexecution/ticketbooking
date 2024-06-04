@@ -14,6 +14,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Str;
 
 /**
  * @mixin IdeHelperEvent
@@ -207,5 +208,23 @@ class Event extends Model implements HasMedia
             $seatPlan->seat_plan_categories = $this->seat_plan_categories;
             $this->seat_plan = $seatPlan;
         }
+    }
+
+    public function getSlugAttribute(): string
+    {
+        return Str::slug($this->artist . ' ' . $this->name);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($event) {
+            $event->slug = Str::slug($event->artist . ' ' . $event->name);
+        });
+
+        static::updating(function ($event) {
+            $event->slug = Str::slug($event->artist . ' ' . $event->name);
+        });
     }
 }

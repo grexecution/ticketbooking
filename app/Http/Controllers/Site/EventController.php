@@ -16,9 +16,9 @@ class EventController extends Controller
         return view('site.events.index', compact('events'));
     }
 
-    public function show(Request $request, string $id) : Renderable
+    public function show(Request $request, string $slug) : Renderable
     {
-        $event = Event::findOrFail($id);
+        $event = Event::where('slug', $slug)->firstOrFail();
         $isPreview = false;
         $isUnavailable = false;
 

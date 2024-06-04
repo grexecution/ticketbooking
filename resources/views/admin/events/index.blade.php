@@ -108,7 +108,7 @@
                                         <td class="text-right col-md-2 event-body">
                                             <div class="d-flex justify-content-end gap-1">
                                                 <!-- View Event Button -->
-                                                <a href="{{ route('site.event', $event->id) }}" target="_blank" type="button" class="btn btn-dark text-white">
+                                                <a href="{{ route('site.event', $event->slug) }}" target="_blank" type="button" class="btn btn-dark text-white">
                                                     <i class="fas fa-link"></i>
                                                 </a>
                                                 <!-- Edit Event Button -->
