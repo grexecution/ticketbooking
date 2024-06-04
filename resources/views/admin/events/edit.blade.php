@@ -233,6 +233,16 @@
                     <!-- Bookings content -->
                     <div class="card seats-plan">
                         <div class="card-body">
+                            <!-- Search and Sort -->
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                                </div>
+                                <div class="col">
+                                    <button id="sortAsc" class="btn btn-primary">Sort Date Ascending</button>
+                                    <button id="sortDesc" class="btn btn-primary">Sort Date Descending</button>
+                                </div>
+                            </div>
                             <!-- Event Table -->
                             <div class="row mt-5 mx-3">
                                 <div class="col">
@@ -1121,6 +1131,62 @@
 
             $("#randomize-btn").on("click", function (a) {
                 // generateRandomBlocks()
+            });
+        });
+        $(document).ready(function() {
+            // Search functionality
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#bookings tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // Sort functionality
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("bookings");
+            rows = table.rows;
+
+            // Sort ascending
+            $("#sortAsc").on("click", function() {
+                switching = true;
+                while (switching) {
+                    switching = false;
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[3]; // Assuming the date is in the 4th column
+                        y = rows[i + 1].getElementsByTagName("TD")[3];
+                        if (new Date(x.innerHTML) > new Date(y.innerHTML)) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                    }
+                }
+            });
+
+            // Sort descending
+            $("#sortDesc").on("click", function() {
+                switching = true;
+                while (switching) {
+                    switching = false;
+                    for (i = 1; i < (rows.length - 1); i++) {
+                        shouldSwitch = false;
+                        x = rows[i].getElementsByTagName("TD")[3]; // Assuming the date is in the 4th column
+                        y = rows[i + 1].getElementsByTagName("TD")[3];
+                        if (new Date(x.innerHTML) < new Date(y.innerHTML)) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    if (shouldSwitch) {
+                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                        switching = true;
+                    }
+                }
             });
         });
     </script>
