@@ -82,8 +82,8 @@ class BookingController extends Controller
         }
     }
 
-    public function expireBookings() : void
+    public function expireBookings($sessionId) : void
     {
-        Booking::query()->where('expires_at', '<', Carbon::now())->delete();
+        Booking::query()->where('session_id', $sessionId)->delete();
     }
 }

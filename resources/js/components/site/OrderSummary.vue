@@ -105,11 +105,11 @@ export default {
     },
     methods: {
         startTimer() {
-            const interval = setInterval(() => {
+            const interval = setInterval(async () => {
                 if (this.time === 0) {
                     clearInterval(interval);
                     this.timeIsUp = true;
-                    this.clearCookies();
+                    await this.expireBookings();
                 } else {
                     this.time--;
                 }
@@ -129,7 +129,7 @@ export default {
 
                     if (this.time <= 0) {
                         this.timeIsUp = true;
-                        this.clearCookies();
+                        await this.expireBookings();
                     }
                 } else {
                     Cookies.set('start_time', moment().toISOString());
@@ -137,6 +137,18 @@ export default {
             } catch (error) {
                 console.error('Error fetching booking start time:', error);
                 Cookies.set('start_time', moment().toISOString());
+            }
+        },
+        async expireBookings() {
+            try {
+                const sessionId = Cookies.get('cart_session_id');
+                if (sessionId) {
+                    await axios.post(`/bookings/expire-session/${sessionId}`).then(response => {
+                        this.clearCookies();
+                    });
+                }
+            } catch (error) {
+                console.error('Error expiring bookings:', error);
             }
         },
         goHome() {

@@ -47,6 +47,7 @@ Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('c
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
 Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets'])->name('bookings.book');
 Route::post('/bookings/start-time/{session_id}', [BookingController::class, 'getBookingStartTime']);
+Route::post('/bookings/expire-session/{session_id}', [BookingController::class, 'expireBookings']);
 
 // Payments
 Route::post('/stripe/session', [PaymentController::class, 'createCheckoutSession'])->name('stripe.session');
