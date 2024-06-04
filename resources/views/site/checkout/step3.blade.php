@@ -25,11 +25,11 @@
             <p>Number of tickets: {{ $order->tickets->count() }}</p>
             <p>Email: delivered</p>
             <div class="btn-group">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showTickets', $order->id) }}', '_blank')">
                     <i class="fa-solid fa-ticket"></i>
                     View tickets
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showInvoice', $order->id) }}', '_blank')">
                     <i class="fa-solid fa-ticket"></i>
                     View invoice
                 </button>
