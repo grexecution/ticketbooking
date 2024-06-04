@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VenueController;
 use App\Http\Controllers\Admin\VoucherController;
 use App\Http\Controllers\Auth\TwoFactorController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Site\TicketScannerController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,8 @@ Route::get('/subscriptions/{id}', 'Site\SubscriptionController@show')->name('sit
 Route::get('/checkout', [CheckoutController::class, 'showStep1']);
 Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('checkout.step2');
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
+Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets'])->name('bookings.book');
+Route::post('/bookings/start-time/{session_id}', [BookingController::class, 'getBookingStartTime']);
 
 // Payments
 Route::post('/stripe/session', [PaymentController::class, 'createCheckoutSession'])->name('stripe.session');

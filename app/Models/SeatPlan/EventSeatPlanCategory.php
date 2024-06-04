@@ -2,9 +2,11 @@
 
 namespace App\Models\SeatPlan;
 
+use App\Models\Booking;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class EventSeatPlanCategory extends Model
 {
@@ -33,5 +35,10 @@ class EventSeatPlanCategory extends Model
     public function event() : BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function bookings() : HasMany
+    {
+        return $this->hasMany(Booking::class, 'event_seat_plan_category_id', 'id');
     }
 }

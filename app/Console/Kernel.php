@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        //
+        $schedule->call(function () {
+            \App\Models\Booking::where('expires_at', '<', \Carbon\Carbon::now())->delete();
+        })->everyMinute();
     }
 
     /**

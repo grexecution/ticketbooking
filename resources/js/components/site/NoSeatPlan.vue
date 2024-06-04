@@ -13,7 +13,8 @@ export default {
     data() {
         return {
             discounts: [],
-            categories: []
+            categories: [],
+            errorMsg: '',
         };
     },
     mounted() {
@@ -131,6 +132,7 @@ export default {
             return parseFloat(price.replace(',', ''))
         },
         proceedToCheckout() {
+            this.errorMsg = null;
             if (this.isCheckoutDisabled) {
                 this.showToastMessage();
                 return;
@@ -142,8 +144,32 @@ export default {
             Cookies.set('cart_tickets', JSON.stringify(tickets));
             Cookies.set('cart_total', total);
 
-            window.location.href = `/checkout?event_id=${this.eventId}`;
-        }
+            this.bookTickets(tickets)
+        },
+        async bookTickets(tickets) {
+            try {
+                const response = await axios.post(`/bookings/events/${this.eventId}`, {
+                    event_id: this.eventId,
+                    tickets: tickets,
+                });
+
+                Cookies.set('cart_bookings', response.data.bookings);
+                Cookies.set('cart_session_id', response.data.session_id);
+
+                window.location.href = `/checkout?event_id=${this.eventId}`;
+
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    this.errorMsg = error.response.data.message;
+                    console.error('Booking error:', error.response.data.errors);
+                    this.showToastMessage('Booking error:' + error.response.data.errors);
+                } else {
+                    this.errorMsg = 'An unexpected error occurred. Please try again.';
+                    console.error('There was an error processing the checkout:', error);
+                    this.showToastMessage('Error booking the tickets. Please try again.');
+                }
+            }
+        },
     }
 };
 </script>
@@ -195,6 +221,7 @@ export default {
                 </div>
 
                 <div class="text-right">
+                    <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
                     <a @click.prevent="proceedToCheckout"
                        :disabled="isCheckoutDisabled"
                        type="button"

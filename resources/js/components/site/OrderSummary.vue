@@ -115,14 +115,27 @@ export default {
                 }
             }, 1000);
         },
-        loadStartTime() {
-            const startTime = Cookies.get('start_time');
-            if (startTime) {
-                const now = moment();
-                const start = moment(startTime);
-                const diff = now.diff(start, 'seconds');
-                this.time = this.time - diff;
-            } else {
+        async loadStartTime() {
+            try {
+                const sessionId = Cookies.get('cart_session_id');
+                const response = await axios.post(`/bookings/start-time/${sessionId}`);
+                const startTime = response.data.start_time;
+
+                if (startTime) {
+                    const now = moment();
+                    const start = moment(startTime);
+                    const diff = now.diff(start, 'seconds');
+                    this.time = Math.max(this.time - diff, 0);
+
+                    if (this.time <= 0) {
+                        this.timeIsUp = true;
+                        this.clearCookies();
+                    }
+                } else {
+                    Cookies.set('start_time', moment().toISOString());
+                }
+            } catch (error) {
+                console.error('Error fetching booking start time:', error);
                 Cookies.set('start_time', moment().toISOString());
             }
         },
@@ -195,6 +208,8 @@ export default {
         },
         clearCookies() {
             Cookies.remove('cart_tickets');
+            Cookies.remove('cart_bookings');
+            Cookies.remove('cart_session_id');
             Cookies.remove('cart_total');
             Cookies.remove('start_time');
         },
