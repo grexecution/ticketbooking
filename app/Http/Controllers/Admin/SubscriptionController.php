@@ -101,17 +101,15 @@ class SubscriptionController extends Controller
         abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
         $subscription->load(['events']);
         $selectedEvents = $subscription->events->map(function (Event $event) {
-           return [
-               'id' => $event->id,
-               'name' => $event->name,
-               // ToDo need to replace after implementation event categories
-               'categories' => [
-                   ['id' => 1, 'name' => 'Category A',],
-                   ['id' => 2, 'name' => 'Category VIP',],
-               ],
-               'type' => $event->pivot->type,
-               'discount' => $event->pivot->discount,
-               'sum' => $event->pivot->sum,
+            $event->load('seatPlanCategories');
+            $event = $event->toArray();
+            return [
+               'id' => $event['id'],
+               'name' => $event['name'],
+               'categories' => $event['seat_plan_categories'],
+               'type' => $event['pivot']['type'],
+               'discount' => $event['pivot']['discount'],
+               'sum' => $event['pivot']['sum'],
            ];
         });
 
@@ -184,6 +182,8 @@ class SubscriptionController extends Controller
                 'sum' => $event['sum'],
             ]);
         }
+
+         // Todo handle $request->category_ids === event_seat_plan_categories.id
 
         return true;
     }

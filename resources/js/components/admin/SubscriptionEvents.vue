@@ -47,8 +47,9 @@
                             <td>
                                 <div class="categories">
                                     <button v-for="category in selectedEvent.categories" id="{{ category.id}}" type="button" class="btn btn-dark">
+                                        <input type="hidden" :name="'category_id[' + selectedEvent.id + '][]'" :value="category.id" />
                                         {{ category.name }}
-                                        <i class="fas fa-times"></i>
+                                        <i class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
                                     </button>
                                 </div>
                             </td>
@@ -183,6 +184,15 @@ export default {
             const index = this.selectedEvents.findIndex(event => event.id === eventId);
             if (index !== -1) {
                 this.selectedEvents.splice(index, 1);
+            }
+        },
+        deleteEventCategory(eventId, categoryId) {
+            const event = this.selectedEvents.find(event => event.id === eventId)
+            if (event) {
+                const index = event.categories.findIndex(category => category.id === categoryId)
+                if (index !== -1) {
+                    event.categories.splice(index, 1)
+                }
             }
         },
         deleteSelectedEvent(eventId) {

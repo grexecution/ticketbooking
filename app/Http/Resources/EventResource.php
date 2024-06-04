@@ -14,6 +14,8 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $this->loadSeatPlanWithCategories();
+
         return [
             'id' => $this->id,
             'name' => $this->name,
