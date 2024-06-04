@@ -42,10 +42,15 @@
 {{--                @each('partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')--}}
 
                 <ul class="nav nav-pills nav-sidebar flex-column " data-widget="treeview" role="menu">
-                    @can('dashboard_access')
-                        <li class="nav-item">
+                    <li class="nav-item">
                             <a class="nav-link {{ str_contains(request()->route()->getName(), 'dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                                 <p>Dashboard</p>
+                            </a>
+                        </li>
+                    @can('finance_access')
+                        <li class="nav-item">
+                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'finance') ? 'active' : '' }}" href="{{ route('finance') }}">
+                                <p>Finance</p>
                             </a>
                         </li>
                     @endcan
@@ -103,13 +108,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                    @endcan
-                    @can('finance_access')
-                        <li class="nav-item">
-                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'finance') ? 'active' : '' }}" href="{{ route('finance') }}">
-                                <p>Finance</p>
-                            </a>
                         </li>
                     @endcan
                     @can('setting_access')
