@@ -29,7 +29,7 @@
                     <div class="col-md-6 p-4 rounded-xl" style="background-color:#F1F5F8">
                         <div class="event-item">
                             {{--                        <img src="{{ asset('img/event_card_image_2.png') }}" alt="Event Image">--}}
-                            <a href="{{ route('site.event', $event->id) }}">
+                            <a href="{{ url('events/' . $event->slug) }}">
                                 <img class="img-fluid object-fit-cover mh-100" src="{{ $event->logo_event_url }}" alt="Event Image">
                             </a>
                             <div class="event-label"><i class="fas fa-star"></i></div>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <a href="{{ route('site.event', $event->id) }}">
+                                    <a href="{{ url('events/' . $event->slug) }}">
                                         <h5>{{ $event->name }}</h5>
                                     </a>
                                 </div>

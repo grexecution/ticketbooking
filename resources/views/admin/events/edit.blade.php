@@ -4,7 +4,7 @@
 @section('title_header', 'Events')
 
 @section('content')
-    <div class="container pt-3">
+    <div class="container py-3">
         @include('messages')
 
         <div class="container card px-4">
@@ -127,106 +127,6 @@
             <!-- Tab content -->
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
-                    <!-- Seats and Pricing Content -->
-{{--                    <div class="card seats-plan">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <!-- Seats and Pricing -->--}}
-{{--                            <div class="row mt-4">--}}
-{{--                                <!-- Pricing Blocks -->--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <img src="{{ asset('img/seat_A.png') }}" alt="Small Image" class="img-fluid">--}}
-{{--                                            <div class="pricing-info">--}}
-{{--                                                <div>Category A</div>--}}
-{{--                                                <div>€ 28,00</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <img src="{{ asset('img/seat_B.png') }}" alt="Small Image" class="img-fluid">--}}
-{{--                                            <div class="pricing-info">--}}
-{{--                                                <div>Category B</div>--}}
-{{--                                                <div>€ 38,00</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <img src="{{ asset('img/seat_C.png') }}" alt="Small Image" class="img-fluid">--}}
-{{--                                            <div class="pricing-info">--}}
-{{--                                                <div>Category C</div>--}}
-{{--                                                <div>€ 38,00</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-md-3">--}}
-{{--                                            <img src="{{ asset('img/seat_D.png') }}" alt="Small Image" class="img-fluid">--}}
-{{--                                            <div class="pricing-info">--}}
-{{--                                                <div>Category D</div>--}}
-{{--                                                <div>€ 8,00</div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <!-- Seat Layout -->--}}
-{{--                            <div class="row mt-4 mb-5">--}}
-{{--                                <div class="col">--}}
-{{--                                    <div class="text-center mb-2">STAGE</div>--}}
-{{--                                    <div class="seat-layout">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-1"></div>--}}
-{{--                                            @for($k = 0; $k < 10; $k++)--}}
-{{--                                                <div class="col seat-header">{{chr(65 + $k)}}</div>--}}
-{{--                                            @endfor--}}
-{{--                                        </div>--}}
-{{--                                        @for($i = 0; $i < 10; $i++)--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="col-1">{{$i + 1}}</div>--}}
-{{--                                                @for($j = 0; $j < 10; $j++)--}}
-{{--                                                    <div class="col seat">--}}
-{{--                                                        <img src="{{ asset('img/seat_A.png') }}" alt="Specific Seat" class="img-fluid m-1" onclick="openPopup('Row {{ $i + 1 }} - Seat {{ chr(65 + $j) }}', '€ 39,90')">--}}
-{{--                                                    </div>--}}
-{{--                                                @endfor--}}
-{{--                                            </div>--}}
-{{--                                        @endfor--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-                    <div id="printContent"  class="flex flex-col h-screen w-100">
-                        <div class="flex flex-row h-full">
-                            <div class="w-48 bg-gray-100 hidden md:block border-r border-r-gray-300 shadow-lg">
-                                <div class="flex flex-col gap-3 p-1.5 text-xs">
-                                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
-                                            id="zoomout-button">
-                                        <i class="fa-solid fa-magnifying-glass-minus mr-2"></i>
-                                        All Blocks
-                                    </button>
-                                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1 px-3 rounded-md hover:bg-slate-200"
-                                            id="get-selected-seats">
-                                        <i class="fa-solid fa-code mr-2"></i>
-                                        Get Json
-                                    </button>
-                                    <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200 zoom-to-block"
-                                            data-block-id="block-1">
-                                        <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
-                                        Zoom Block 2
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="seats_container" class="w-full flex-1 h-full"></div>
-
-                            <div class="flex flex-col w-52 flex-0 border-l">
-                                <div class="text-center w-full text-sm p-2 bg-gray-100 border-b">Selected Seats</div>
-                                <table class="table-auto text-sm">
-                                    <tbody id="selected-seats">
-
-                                    </tbody>
-                                </table>
-                                <button id="checkout" class="btn btn-primary">Checkout</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="tab-pane fade bg-white rounded" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
@@ -239,8 +139,7 @@
                                     <input type="text" id="searchInput" class="form-control" placeholder="Search...">
                                 </div>
                                 <div class="col">
-                                    <button id="sortAsc" class="btn btn-primary">Sort Date Ascending</button>
-                                    <button id="sortDesc" class="btn btn-primary">Sort Date Descending</button>
+
                                 </div>
                             </div>
                             <!-- Event Table -->
@@ -251,7 +150,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Customer</th>
-                                            <th>Places</th>
+                                            <th>Seats</th>
                                             <th>Date</th>
                                             <th>Total</th>
                                             <th>Status</th>
@@ -259,14 +158,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($event->orders as $order)
+                                        @foreach($event->orders->sortByDesc('created_at') as $order)
                                             <tr class="">
                                                 <td>
                                                     <span>#{{ $order->id }}</span>
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        {{ $order->first_name }} {{ $order->last_name }}
+                                                        <div>
+                                                            {{ $order->first_name }} {{ $order->last_name }}
+                                                        </div>
+                                                        {{ $order->email }}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -1140,53 +1042,6 @@
                 $("#bookings tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
-            });
-
-            // Sort functionality
-            var table, rows, switching, i, x, y, shouldSwitch;
-            table = document.getElementById("bookings");
-            rows = table.rows;
-
-            // Sort ascending
-            $("#sortAsc").on("click", function() {
-                switching = true;
-                while (switching) {
-                    switching = false;
-                    for (i = 1; i < (rows.length - 1); i++) {
-                        shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[3]; // Assuming the date is in the 4th column
-                        y = rows[i + 1].getElementsByTagName("TD")[3];
-                        if (new Date(x.innerHTML) > new Date(y.innerHTML)) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                    if (shouldSwitch) {
-                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                        switching = true;
-                    }
-                }
-            });
-
-            // Sort descending
-            $("#sortDesc").on("click", function() {
-                switching = true;
-                while (switching) {
-                    switching = false;
-                    for (i = 1; i < (rows.length - 1); i++) {
-                        shouldSwitch = false;
-                        x = rows[i].getElementsByTagName("TD")[3]; // Assuming the date is in the 4th column
-                        y = rows[i + 1].getElementsByTagName("TD")[3];
-                        if (new Date(x.innerHTML) < new Date(y.innerHTML)) {
-                            shouldSwitch = true;
-                            break;
-                        }
-                    }
-                    if (shouldSwitch) {
-                        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-                        switching = true;
-                    }
-                }
             });
         });
     </script>
