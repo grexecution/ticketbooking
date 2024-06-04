@@ -68,6 +68,7 @@ export default {
         return {
             tickets: [],
             total: '0,00',
+            event: '',
             eventName: '',
             eventDate: '',
             eventTime: '',
@@ -175,11 +176,15 @@ export default {
         loadTicketData() {
             const tickets = Cookies.get('cart_tickets');
             const total = Cookies.get('cart_total');
+            const event = Cookies.get('cart_event');
             if (tickets) {
                 this.tickets = JSON.parse(tickets);
             }
             if (total) {
                 this.total = total;
+            }
+            if (event) {
+                this.event = event;
             }
         },
         loadStripeScript() {

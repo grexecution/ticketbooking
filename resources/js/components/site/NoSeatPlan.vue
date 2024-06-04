@@ -143,7 +143,7 @@ export default {
 
             Cookies.set('cart_tickets', JSON.stringify(tickets));
             Cookies.set('cart_total', total);
-
+            Cookies.set('cart_event', this.eventId);
             this.bookTickets(tickets)
         },
         async bookTickets(tickets) {

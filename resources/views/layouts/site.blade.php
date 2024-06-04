@@ -49,7 +49,11 @@
                         </div>
                     </div>
                 </li>
-            </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="/checkout">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
