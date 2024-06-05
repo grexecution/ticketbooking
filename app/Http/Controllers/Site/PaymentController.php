@@ -34,7 +34,7 @@ class PaymentController extends Controller
         if (! $accountId) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Invalid event',
+                'message' => 'Invalid stripe_account_id',
             ], 500);
         }
 
@@ -146,7 +146,10 @@ class PaymentController extends Controller
         $order = Order::query()->find($orderId)->first();
 
         if ($order) {
-            $order->update(['order_status' => $paymentIntent->status]);
+            $order->update([
+                'order_status' => $paymentIntent->status,
+                'is_paid' => true,
+            ]);
         }
 
         info('Payment intent succeeded for order: ' . ($order ? $order->id : 'Order not found'));
@@ -158,7 +161,10 @@ class PaymentController extends Controller
         $order = Order::query()->find($orderId)->first();
 
         if ($order) {
-            $order->update(['order_status' => $paymentIntent->status]);
+            $order->update([
+                'order_status' => $paymentIntent->status,
+                'is_paid' => false,
+            ]);
         }
 
         info('Payment intent failed for order: ' . ($order ? $order->id : 'Order not found'));
