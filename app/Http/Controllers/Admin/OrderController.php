@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -47,60 +46,18 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function showInvoice(string $orderId)
+    public function showInvoice(string $orderId) : View
     {
         $order = Order::query()->with(['tickets'])->findOrFail($orderId);
-
-//        $html = view('admin.orders.invoice', compact('order'))->render();
-
-//        $dompdf = new Dompdf();
-//        $dompdf->loadHtml($html);
-//        $customPaper = [0,0,675,800];
-//        $dompdf->setPaper($customPaper, 'portrait');
-//        $dompdf->render();
-//
-//        $output = $dompdf->output();
-//
-//        $headers = [
-//            'Content-Type' => 'application/pdf',
-//            'Content-Length' => strlen($output),
-//            'Cache-Control' => 'private, max-age=0, must-revalidate',
-//            'Pragma' => 'public',
-//            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
-//            'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
-//        ];
-//
-//        return response($output, 200, $headers);
 
         return view('admin.orders.invoice', compact('order'));
     }
 
-    public function showTickets(string $orderId)
+    public function showTickets(string $orderId) : View
     {
-        $data = [
-            'orderId' => $orderId,
-        ];
+        $order = Order::query()->with(['tickets', 'event.venue'])->findOrFail($orderId);
 
-        $html = view('admin.orders.ticket', $data)->render();
-
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $customPaper = [0,0,675,800];
-        $dompdf->setPaper($customPaper, 'portrait');
-        $dompdf->render();
-
-        $output = $dompdf->output();
-
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Length' => strlen($output),
-            'Cache-Control' => 'private, max-age=0, must-revalidate',
-            'Pragma' => 'public',
-            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
-            'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
-        ];
-
-        return response($output, 200, $headers);
+        return  view('admin.orders.tickets', compact('order'));
     }
 
     /**

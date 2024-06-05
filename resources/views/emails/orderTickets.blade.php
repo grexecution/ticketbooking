@@ -307,58 +307,59 @@
         <div class="logo">
             <img style="width: 80px" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
         </div>
-        <div class="ticket-card">
-
-            <div class="ticket-header">
-                <h1>Flo & Wisch</h1>
-                <h4>Humorwürmer</h4>
-            </div>
-            <div class="ticket-qr-section">
-                <div class="redeem-stamp">
-
+        @foreach($order->tickets as $ticket)
+            <div class="ticket-card">
+                <div class="ticket-header">
+                    <h1>{{ $order->event->name }}</h1>
+                    {{--                <h4>Humorwürmer</h4>--}}
                 </div>
-                <div class="ticket-qr" style="display: flex; flex-direction: column">
-                    <img src="https://cdn.britannica.com/17/155017-050-9AC96FC8/Example-QR-code.jpg"/>
-                    <div class="info-row">
-                        <div class="info-data">Category A | Row: 9, Seat: 34</div>
+                <div class="ticket-qr-section">
+                    <div class="redeem-stamp">
+
                     </div>
-                </div>
-            </div>
-            <div id="stub" class="ticket-body-section">
-                <div class="info-section">
-                    <div class="info-row">
-                        <div class="info-label">Name</div>
-                        <div class="info-data">Gregor Wallner</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Venue</div>
-                        <div class="info-data">Orpheum Wien - Burggasse 83a/17, 1070 Wien</div>
-                    </div>
-                    <div style="display: flex; gap: 20px">
+                    <div class="ticket-qr" style="display: flex; flex-direction: column">
+                        <img src="{{ $ticket->qr_url }}"/>
                         <div class="info-row">
-                            <div class="info-label">Entrance:</div>
-                            <div class="info-data">18:30</div>
-                        </div>
-                        <div class="info-row">
-                            <div class="info-label">Start:</div>
-                            <div class="info-data">19:00</div>
+                            <div class="info-data">{{ $ticket->name }} | {{ $ticket->row ? "Row: {$ticket->row}," : '' }} {{ $ticket->seat ? "Seat: {$ticket->seat}," : '' }}</div>
                         </div>
                     </div>
-                    <div class="info-row">
-                        <div class="info-label">Ticket price</div>
-                        <div class="info-data">€ 29,00</div>
+                </div>
+                <div id="stub" class="ticket-body-section">
+                    <div class="info-section">
+                        <div class="info-row">
+                            <div class="info-label">Name</div>
+                            <div class="info-data">{{ $order->first_name }} {{ $order->last_name }}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Venue</div>
+                            <div class="info-data">{{ $order->event->venue->name }} - {{ $order->event->venue->address }}, {{ $order->event->venue->zipcode }}, {{ $order->event->venue->city }}, {{ $order->event->venue->country }}</div>
+                        </div>
+                        <div style="display: flex; gap: 20px">
+                            <div class="info-row">
+                                <div class="info-label">Entrance:</div>
+                                <div class="info-data">{{ \Carbon\Carbon::parse($order->event->doors_open_time)->format('g:i a') }}</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Start:</div>
+                                <div class="info-data">{{ \Carbon\Carbon::parse($order->event->start_time)->format('g:i a') }}</div>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Ticket price</div>
+                            <div class="info-data">{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->price) }}</div>
+                        </div>
                     </div>
                 </div>
+                <p class="ticket-code">#{{ $ticket->id }}</p>
+                <div class="logo-box">
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                </div>
             </div>
-            <p class="ticket-code">#39989523080</p>
-            <div class="logo-box">
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>

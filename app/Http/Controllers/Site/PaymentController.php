@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderInvoice;
+use App\Mail\OrderTickets;
 use App\Models\Event;
 use App\Models\Order;
 use App\Models\StripeCallback;
@@ -149,7 +150,7 @@ class PaymentController extends Controller
     protected function handlePaymentIntentSucceeded($paymentIntent) : void
     {
         $orderId = $paymentIntent->metadata?->order_id;
-        $order = Order::query()->find($orderId)->first();
+        $order = Order::query()->with(['tickets', 'event.venue'])->find($orderId)->first();
 
         if ($order) {
             $order->update([
@@ -171,6 +172,7 @@ class PaymentController extends Controller
                     $ticket->update(['qr_data' => $qrData]);
                     $tmpFileName = $QRCodeService->createQR($qrData);
                     Mail::to($order->email)->send(new OrderInvoice($order));
+                    Mail::to($order->email)->send(new OrderTickets($order));
                     MediaHelper::handleMedia($t, 'qr', $tmpFileName);
                     info("QR created: {$t->qr_url}");
                 }
