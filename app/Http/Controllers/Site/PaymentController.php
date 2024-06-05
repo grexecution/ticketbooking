@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderInvoice;
 use App\Models\Event;
 use App\Models\Order;
 use App\Models\StripeCallback;
@@ -13,6 +14,7 @@ use App\Services\QRCodeService;
 use App\Services\StripeConnectApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use function Laravel\Prompts\error;
 
@@ -168,6 +170,7 @@ class PaymentController extends Controller
                     ]); // Example of data: 6_6_14
                     $ticket->update(['qr_data' => $qrData]);
                     $tmpFileName = $QRCodeService->createQR($qrData);
+                    Mail::to($order->email)->send(new OrderInvoice($order));
                     MediaHelper::handleMedia($t, 'qr', $tmpFileName);
                     info("QR created: {$t->qr_url}");
                 }

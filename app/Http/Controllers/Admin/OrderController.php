@@ -49,30 +49,30 @@ class OrderController extends Controller
      */
     public function showInvoice(string $orderId)
     {
-        $data = [
-            'orderId' => $orderId,
-        ];
+        $order = Order::query()->with(['tickets'])->findOrFail($orderId);
 
-        $html = view('admin.orders.invoice', $data)->render();
+//        $html = view('admin.orders.invoice', compact('order'))->render();
 
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $customPaper = [0,0,675,800];
-        $dompdf->setPaper($customPaper, 'portrait');
-        $dompdf->render();
+//        $dompdf = new Dompdf();
+//        $dompdf->loadHtml($html);
+//        $customPaper = [0,0,675,800];
+//        $dompdf->setPaper($customPaper, 'portrait');
+//        $dompdf->render();
+//
+//        $output = $dompdf->output();
+//
+//        $headers = [
+//            'Content-Type' => 'application/pdf',
+//            'Content-Length' => strlen($output),
+//            'Cache-Control' => 'private, max-age=0, must-revalidate',
+//            'Pragma' => 'public',
+//            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+//            'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
+//        ];
+//
+//        return response($output, 200, $headers);
 
-        $output = $dompdf->output();
-
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Length' => strlen($output),
-            'Cache-Control' => 'private, max-age=0, must-revalidate',
-            'Pragma' => 'public',
-            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
-            'Last-Modified' => gmdate('D, d M Y H:i:s') . ' GMT',
-        ];
-
-        return response($output, 200, $headers);
+        return view('admin.orders.invoice', compact('order'));
     }
 
     public function showTickets(string $orderId)
