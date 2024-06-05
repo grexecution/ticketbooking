@@ -144,7 +144,7 @@ class PaymentController extends Controller
         }
     }
 
-    protected function handlePaymentIntentSucceeded($paymentIntent, QRCodeService $QRCodeService) : void
+    protected function handlePaymentIntentSucceeded($paymentIntent) : void
     {
         $orderId = $paymentIntent->metadata?->order_id;
         $order = Order::query()->find($orderId)->first();
@@ -156,6 +156,7 @@ class PaymentController extends Controller
             ]);
         }
 
+        $QRCodeService = app(QRCodeService::class);
         foreach ($order->tickets as $ticket) {
             try {
                 /** @var Ticket $ticket */

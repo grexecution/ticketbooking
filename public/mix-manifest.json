@@ -9,6 +9,7 @@
     "/img/cc-icon.png": "/img/cc-icon.png",
     "/img/checkin.png": "/img/checkin.png",
     "/img/course-default.png": "/img/course-default.png",
+    "/img/dashboard-event.jpg": "/img/dashboard-event.jpg",
     "/img/dashboard_image.png": "/img/dashboard_image.png",
     "/img/default_stage.jpg": "/img/default_stage.jpg",
     "/img/dergreg-logo_navbar.png": "/img/dergreg-logo_navbar.png",
@@ -21,7 +22,7 @@
     "/img/poh-screenshot.png": "/img/poh-screenshot.png",
     "/img/preview-default.png": "/img/preview-default.png",
     "/img/profile.png": "/img/profile.png",
-    "/img/qrcode_S-1-14.png": "/img/qrcode_S-1-14.png",
+    "/img/qrcode_6_6_14.png": "/img/qrcode_6_6_14.png",
     "/img/sales.png": "/img/sales.png",
     "/img/seat_A.png": "/img/seat_A.png",
     "/img/seat_B.png": "/img/seat_B.png",
@@ -29,6 +30,5 @@
     "/img/seat_D.png": "/img/seat_D.png",
     "/img/thegreg_emoji_dev.png": "/img/thegreg_emoji_dev.png",
     "/img/thegreg_logo.svg": "/img/thegreg_logo.svg",
-    "/img/ticket-check.png": "/img/ticket-check.png",
-    "/img/dashboard-event.jpg": "/img/dashboard-event.jpg"
+    "/img/ticket-check.png": "/img/ticket-check.png"
 }
