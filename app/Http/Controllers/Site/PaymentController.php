@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Order;
 use App\Models\StripeCallback;
+use App\Models\Ticket;
 use App\Services\OrderService;
+use App\Services\QRCodeService;
 use App\Services\StripeConnectApi;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use function Laravel\Prompts\error;
 
 class PaymentController extends Controller
 {
@@ -140,7 +144,7 @@ class PaymentController extends Controller
         }
     }
 
-    protected function handlePaymentIntentSucceeded($paymentIntent) : void
+    protected function handlePaymentIntentSucceeded($paymentIntent, QRCodeService $QRCodeService) : void
     {
         $orderId = $paymentIntent->metadata?->order_id;
         $order = Order::query()->find($orderId)->first();
@@ -150,6 +154,26 @@ class PaymentController extends Controller
                 'order_status' => $paymentIntent->status,
                 'is_paid' => true,
             ]);
+        }
+
+        foreach ($order->tickets as $ticket) {
+            try {
+                /** @var Ticket $ticket */
+                foreach ($order->tickets as $t) {
+                    $qrData = implode('_', [
+                        $order->id,
+                        $order->event->id,
+                        $t->id,
+                    ]); // Example of data: 6_6_14
+                    $ticket->update(['qr_data' => $qrData]);
+                    $tmpFileName = $QRCodeService->createQR($qrData);
+                    MediaHelper::handleMedia($t, 'qr', $tmpFileName);
+                    info("QR created: {$t->qr_url}");
+                }
+
+            } catch (\Exception $e) {
+                \Log::error("Error create a QR to ticket#{$ticket->id}: " . $e->getMessage());
+            }
         }
 
         info('Payment intent succeeded for order: ' . ($order ? $order->id : 'Order not found'));

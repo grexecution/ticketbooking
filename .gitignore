@@ -6,6 +6,7 @@
 /public/storage/tmp/*
 /public/css
 /public/js
+/public/img
 storage/tmp
 /storage/*.key
 /vendor
