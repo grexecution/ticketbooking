@@ -30,4 +30,4 @@ _ide_helper_models.php
 changelog.txt
 /public/mix-manifest.json
 /storage/debugbar/*
-db/
+public/mix-manifest.json
