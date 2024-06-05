@@ -64,7 +64,6 @@ img, video {
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
     background-color: #979797;
     color: #fff;
-    font-size: 20px!important;
 }
 
 .nav-link {
