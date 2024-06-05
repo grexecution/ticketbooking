@@ -44,8 +44,8 @@ class BookingController extends Controller
                     }
                 }
             ],
-            'tickets.*.seat' => 'nullable|string',
-            'tickets.*.row' => 'nullable|string',
+            'tickets.*.seat' => 'sometimes|nullable|int',
+            'tickets.*.row' => 'sometimes|nullable|int',
         ]);
 
         $sessionId = Session::getId();

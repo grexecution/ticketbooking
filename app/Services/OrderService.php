@@ -51,6 +51,8 @@ class OrderService
                     'name' => $ticket['name'],
                     'discount' => null,
                     'price' => $ticket['price'],
+                    'row' => $ticket['row'] ?? null,
+                    'seat' => $ticket['seat'] ?? null,
                     'total' => $ticket['total'],
                 ]);
             }

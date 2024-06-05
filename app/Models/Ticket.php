@@ -19,6 +19,8 @@ class Ticket extends Model
         'category_name',
         'discount',
         'price',
+        'row',
+        'seat',
         'total',
         'is_refunded',
         'is_paid',

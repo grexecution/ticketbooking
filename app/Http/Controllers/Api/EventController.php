@@ -13,7 +13,7 @@ class EventController extends Controller
 {
     public function show(Request $request, int $id): JsonResponse
     {
-        $event = Event::query()->with(['discounts', 'venue'])->findOrFail($id);
+        $event = Event::query()->with(['discounts', 'venue', 'bookings', 'orders'])->findOrFail($id);
         $event->loadSeatPlanWithCategories();
 
         return response()->json($event);

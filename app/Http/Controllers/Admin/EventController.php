@@ -225,6 +225,9 @@ class EventController extends Controller
                 'name' => $category->name,
                 'price' => $category->price,
                 'places' => $category->places,
+                'rows' => $category->rows,
+                'seats' => $category->seats,
+                'aisles_after' => $category->aisles_after,
                 'description' => $category->description,
             ]);
         });

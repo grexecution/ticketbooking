@@ -64,8 +64,10 @@
     <div class="main-bg py-6">
         <div class="row py-6 mb-5 container m-auto">
             <div class="container card py-6">
-                <!-- <seat-map></seat-map> -->
-                <seat-plan :event-id="{{ $event->id }}"></seat-plan>
+                <seat-plan
+                    event-id="{{ $event->id }}"
+                ></seat-plan>
+{{--                <seat-plan :event-id="{{ $event->id }}"></seat-plan>--}}
             </div>
         </div>
     </div>

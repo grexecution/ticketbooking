@@ -18,6 +18,9 @@ class EventSeatPlanCategory extends Model
         'name',
         'price',
         'places',
+        'rows',
+        'seats',
+        'aisles_after',
         'description',
     ];
 

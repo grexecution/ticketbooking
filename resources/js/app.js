@@ -17,6 +17,6 @@ adminApp.mount('#app')
 const siteApp = createApp({});
 siteApp.component('no-seat-plan', NoSeatPlan);
 siteApp.component('order-summary', OrderSummary);
-siteApp.component('seat-map', SeatMap);
+// siteApp.component('seat-map', SeatMap);
 siteApp.component('seat-plan', SeatPlanSite);
 siteApp.mount('#site-app');
