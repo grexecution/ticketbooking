@@ -150,7 +150,7 @@ class PaymentController extends Controller
     protected function handlePaymentIntentSucceeded($paymentIntent) : void
     {
         $orderId = $paymentIntent->metadata?->order_id;
-        $order = Order::query()->with(['tickets', 'event.venue'])->find($orderId)->first();
+        $order = Order::query()->with(['tickets', 'event.venue'])->find($orderId);
 
         if ($order) {
             $order->update([
