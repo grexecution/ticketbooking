@@ -40,7 +40,7 @@ class OrderTickets extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.OrderTickets',
+            view: 'emails.orderTickets',
             with: [
                 'order' => $this->order,
             ]
