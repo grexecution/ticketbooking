@@ -107,6 +107,9 @@
                                         <tr>
                                             <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
                                                 <small>ORDER</small> #{{ $order->id }}<br />
+                                                @if(! in_array($order->order_status, ['new', 'succeeded']))
+                                                    <small style="color: red;">Status: Cancelled</small><br />
+                                                @endif
                                                 <small>{{ \Carbon\Carbon::parse($order->order_date)->format('F jS Y') }}</small>
                                             </td>
                                         </tr>
