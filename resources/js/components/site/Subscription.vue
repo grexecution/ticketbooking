@@ -26,7 +26,7 @@ export default {
                 const response = await axios.get(`/api/subscriptions/${subscriptionId}`);
                 this.subscription = response.data;
                 console.log('response.data', response.data);
-                this.processEvents(response.data.events)
+                this.processEvents(response.data.eventsLive)
             } catch (error) {
                 console.error("Error fetching subscription data:", error);
                 this.errorMsg = "Error fetching subscription data";

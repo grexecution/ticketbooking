@@ -22,8 +22,8 @@ class SubscriptionController extends Controller
             $event->loadSeatPlanWithCategoriesForSubscriptions();
         });
 
-        $subscription->events = $events;
-        
+        $subscription->eventsLive = $events;
+
         return response()->json($subscription);
     }
 }
