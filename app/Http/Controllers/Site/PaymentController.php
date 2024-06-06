@@ -9,6 +9,7 @@ use App\Mail\OrderTickets;
 use App\Models\Event;
 use App\Models\Order;
 use App\Models\StripeCallback;
+use App\Models\Subscription;
 use App\Models\Ticket;
 use App\Services\OrderService;
 use App\Services\QRCodeService;
@@ -17,7 +18,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use function Laravel\Prompts\error;
 
 class PaymentController extends Controller
 {
@@ -37,6 +37,7 @@ class PaymentController extends Controller
         ]);
 
         $eventId = $request->input('event_id') ?: $ticketsData['tickets'][0]['event_id']; // $ticketsData['tickets'][0]['event_id'] for subscriptions
+        $subscriptionId = $ticketsData['tickets'][0]['subscription_id'] ?? null;
         $event = Event::findOrFail($eventId);
         $accountId = $event->user?->tenant?->stripe_account_id;
         if (! $accountId) {
@@ -98,6 +99,10 @@ class PaymentController extends Controller
             ]);
 
             Session::forget('customer_data');
+
+            if ($subscriptionId) {
+                Subscription::find($subscriptionId)->increment('used', 1);
+            }
 
             return response()->json([
                 'status' => 'success',

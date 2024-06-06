@@ -24,6 +24,8 @@ class Subscription extends Model implements HasMedia
         'price',
         'short_desc',
         'description',
+        'max_usage',
+        'used',
     ];
 
     protected $appends = [

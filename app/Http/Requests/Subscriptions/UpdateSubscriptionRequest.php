@@ -11,6 +11,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string short_desc
  * @property string description
  * @property float  price
+ * @property int max_usage
  * @property string logo
  * @property string logo_origin_names
  * @property string logo_sizes
@@ -43,6 +44,7 @@ class UpdateSubscriptionRequest extends FormRequest
             'short_desc' => 'sometimes|nullable|string|max:256',
             'description' => 'sometimes|nullable|string|max:4096',
             'price' => 'required|numeric|min:0',
+            'max_usage' => 'required|int|min:0',
             'logo' => 'sometimes|nullable|string',
             'logo_origin_names' => 'sometimes|nullable|array',
             'logo_sizes' => 'sometimes|nullable|array',

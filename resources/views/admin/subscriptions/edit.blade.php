@@ -16,7 +16,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
                             <label for="name">Subscription Name</label>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter Subscription Name" value="{{ old('name', $subscription->name) }}">
                             @error('name')
@@ -31,7 +31,14 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-2">
+                            <label for="max_usage">Maximum usage</label>
+                            <input type="number" class="form-control" name="max_usage" id="max_usage" min="0" placeholder="0 = no limit" value="{{ old('max_usage', $subscription->max_usage) }}">
+                            @error('max_usage')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-2">
                             <label for="price">Subscription Price</label>
                             <span class="float-right text-muted">Gross</span>
                             <input type="number" min="0" step="0.1" class="form-control" name="price" id="price" placeholder="Enter Subscription Price" value="{{ old('price', $subscription->price) }}">

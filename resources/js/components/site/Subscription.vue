@@ -38,6 +38,7 @@ export default {
                     return {
                         id: category.id,
                         event_id: event.id,
+                        subscription_id: this.subscriptionId,
                         categoryName: category.name,
                         price: category.price,
                         total: this.formatPrice(category.price),
@@ -68,7 +69,11 @@ export default {
         proceedToCheckout() {
             this.errorMsg = null;
             if (this.isCheckoutDisabled) {
-                this.showToastMessage();
+                this.showToastMessage('Please select tickets to continue');
+                return;
+            }
+            if (this.subscription.used >= this.subscription.max_usage) {
+                this.errorMsg = 'The number of subscriptions issued reached a maximum';
                 return;
             }
 
@@ -122,9 +127,9 @@ export default {
         formatTime(time) {
             return time ? new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : '';
         },
-        showToastMessage() {
+        showToastMessage(message) {
             if (this.isCheckoutDisabled) {
-                alert('Please select tickets to continue');
+                alert(message);
             }
         },
         formatPrice(price) {
