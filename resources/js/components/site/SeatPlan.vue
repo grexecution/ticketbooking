@@ -146,6 +146,7 @@ export default {
         filterTickets() {
             return this.cart.flatMap(category => {
                 return {
+                    event_id: this.event.id,
                     count: 1,
                     name: 'Regular',
                     price: category.price,

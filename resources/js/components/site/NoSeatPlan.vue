@@ -100,6 +100,7 @@ export default {
         filterTickets() {
             return this.categories.flatMap(category => {
                 const regularTicket = {
+                    event_id: this.event.id,
                     count: category.regularPrice.count,
                     name: category.regularPrice.name,
                     price: category.regularPrice.price,
@@ -115,6 +116,7 @@ export default {
                 const discountTickets = category.discountPrices
                     .filter(() => category.showMore)
                     .map(discountPrice => ({
+                        event_id: this.event.id,
                         count: discountPrice.count,
                         name: discountPrice.name,
                         price: discountPrice.price,
