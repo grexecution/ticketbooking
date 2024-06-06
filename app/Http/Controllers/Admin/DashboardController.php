@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User\User;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Event;
@@ -27,23 +28,17 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $tenant = $user->tenant; // Assuming the user has a tenant relationship
 
-        // Calculate the total number of orders for the tenant
-        $totalOrders = Order::count();
-        if ($tenant) {
-            foreach ($tenant->events as $event) {
-                $totalOrders += $event->orders->count();
-            }
+        $totalOrders = 0;
+        if ($user->tenant) {
+            $userIds = User::query()->where('tenant_id', $user->tenant->id)->pluck('id')->toArray();
+            $totalOrders = Order::succeeded()->whereIn('user_id', $userIds)->count();
         }
 
-        // Calculate the total number of events
         $totalEvents = Event::count();
-
-        // Calculate the total sum of "total" from orders
-        $totalSum = Order::sum('total');
-
+        $totalSum = Order::succeeded()->sum('total');
         $orders = Order::all();
-        return view('admin.dashboard', ['totalOrders' => $totalOrders, 'totalEvents' => $totalEvents, 'totalSum' => $totalSum, 'orders' => $orders]);
+
+        return view('admin.dashboard', compact('totalEvents', 'totalSum', 'totalOrders', 'orders'));
     }
 }

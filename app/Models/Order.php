@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin IdeHelperOrder
+ */
 class Order extends Model
 {
     protected $table = 'orders';
@@ -34,6 +37,11 @@ class Order extends Model
         'vat',
         'total',
     ];
+
+    public function scopeSucceeded($query)
+    {
+        return $query->where('order_status', 'succeeded');
+    }
 
     public function user(): BelongsTo
     {

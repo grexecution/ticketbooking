@@ -5,6 +5,9 @@ namespace App\Models\SeatPlan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin IdeHelperSeatPlan
+ */
 class SeatPlan extends Model
 {
     protected $table = 'seat_plans';

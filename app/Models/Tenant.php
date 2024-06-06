@@ -90,14 +90,4 @@ class Tenant extends Model implements HasMedia
     {
         return $this->hasMany(User::class);
     }
-
-    public function venues()
-    {
-        return collect();
-    }
-
-    public function events()
-    {
-        return collect();
-    }
 }

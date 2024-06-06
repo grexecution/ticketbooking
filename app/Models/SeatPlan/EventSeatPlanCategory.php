@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin IdeHelperEventSeatPlanCategory
+ */
 class EventSeatPlanCategory extends Model
 {
     protected $table = 'event_seat_plan_categories';

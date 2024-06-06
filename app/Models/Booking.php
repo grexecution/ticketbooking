@@ -6,6 +6,9 @@ use App\Models\SeatPlan\EventSeatPlanCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @mixin IdeHelperBooking
+ */
 class Booking extends Model
 {
     protected $fillable = [
