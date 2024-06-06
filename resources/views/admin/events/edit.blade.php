@@ -352,6 +352,9 @@
                                             <div class="col-md-8">
                                                 <label for="logo">Short Description</label>
                                                 <textarea name="short_desc" class="form-control" rows="5" placeholder="Enter Short Description" {{ $isEnded ? 'disabled' : '' }}>{{ old('short_desc', $event->short_desc) }}</textarea>
+                                                @error('short_desc')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label for="logo">Event Picture</label>
