@@ -6,9 +6,9 @@
     <!-- Step 3: Confirmation -->
     <div class="container mt-5">
         <div class="step-indicator">
-            <div class="active">1. Information</div>
-            <div class="active">2. Payment</div>
-            <div class="active">3. Confirmation</div>
+            <div class="d-flex justify-content-center align-items-center active">1. Information</div>
+            <div class="d-flex justify-content-center align-items-center active">2. Payment</div>
+            <div class="d-flex justify-content-center align-items-center active">3. Confirmation</div>
         </div>
 
         <div class="confirmation">

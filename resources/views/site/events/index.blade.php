@@ -22,9 +22,9 @@
 {{--            @endforeach--}}
 {{--        </ul>--}}
 
-    <div class="container my-5">
+    <div class="container mt-5">
         <div class="">
-            <div class="d-flex flex-row mb-4 gap-6">
+            <div class="d-flex flex-col flex-md-row mb-4 gap-6">
                 @foreach($events as $event)
                     <div class="col-md-6 p-4 rounded-xl" style="background-color:#F1F5F8">
                         <div class="event-item">
