@@ -5,10 +5,12 @@
 
 @section('content')
     <div class="container pt-3">
+        <div class="container card py-3">
+            <h1>Coming Soon</h1>
+        </div>
         @include('messages')
-        <div class="row">
+       <!-- <div class="row">
             <div class="col-lg-3 col-6">
-
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{ $totalOrders }}</h3>
@@ -20,7 +22,6 @@
                     <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
             <div class="col-lg-3 col-6">
 
                 <div class="small-box bg-success">
@@ -66,11 +67,9 @@
         </div>
         <div class="card seats-plan">
             <div class="card-body">
-                <!-- Search and Sort -->
                     <h3 class="card-title">
                         Newest Orders
                     </h3>
-                <!-- Event Table -->
                 <div class="row mt-5">
                     <div class="col">
                         <table class="table table-full-width">
@@ -131,7 +130,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 @stop
 

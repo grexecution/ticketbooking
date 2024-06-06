@@ -7,12 +7,12 @@
 <div class="py-5" style="background-color: #F1F5F8">
     <div class="container">
         <div class="step-indicator">
-            <div class="active">1. Information</div>
-            <div>2. Payment</div>
-            <div>3. Confirmation</div>
+            <div class="d-flex justify-content-center align-items-center active">1. Information</div>
+            <div class="d-flex justify-content-center align-items-center">2. Payment</div>
+            <div class="d-flex justify-content-center align-items-center">3. Confirmation</div>
         </div>
 
-        <div class="container card d-flex flex-row justify-content-between p-4">
+        <div class="container card d-flex flex-col flex-md-row justify-content-between px-2 px-md-4 py-4 py-md-4">
             <div class="col-md-6">
                 <h4 class="checkout-subtitle">Ticket type</h4>
                 <div class="form-check d-flex flex-row align-items-center mt-3">

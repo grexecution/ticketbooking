@@ -210,41 +210,59 @@ export default {
 <template>
     <div class="seatmap">
         <div v-for="(category, categoryIndex) in seatCategories" :key="categoryIndex" class="category">
-            <div class="category-name">{{ category.name }}</div>
-            <div v-for="(row, rowIndex) in category.rows" :key="rowIndex" class="row">
-                <div v-for="(seat, seatIndex) in row"
-                     @click="!seat.aisle && !seat.booked && selectSeat(categoryIndex, rowIndex, seatIndex)"
-                     :key="seatIndex" class="seat"
-                     :class="{
+            <div class="category-name px-3 py-2 mb-2" style="background-color: #ffc107; color: black; font-size:18px;font-weight:600; border-radius: 10px">{{ category.name }}</div>
+            <div class="category-seats px-3">
+                <div v-for="(row, rowIndex) in category.rows" :key="rowIndex" class="row seat-overflow">
+                    <div v-for="(seat, seatIndex) in row"
+                         @click="!seat.aisle && !seat.booked && selectSeat(categoryIndex, rowIndex, seatIndex)"
+                         :key="seatIndex" class="seat"
+                         :class="{
                          aisle: seat.aisle,
                          selected: seat.selected,
                          booked: seat.booked
                      }"
-                >
-                    <span v-if="seat.selected">✓</span>
-                    <span v-else-if="!seat.aisle">×</span>
+                    >
+                        <span v-if="seat.selected">✓</span>
+                        <span v-else-if="!seat.aisle">×</span>
+                    </div>
                 </div>
             </div>
         </div>
         <div v-if="cart.length" class="selected-seats">
-            <h2>Cart:</h2>
-            <ul>
+            <h2 class="cart-heading">Warenkorb</h2>
+            <hr>
+            <ul class="seat-list pb-2">
                 <li v-for="(seat, index) in selectedSeats" :key="index">
-                    Category: {{ seat.categoryName }}, Row: {{ seat.number }}, Seat: {{ seat.seatNumber }}, Price: {{ formatPrice(seat.price) }}
-                    <button @click="removeSeat(seat)" class="delete-button"></button>
+                    <div class="d-flex col px-0 py-2 gap-2 justify-content-between">
+                        <div>
+                            <p>1x {{ seat.categoryName }}</p>
+                            <div class="d-flex flex-col px-0">
+                                <small>Reihe: {{ seat.number }}, Platz: {{ seat.seatNumber }}</small>
+                                <small><strong>Preis: {{ formatPrice(seat.price) }}</strong></small>
+                            </div>
+                        </div>
+                        <button @click="removeSeat(seat)" class="delete-button" style=""></button>
+                    </div>
+                    <hr>
                 </li>
             </ul>
             <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
             <button @click.prevent="proceedToCheckout"
                     :disabled="cart.length === 0"
                     type="button"
-                    class="btn-orange checkout-btn"
-            >Weiter zum Checkout</button>
+                    class="btn btn-orange checkout-btn w-100 mt-2"
+            ><i class="fas fa-money-bill mr-2"></i>Weiter zum Checkout</button>
         </div>
     </div>
 </template>
 
 <style scoped>
+.cart-heading {
+    text-align: center;
+    margin-bottom: 10px!important;
+    font-size: 18px;
+    font-weight: 600;
+}
 .seatmap {
     display: flex;
     flex-direction: column;
@@ -316,10 +334,13 @@ export default {
 }
 
 .delete-button {
-    background: none;
     border: none;
     cursor: pointer;
-    color: red;
+    width: 30px;
+    height: 30px;
+    background-color:#d9d9d9;
+    border-radius: 10px;
+    color: black;
 }
 
 .delete-button:before {
@@ -334,5 +355,44 @@ export default {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+}
+
+.btn-orange {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
+    box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
+    height: calc(2.75rem + 2px);
+    font-weight: 600;
+    color: white;
+}
+
+@media (max-width:480px) {
+    .selected-seats {
+        position: fixed;
+        bottom: 0;
+        top: unset;
+        right: 0;
+        width: 100%;
+        max-height: 330px;
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 20px;
+        z-index: 1;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .seat-list {
+        overflow: scroll;
+        max-height: 150px;
+    }
+
+    .seat-overflow {
+        flex-wrap: nowrap!important;
+        overflow: visible;
+    }
+    .seatmap {
+        overflow: scroll
+    }
 }
 </style>

@@ -7,12 +7,12 @@
 <div class="py-5" style="background-color: #F1F5F8">
     <div class="container">
         <div class="step-indicator">
-            <div class="active">1. Information</div>
-            <div class="active">2. Payment</div>
-            <div>3. Confirmation</div>
+            <div class="d-flex justify-content-center align-items-center active">1. Information</div>
+            <div class="d-flex justify-content-center align-items-center active">2. Payment</div>
+            <div class="d-flex justify-content-center align-items-center">3. Confirmation</div>
         </div>
 
-        <div class="container card d-flex flex-row p-4">
+        <div class="container card d-flex flex-col flex-md-row justify-content-between px-2 px-md-4 py-4 py-md-4">
             <div class="col-md-7">
                 <h4 class="checkout-subtitle">Payment method</h4>
                 <div class="d-flex payment-method gap-2">
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 mt-4">
                 <order-summary
                     :action-url="'{{ route('checkout.step3') }}'"
                     :stripe-public-key="'{{ config('services.stripe_connect.key') }}'"

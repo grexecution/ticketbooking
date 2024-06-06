@@ -4,9 +4,9 @@
 
 @section('content')
 {{--    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>--}}
-<div class="bg-white border-bottom py-14">
+<div class="bg-white border-bottom py-4 my-md-4">
     <div class="container">
-        <div class="row my-3">
+        <div class="d-flex flex-col-reverse flex-md-row my-3">
             <!-- Event Banner -->
             <div class="col-lg-8">
                 <div class="event-banner">
@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <!-- Event Details -->
-                    <div class="row">
-                        <div class="col d-flex gap-6">
+                    <div class="row m-0">
+                        <div class="d-flex gap-0 flex-col flex-md-row gap-1 gap-md-6">
                             <div class="event-detail">
                                 <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('g:i a') ?? '' }}
                             </div>
@@ -39,9 +39,9 @@
                 </div>
             </div>
             <!-- Event Image -->
-            <div class="col-lg-4">
+            <div class="col-lg-4 mb-3 mb-md-0">
 {{--                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">--}}
-                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded event-image">
+                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded event-image w-100">
             </div>
         </div>
     </div>

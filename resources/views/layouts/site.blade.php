@@ -17,37 +17,22 @@
 
 <nav class="navbar py-3 navbar-expand-lg navbar-dark bg-black shadow">
     <div class="container">
-            <a class="navbar-brand col-md-3 px-0" href="/">
-                <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon"> <!-- Add your image path here -->
+            <a class="navbar-brand col-1 col-md-3 px-0" href="/">
+                <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon">
                 <div class="d-flex flex-col gap-0">
                     <p style="font-size:20px; font-weight:700;letter-spacing: -0.4px;">Ticketwilli</p>
                     <span class="ticket-text">Die Online-Pudl für Events</span>
                 </div>
             </a>
         <div class="search-container col-md-6 d-none">
-            <form class="form-inline my-2 my-lg-0 search-form"> <!-- Center the search input -->
+            <form class="form-inline my-2 my-lg-0 search-form">
                 <input class="form-control mr-sm-2" type="search" placeholder="Events durchsuchen..." aria-label="Search">
             </form>
         </div>
         <div class="nav-menu">
-            <ul class="navbar-nav d-flex flex-col gap-4">
+            <ul class="navbar-nav d-flex flex-row flex-md-col gap-4">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('site.events') }}">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('site.events') }}">Über Uns</a>
-                </li>
-                <li class="nav-item">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Profil
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Action</button>
-                            <button class="dropdown-item" type="button">Another action</button>
-                            <button class="dropdown-item" type="button">Something else here</button>
-                        </div>
-                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/checkout">
@@ -58,25 +43,22 @@
         </div>
     </div>
 </nav>
+
     <span id="site-app">
         @yield('content')
     </span>
-</div>
 
-<div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-6">
-    <p class="col-md-4 mb-0 text-muted">© 2021 Company, Inc</p>
+<div class="container mt-14 mt-md-0">
+  <footer class="d-flex flex-wrap justify-content-between align-items-center py-6 border-top">
+    <p class="col-2 col-md-4 mb-0 text-muted">© 2024 Ticketwilli</p>
 
-    <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+    <a href="/" class="col-2 col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <img src="{{ asset('img/logo.png') }}" alt="Ticket Icon" class="ticket-icon">
     </a>
 
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    <ul class="nav col-2 col-md-4 justify-content-end">
+      <li class="nav-item"><a href=/" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Kontakt</a></li>
     </ul>
   </footer>
 </div>
