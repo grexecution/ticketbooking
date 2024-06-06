@@ -14,6 +14,9 @@ class SubscriptionController extends Controller
     {
         $subscription = Subscription::query()
             ->with(['events.seatPlanCategoriesForSubscriptions', 'events.venue'])
+            ->whereHas('events', function ($query) {
+                $query->where('status', Event::STATUS_LIVE);
+            })
             ->findOrFail($id);
 
         collect($subscription->events)->each(function (Event $event) {
