@@ -180,6 +180,12 @@ export default {
                 }
             }
         },
+        formatDate(date) {
+            return date ? new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
+        },
+        formatTime(time) {
+            return time ? new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : '';
+        },
     }
 };
 </script>
