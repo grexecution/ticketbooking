@@ -31,12 +31,13 @@ class PaymentController extends Controller
     public function createCheckoutSession(Request $request) : JsonResponse
     {
         $ticketsData = $request->validate([
-            'event_id' => 'required|exists:events,id',
+            'event_id' => 'sometimes|exists:events,id',
             'tickets' => 'required|array',
             'amount' => 'required|numeric',
         ]);
 
-        $event = Event::findOrFail($request->input('event_id'));
+        $eventId = $request->input('event_id') ?: $ticketsData['tickets'][0]['event_id']; // $ticketsData['tickets'][0]['event_id'] for subscriptions
+        $event = Event::findOrFail($eventId);
         $accountId = $event->user?->tenant?->stripe_account_id;
         if (! $accountId) {
             return response()->json([

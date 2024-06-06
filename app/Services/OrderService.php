@@ -13,7 +13,7 @@ class OrderService
         /** @var Order $order */
         $order = Order::query()->create([
             'user_id' => null,
-            'event_id' => $ticketsData['event_id'],
+            'event_id' => $ticketsData['event_id'] ?? $ticketsData['tickets'][0]['event_id'],
             'first_name' => $customerData['first_name'],
             'last_name' => $customerData['last_name'],
             'email' => $customerData['email'],
@@ -44,7 +44,7 @@ class OrderService
         foreach ($ticketsData['tickets'] as $ticket) {
             for ($i = 0; $i < (int) $ticket['count']; $i++) {
                 $order->tickets()->create([
-                    'event_seat_plan_category_id' => $ticket['categoryId'],
+                    'event_seat_plan_category_id' => $ticket['categoryId'] ?? $ticket['id'], // $ticket['id'] for subscriptions
                     'voucher_id' => null,
                     'category_name' => $ticket['categoryName'],
                     'voucher_name' => null,
