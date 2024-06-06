@@ -33,7 +33,7 @@
                                 <img class="img-fluid object-fit-cover mh-100" src="{{ $event->logo_event_url }}" alt="Event Image">
                             </a>
                             <div class="event-label"><i class="fas fa-star"></i></div>
-                            <div class="category-label">Adventure</div>
+                            <div class="category-label">Kabarett</div>
                         </div>
                         <div class="event-info">
                             <div class="row">
