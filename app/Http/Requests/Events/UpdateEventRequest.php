@@ -48,7 +48,7 @@ class UpdateEventRequest extends FormRequest
         return [
             'id' => 'required|string|exists:events,id',
             'name' => 'required|string|max:255',
-            'short_desc' => 'sometimes|nullable|string|max:256',
+            'short_desc' => 'sometimes|nullable|string|max:512',
             'description' => 'sometimes|nullable|string|max:4096',
             'venue_id' => 'sometimes|nullable|exists:venues,id',
             'program_id' => 'sometimes|nullable',
