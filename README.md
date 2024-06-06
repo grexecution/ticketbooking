@@ -34,3 +34,8 @@ npm run prod
 ```bash
 php artisan db:seed --class=SeatPlanSeeder
 ```
+
+#### Dashboard cron:
+```bash
+php /home/ploi/ticketwilli.com/artisan schedule:run
+```
