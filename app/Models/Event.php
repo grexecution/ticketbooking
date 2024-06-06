@@ -65,6 +65,19 @@ class Event extends Model implements HasMedia
         'total_tickets',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($event) {
+            $event->slug = Str::slug($event->artist . ' ' . $event->name);
+        });
+
+        static::updating(function ($event) {
+            $event->slug = Str::slug($event->artist . ' ' . $event->name);
+        });
+    }
+
     /**
      * @param Media|null $media
      */
@@ -186,7 +199,16 @@ class Event extends Model implements HasMedia
 
     public function seatPlanCategories() : HasMany
     {
-        return $this->hasMany(EventSeatPlanCategory::class);
+        return $this
+            ->hasMany(EventSeatPlanCategory::class)
+            ->whereNull('subscription_id');
+    }
+
+    public function seatPlanCategoriesForSubscriptions() : HasMany
+    {
+        return $this
+            ->hasMany(EventSeatPlanCategory::class)
+            ->whereNotNull('subscription_id');
     }
 
     public function orders() : HasMany
@@ -210,21 +232,19 @@ class Event extends Model implements HasMedia
         }
     }
 
+    public function loadSeatPlanWithCategoriesForSubscriptions() : void
+    {
+        $this->load(['seatPlanCategoriesForSubscriptions']);
+        if ($this->seatPlanCategoriesForSubscriptions->count() > 0) {
+            $seatPlainId = $this->seatPlanCategoriesForSubscriptions->first()->seat_plan_id;
+            $seatPlan = SeatPlan::query()->find($seatPlainId);
+            $seatPlan->seat_plan_categories_for_subscriptions = $this->seat_plan_categories;
+            $this->seat_plan = $seatPlan;
+        }
+    }
+
     public function getSlugAttribute(): string
     {
         return Str::slug($this->artist . ' ' . $this->name);
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($event) {
-            $event->slug = Str::slug($event->artist . ' ' . $event->name);
-        });
-
-        static::updating(function ($event) {
-            $event->slug = Str::slug($event->artist . ' ' . $event->name);
-        });
     }
 }

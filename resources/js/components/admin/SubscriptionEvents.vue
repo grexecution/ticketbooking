@@ -46,8 +46,13 @@
                             <td>{{ selectedEvent.name }}</td>
                             <td>
                                 <div class="categories">
-                                    <button v-for="category in selectedEvent.categories" id="{{ category.id}}" type="button" class="btn btn-dark">
-                                        <input type="hidden" :name="'category_id[' + selectedEvent.id + '][]'" :value="category.id" />
+                                    <button v-if="selectedEvent.seat_plan_categories_for_subscriptions" v-for="category in selectedEvent.seat_plan_categories_for_subscriptions" id="{{ category.id}}" type="button" class="btn btn-dark">
+                                        <input type="hidden" :name="'category_ids[' + selectedEvent.id + '][]'" :value="category.id" />
+                                        {{ category.name }}
+                                        <i class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
+                                    </button>
+                                    <button v-if="!selectedEvent.seat_plan_categories_for_subscriptions" v-for="category in selectedEvent.seat_plan_categories" id="{{ category.id}}" type="button" class="btn btn-dark">
+                                        <input type="hidden" :name="'category_ids[' + selectedEvent.id + '][]'" :value="category.id" />
                                         {{ category.name }}
                                         <i class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
                                     </button>
@@ -155,7 +160,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/api/events')
                     .then((response) => {
-                        this.allEvents = response.data.data;
+                        this.allEvents = response.data;
                         resolve(); // Resolve the promise once data is fetched and assigned
                     })
                     .catch(error => {
@@ -189,9 +194,9 @@ export default {
         deleteEventCategory(eventId, categoryId) {
             const event = this.selectedEvents.find(event => event.id === eventId)
             if (event) {
-                const index = event.categories.findIndex(category => category.id === categoryId)
+                const index = event.seat_plan_categories.findIndex(category => category.id === categoryId)
                 if (index !== -1) {
-                    event.categories.splice(index, 1)
+                    event.seat_plan_categories.splice(index, 1)
                 }
             }
         },

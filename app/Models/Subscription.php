@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\SeatPlan\EventSeatPlanCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -85,5 +87,10 @@ class Subscription extends Model implements HasMedia
         return $this
             ->belongsToMany(Event::class, 'event_subscription', 'subscription_id', 'event_id')
             ->withPivot(['type', 'discount', 'sum']);
+    }
+
+    public function seatPlanCategories() : HasMany
+    {
+        return $this->hasMany(EventSeatPlanCategory::class);
     }
 }

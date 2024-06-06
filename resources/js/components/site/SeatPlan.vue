@@ -18,7 +18,7 @@ export default {
             boughtTickets: [],
             cart: [],
             errorMsg: '',
-            event: null,
+            event: {},
         };
     },
     computed: {
@@ -153,7 +153,11 @@ export default {
                     seat: category.seatNumber,
                     total: this.formatPrice(category.price),
                     categoryId: category.categoryId,
-                    categoryName: category.categoryName
+                    categoryName: category.categoryName,
+                    eventName: this.event.name,
+                    eventDate: this.formatDate(this.event.start_date),
+                    eventTime: this.formatTime(this.event.start_time),
+                    eventLocation: `${this.event.venue.city}, ${this.event.venue.country}`,
                 };
             });
         },
@@ -191,6 +195,12 @@ export default {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             }).format(price);
+        },
+        formatDate(date) {
+            return date ? new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
+        },
+        formatTime(time) {
+            return time ? new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : '';
         },
     }
 };

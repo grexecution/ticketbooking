@@ -8,9 +8,12 @@ use App\Http\Requests\Subscriptions\IndexSubscriptionRequest;
 use App\Http\Requests\Subscriptions\StoreSubscriptionRequest;
 use App\Http\Requests\Subscriptions\UpdateSubscriptionRequest;
 use App\Models\Event;
+use App\Models\SeatPlan\EventSeatPlanCategory;
+use App\Models\SeatPlan\SeatPlan;
 use App\Models\Subscription;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,16 +28,6 @@ class SubscriptionController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', '2fa']);
-    }
-
-    /*
-     * Show the Subscription on the site.
-     */
-    public function show($id)
-    {
-        $subscription = Subscription::with('events')->find($id);
-
-        return view('site.events.subscription', compact('subscription'));
     }
 
     /**
@@ -101,12 +94,14 @@ class SubscriptionController extends Controller
         abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
         $subscription->load(['events']);
         $selectedEvents = $subscription->events->map(function (Event $event) {
-            $event->load('seatPlanCategories');
+            $event->load(['seatPlanCategories', 'seatPlanCategoriesForSubscriptions']);
             $event = $event->toArray();
+
             return [
                'id' => $event['id'],
                'name' => $event['name'],
-               'categories' => $event['seat_plan_categories'],
+               'seat_plan_categories' => $event['seat_plan_categories'],
+               'seat_plan_categories_for_subscriptions' => $event['seat_plan_categories_for_subscriptions'],
                'type' => $event['pivot']['type'],
                'discount' => $event['pivot']['discount'],
                'sum' => $event['pivot']['sum'],
@@ -156,34 +151,66 @@ class SubscriptionController extends Controller
 
     private function handleSelectedEvents(StoreSubscriptionRequest|UpdateSubscriptionRequest $request, Subscription $subscription): bool
     {
-        $events = [];
+        $eventsArr = [];
         $eventIds = array_keys($request->type);
 
         foreach ($eventIds as $eventId) {
-            $events[] = [
+            $eventsArr[] = [
                 'event_id' => $eventId,
                 'type' => $request->type[$eventId],
                 'discount' => $request->discount[$eventId],
-                'sum' => $request->sum[$eventId]
+                'sum' => $request->sum[$eventId],
+                'category_ids' => $request->category_ids[$eventId],
             ];
         }
 
-        $sum = collect($events)->sum('sum');
+        $sum = collect($eventsArr)->sum('sum');
         if ($sum !== (float) $request->price) {
             return false;
         }
 
         $subscription->events()->sync([]);
 
-        foreach ($events as $event) {
-            $subscription->events()->attach($event['event_id'], [
-                'type' => $event['type'],
-                'discount' => $event['discount'],
-                'sum' => $event['sum'],
-            ]);
-        }
 
-         // Todo handle $request->category_ids === event_seat_plan_categories.id
+        $toDeleteCatIds = [];
+        foreach ($eventsArr as $eventArr) {
+            $subscription->events()->attach($eventArr['event_id'], [
+                'type' => $eventArr['type'],
+                'discount' => $eventArr['discount'],
+                'sum' => $eventArr['sum'],
+            ]);
+
+            // Save subscription categories
+            $event = Event::query()->find($eventArr['event_id']);
+            // Delete sub categories after creating new ones
+            $toDeleteSubCatIds = $event->seatPlanCategoriesForSubscriptions->pluck('id')->toArray();
+
+            foreach ($eventArr['category_ids'] as $categoryId) {
+                $eventRelatedCategory = EventSeatPlanCategory::query()->find($categoryId);
+                if (! $eventRelatedCategory->subscription_id) {
+                    $parentId = $eventRelatedCategory->id;
+                }
+                EventSeatPlanCategory::query()->create([
+                    'parent_id' => $parentId,
+                    'seat_plan_id' => SeatPlan::SEAT_PLAN_CUSTOM_ID,
+                    'event_id' => $event->id,
+                    'subscription_id' => $subscription->id,
+                    'name' => $eventRelatedCategory->name,
+                    'price' => $eventArr['sum'],
+                    'places' => $eventRelatedCategory->places,
+                    'rows' => 0,
+                    'seats' => 0,
+                    'aisles_after' => 0,
+                    'description' => $eventRelatedCategory?->description ?? '',
+                ]);
+            }
+
+            if ($toDeleteSubCatIds) {
+                DB::table('event_seat_plan_categories')
+                    ->whereIn('id', $toDeleteSubCatIds)
+                    ->delete();
+            }
+        }
 
         return true;
     }

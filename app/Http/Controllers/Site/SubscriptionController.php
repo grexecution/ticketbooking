@@ -18,7 +18,7 @@ class SubscriptionController extends Controller
      */
     public function show(Request $request, string $id) : Renderable
     {
-        $subscription = Subscription::with('events')->find($id);
+        $subscription = Subscription::with('events.venue')->find($id);
 
         return view('site.events.subscription', compact('subscription'));
     }

@@ -19,8 +19,13 @@ class EventController extends Controller
         return response()->json($event);
     }
 
-    public function index(): JsonResource
+    public function index(): JsonResponse
     {
-        return EventResource::collection(Event::all());
+        $events = Event::query()->with(['venue'])->get()->map(function ($event) {
+            $event->loadSeatPlanWithCategories();
+            return $event;
+        });
+
+        return response()->json($events);
     }
 }

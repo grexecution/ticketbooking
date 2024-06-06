@@ -48,42 +48,9 @@
         </div>
         <!-- Events List -->
         <div class="main-bg pt-6 pb-20">
-            <div class="col py-6 mb-5 container m-auto gap-2">
-                <h2 class="sub-subheadline">Events included in this Subscription:</h2>
-                @foreach($subscription->events as $event)
-                    <div class="card my-3 rounded overflow-hidden">
-                        <div class="d-flex">
-                            <div class="col-md-3 p-0">
-                                <img src="{{ $event->logo_event_url }}" class="img-fluid event-image" alt="Event Image">
-                            </div>
-                            <div class="card-body py-6">
-                                <h5 class="mb-1 sub-event-title">{{ $event->name }}</h5>
-                                <div>
-                                    <p class="card-text">{!! $event->short_desc !!}</p>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col d-flex gap-6">
-                                        <div class="event-detail">
-                                            <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('g:i a') ?? '' }}
-                                        </div>
-                                        <div class="event-detail">
-                                            <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
-                                        </div>
-                                        <div class="event-detail">
-                                            <i class="fas fa-money-bill"></i> Preis ab €{{ $event->price ?? 0 }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <!-- No Seat Plan Component -->
-            <no-seat-plan
-                event-id="{{ $event->id }}"
-            ></no-seat-plan>
-
+            <subscription
+                :subscription-id="'{{ $subscription->id }}'"
+            ></subscription>
         </div>
     </div>
 @endsection

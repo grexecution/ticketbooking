@@ -7,9 +7,9 @@
         <div class="mt-3" v-for="(item, index) in tickets" :key="index">
             <div class="d-flex flex-row justify-content-between">
                 <div>
-                    <p class="co-price-text">{{ item.count }} x {{ eventName }}</p>
-                    <p class="co-price-details">{{ eventDate }} | {{ eventTime }}</p>
-                    <p class="co-price-details">{{ eventLocation }}</p>
+                    <p class="co-price-text">{{ item.count }} x {{ item.eventName }}</p>
+                    <p class="co-price-details">{{ item.eventDate }} | {{ item.eventTime }}</p>
+                    <p class="co-price-details">{{ item.eventLocation }}</p>
                     <p class="co-price-details">{{ item.categoryName }} | Ticket: {{ item.name }}</p>
                 </div>
                 <p>€{{ item.total }}</p>
@@ -48,10 +48,10 @@ export default {
             type: String,
             required: true
         },
-        eventId: {
-            type: String,
-            required: true
-        },
+        // eventId: {
+        //     type: String,
+        //     required: true
+        // },
         isPaymentForm: {
             type: Boolean,
             required: true
@@ -68,11 +68,7 @@ export default {
         return {
             tickets: [],
             total: '0,00',
-            event: '',
-            eventName: '',
-            eventDate: '',
-            eventTime: '',
-            eventLocation: '',
+            event: {},
             errorMsg: '',
             time: 10 * 60, // 10 minutes in seconds
             timeIsUp: false,
@@ -94,7 +90,7 @@ export default {
         },
     },
     mounted() {
-        this.fetchEvent(this.eventId);
+        // this.fetchEvent(this.eventId);
         this.loadTicketData();
         if (this.isPaymentForm) {
             this.loadStripeScript();
@@ -158,20 +154,6 @@ export default {
         sendCustomerData() {
             const form = document.getElementById('customer-data-form');
             form.submit();
-        },
-        async fetchEvent(eventId) {
-            try {
-                const response = await axios.post(`/api/events/${eventId}`);
-                this.processEventData(response.data);
-            } catch (error) {
-                console.error("Error fetching event data:", error);
-            }
-        },
-        processEventData(data) {
-            this.eventName = data.name;
-            this.eventDate = this.formatDate(data.start_date);
-            this.eventTime = this.formatTime(data.start_time);
-            this.eventLocation = `${data.venue.city}, ${data.venue.country}`;
         },
         loadTicketData() {
             const tickets = Cookies.get('cart_tickets');

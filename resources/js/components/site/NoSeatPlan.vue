@@ -15,6 +15,7 @@ export default {
             discounts: [],
             categories: [],
             errorMsg: '',
+            event: {},
         };
     },
     mounted() {
@@ -42,6 +43,7 @@ export default {
             }
         },
         processEventData(data) {
+            this.event = data;
             this.processDiscounts(data.discounts);
             this.processCategories(data.seat_plan_categories);
         },
@@ -103,7 +105,11 @@ export default {
                     price: category.regularPrice.price,
                     total: this.formatPrice(this.convertPriceToFloat(category.regularPrice.price) * category.regularPrice.count),
                     categoryId: category.id,
-                    categoryName: category.name
+                    categoryName: category.name,
+                    eventName: this.event.name,
+                    eventDate: this.formatDate(this.event.start_date),
+                    eventTime: this.formatTime(this.event.start_time),
+                    eventLocation: `${this.event.venue.city}, ${this.event.venue.country}`,
                 };
 
                 const discountTickets = category.discountPrices
@@ -114,7 +120,11 @@ export default {
                         price: discountPrice.price,
                         total: this.formatPrice(this.convertPriceToFloat(discountPrice.price) * discountPrice.count),
                         categoryId: category.id,
-                        categoryName: category.name
+                        categoryName: category.name,
+                        eventName: this.event.name,
+                        eventDate: this.formatDate(this.event.start_date),
+                        eventTime: this.formatTime(this.event.start_time),
+                        eventLocation: `${this.event.venue.city}, ${this.event.venue.country}`,
                     }));
 
                 return [regularTicket, ...discountTickets].filter(ticket => ticket.count > 0);

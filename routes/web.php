@@ -44,9 +44,11 @@ Route::get('/events/{slug}', [\App\Http\Controllers\Site\EventController::class,
 Route::get('/checkout', [CheckoutController::class, 'showStep1']);
 Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('checkout.step2');
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
-Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets'])->name('bookings.book');
+Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets']);
+Route::post('/bookings/bookSubscriptionTickets', [BookingController::class, 'bookSubscriptionTickets']);
 Route::post('/bookings/start-time/{session_id}', [BookingController::class, 'getBookingStartTime']);
 Route::post('/bookings/expire-session/{session_id}', [BookingController::class, 'expireBookings']);
+Route::get('/subscriptions/{id}', [App\Http\Controllers\Site\SubscriptionController::class, 'show'])->name('subscriptions.show');
 
 // Payments
 Route::post('/stripe/session', [PaymentController::class, 'createCheckoutSession'])->name('stripe.session');
@@ -87,7 +89,6 @@ Route::get('admin/venues/delete/{venueId}', [VenueController::class, 'destroy'])
 // Subscriptions
 Route::resource('admin/subscriptions', SubscriptionController::class)->except('show', 'destroy');
 Route::get('admin/subscriptions/delete/{voucherId}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
-Route::get('/subscriptions/{id}', [SubscriptionController::class, 'show'])->name('subscriptions.show');
 
 // Discounts
 Route::resource('admin/discounts', DiscountController::class)->except('show', 'destroy');

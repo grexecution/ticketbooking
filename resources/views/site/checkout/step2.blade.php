@@ -41,7 +41,6 @@
             <div class="col-md-5">
                 <order-summary
                     :action-url="'{{ route('checkout.step3') }}'"
-                    :event-id="'{{ request()->get('event_id') }}'"
                     :stripe-public-key="'{{ config('services.stripe_connect.key') }}'"
                     :is-payment-form="true"
                 /></order-summary>

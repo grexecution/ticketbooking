@@ -9,6 +9,8 @@ class SeatPlan extends Model
 {
     protected $table = 'seat_plans';
 
+    const SEAT_PLAN_CUSTOM_ID = 1;
+
     protected $fillable = [
         'id',
         'name',

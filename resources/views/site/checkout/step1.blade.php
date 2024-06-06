@@ -98,7 +98,6 @@
             <div class="col-md-5">
                 <order-summary
                     :action-url="'{{ route('checkout.step2') }}'"
-                    :event-id="'{{ request()->get('event_id') }}'"
                     :is-payment-form="false"
                 /></order-summary>
             </div>
