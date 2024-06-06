@@ -198,7 +198,7 @@ export default {
             <div class="col-12 pb-3">
                 <h3 class="pt-4 pb-3 question-styling">Please choose seating category:</h3>
 
-                <div v-for="category in categories" class="category-card mb-3 d-flex justify-content-between">
+                <div v-for="category in categories" class="category-card mb-3 d-flex flex-col flex-md-row justify-content-between">
                     <div class="col-md-3 d-flex flex-row align-items-center">
                         <div class="d-flex flex-col">
                             <h6 class="category-title">{{ category.name }}</h6>
@@ -206,7 +206,7 @@ export default {
                         </div>
                     </div>
                     <div class="col-md-9 d-flex flex-col gap-4">
-                        <div class="d-flex flex-row w-100 align-items-center">
+                        <div class="d-flex flex-col flex-md-row w-100 align-items-start align-items-md-center">
                             <div class="d-flex flex-col w-100">
                                 <p>Regular Price</p>
                                 <small v-if="! category.showMore && category.discountPrices.length > 0" @click="category.showMore = true" class="show-more-options" style="color:#ffc107; text-decoration: underline;">Show more price options</small>

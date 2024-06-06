@@ -28,6 +28,8 @@
 
 .banner-title {
     color: white;
+    font-weight: 600;
+    font-size: 40px;
 }
 
 .banner-desc {
@@ -315,3 +317,11 @@ label {
 .confirmation .btn-group .btn {
     margin: 5px;
 }
+
+/* Responsive */
+@media (max-width:480px)  {
+    .event-banner {
+        gap:10px
+    }/* smartphones, Android phones, landscape iPhone */
+}
+
