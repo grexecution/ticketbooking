@@ -58,6 +58,7 @@ export default {
             events.forEach(event => {
                 event.seat_plan_categories_for_subscriptions.forEach(category => {
                     if (category.count > 0) {
+                        category.total = this.formatPrice(category.price * category.count);
                         categories.push(category);
                     }
                 });
