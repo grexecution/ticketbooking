@@ -4,11 +4,11 @@
 
 @section('content')
 {{--    <h1>Show Event # {{ Route::current()->parameter('eventId') }}</h1>--}}
-<div class="bg-white border-bottom py-4 my-md-4">
+<div class="bg-white border-bottom py-3 py-md-5">
     <div class="container">
         <div class="d-flex flex-col-reverse flex-md-row my-3">
             <!-- Event Banner -->
-            <div class="col-lg-8">
+            <div class="col-lg-7">
                 <div class="event-banner">
                     <!-- Title -->
                     <div class="row">
@@ -23,8 +23,8 @@
                         </div>
                     </div>
                     <!-- Event Details -->
-                    <div class="row m-0">
-                        <div class="d-flex gap-0 flex-col flex-md-row gap-1 gap-md-6">
+                    <div class="col m-0">
+                        <div class="row flex-col flex-md-row w-100 justify-content-between">
                             <div class="event-detail">
                                 <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('g:i a') ?? '' }}
                             </div>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <!-- Event Image -->
-            <div class="col-lg-4 mb-3 mb-md-0">
+            <div class="col-lg-5 mb-3 mb-md-0">
 {{--                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">--}}
                 <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded event-image w-100">
             </div>
@@ -63,7 +63,7 @@
 @else
     <div class="main-bg py-6">
         <div class="row py-6 mb-5 container m-auto">
-            <div class="container card py-6">
+            <div class="container card py-1 py-md-3 px-1">
                 <seat-plan
                     event-id="{{ $event->id }}"
                 ></seat-plan>

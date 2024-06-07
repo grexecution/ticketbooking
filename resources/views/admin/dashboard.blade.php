@@ -9,7 +9,7 @@
             <h1>Coming Soon</h1>
         </div>
         @include('messages')
-       <!-- <div class="row">
+       <div class="row">
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 @stop
 

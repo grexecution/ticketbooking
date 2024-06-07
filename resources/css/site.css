@@ -52,7 +52,7 @@
     background-image: url(/images/banner.png?215dfeb5e689a1fca6ca2f7bdc5a4240);
     background-size: cover;
     background-position: center;
-    height: 350px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -322,6 +322,12 @@ label {
 @media (max-width:480px)  {
     .event-banner {
         gap:10px
-    }/* smartphones, Android phones, landscape iPhone */
+    }
+    .event-image {
+        max-height: 300px;
+    }
+    .hero-container {
+        height: 200px;
+    }
 }
 
