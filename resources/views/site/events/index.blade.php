@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <p><i class="fas fa-clock"></i> Start: {{ $event->start_time?->format('g:i a') ?? '' }}</p>
+                                        <p><i class="fas fa-clock"></i> Start: {{ $event->start_time?->format('H:i') ?? '' }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
