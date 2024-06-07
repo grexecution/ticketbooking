@@ -6,11 +6,11 @@ export default {
         initSeatType: String,
         status: String,
         eventId: '',
+        hasBoughtTickets: Boolean,
     },
     data() {
         return {
             seatType: this.initSeatType,
-            bookingCount: 0,
             disabled: false,
             defaultSeatPlans: [],
             customSeatPlan: {},
@@ -95,15 +95,15 @@ export default {
             <div class="row">
                 <div class="col-md-5">
                     <div class="form-group">
-                        <span v-if="bookingCount > 0" class="float-right text-muted">Price type can no longer be changed</span>
+                        <span v-if="hasBoughtTickets" class="float-right text-muted">Price type can no longer be changed</span>
                         <div class="form-check">
-                            <input v-model="seatType" class="form-check-input" type="radio" name="seat_type" id="seat_plan" value="seat_plan" checked :disabled="disabled">
+                            <input v-model="seatType" class="form-check-input" type="radio" name="seat_type" id="seat_plan" value="seat_plan" checked :disabled="disabled || hasBoughtTickets">
                             <label class="form-check-label" for="seatplan">
                                 Seatplan Selection
                             </label>
                         </div>
                         <div class="form-check">
-                            <input v-model="seatType" class="form-check-input" type="radio" name="seat_type" id="no_seat_plan" value="no_seat_plan" :disabled="disabled">
+                            <input v-model="seatType" class="form-check-input" type="radio" name="seat_type" id="no_seat_plan" value="no_seat_plan" :disabled="disabled || hasBoughtTickets">
                             <label class="form-check-label" for="no_seatplan">
                                 No Seat Selection
                             </label>
@@ -114,8 +114,8 @@ export default {
                 <div class="col-md-5">
                     <div v-if="seatType === 'seat_plan'" class="form-group">
                         <label for="seating">Seating plan</label>
-                        <span class="float-right text-muted">Seating plan can no longer be changed</span>
-                        <select class="form-control" id="seating" v-model="selectedSeatPlanId" @change="handleActivePlanChange" :disabled="disabled">
+                        <span v-if="hasBoughtTickets" class="float-right text-muted">Seating plan can no longer be changed</span>
+                        <select class="form-control" id="seating" v-model="selectedSeatPlanId" @change="handleActivePlanChange" :disabled="disabled || hasBoughtTickets">
                             <option v-for="seatPlan in defaultSeatPlans" :key="seatPlan.id" :value="seatPlan.id" :selected="selectedSeatPlanId === seatPlan.id">{{ seatPlan.name }} ({{ seatPlan.places }} seats)</option>
                         </select>
                     </div>

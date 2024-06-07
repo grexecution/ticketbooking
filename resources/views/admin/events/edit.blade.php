@@ -388,6 +388,7 @@
                                     :init-seat-type="'{{ old('seat_type', $event->seat_type) }}'"
                                     :status="'{{ $event->status }}'"
                                     :event-id="'{{ $event->id }}'"
+                                    :has-bought-tickets="{{ $event->has_bought_tickets ? 'true' : 'false' }}"
                                 ></seat-plan>
                                 <!-- Discounts -->
                                 <div class="row mt-4">

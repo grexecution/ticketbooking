@@ -63,6 +63,7 @@ class Event extends Model implements HasMedia
         'logo_event_url',
         'active_bookings',
         'total_tickets',
+        'has_bought_tickets',
     ];
 
     protected static function boot()
@@ -155,6 +156,18 @@ class Event extends Model implements HasMedia
     public function getTotalTicketsAttribute()
     {
         return $this->seatPlanCategories->sum('places');
+    }
+
+    public function getHasBoughtTicketsAttribute() : bool
+    {
+        $this->load(['orders.tickets']);
+
+        return $this->orders
+            ->flatMap(fn ($order) => $order->tickets)
+            ->where('is_paid', true)
+            ->where('is_cancelled', false)
+            ->where('is_refunded', false)
+            ->count() > 0;
     }
 
     public function user(): BelongsTo
