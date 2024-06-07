@@ -161,7 +161,8 @@ export default {
                         <tr v-for="category in activeSeatPlan.seat_plan_categories" :key="category.id">
                             <td><input type="text" class="form-control" v-model="category.name" :disabled="disabled"></td>
                             <td><input type="text" class="form-control" v-model="category.description" placeholder="Enter description text" :disabled="disabled"></td>
-                            <td><input type="number" class="form-control" v-model="category.places" :disabled="disabled" min="1" step="1"></td>
+                            <td v-if="hasBoughtTickets">{{ category.places }}</td>
+                            <td v-else><input type="number" class="form-control" v-model="category.places" :disabled="disabled" min="1" step="1"></td>
                             <td><input type="number" class="form-control" v-model="category.price" :disabled="disabled" min="0.1" step="0.1"></td>
                             <td>
                                 <a @click="handleDeleteCategory(category.id)" class="btn btn-danger mx-2 delete-record">
@@ -171,8 +172,8 @@ export default {
                         </tr>
                         <tr>
                             <td colspan="5" style="text-align: right;">
-                                <a @click="handleAddCategory" class="btn btn-success mx-2">
-                                    <i class="fas fa-plus"></i>
+                                <a @click="handleAddCategory" class="mx-2" style="cursor: pointer;">
+                                    Add Category
                                 </a>
                             </td>
                         </tr>
