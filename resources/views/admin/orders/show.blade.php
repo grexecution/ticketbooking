@@ -63,7 +63,7 @@
                                 </a>
                             </div>
                             <div class="col">
-                                <a href="{{ route('showInvoice', 1) }}" target="_blank" class="btn btn-dark btn-header">
+                                <a href="{{ route('showInvoice', $order->id) }}" target="_blank" class="btn btn-dark btn-header">
                                     <i class="fa-solid fa-print"></i> View invoice
                                 </a>
                             </div>
@@ -75,7 +75,7 @@
                                 </a>
                             </div>
                             <div class="col">
-                                <a href="{{ route('showTickets', 1) }}" target="_blank" class="btn btn-dark btn-header">
+                                <a href="{{ route('showTickets', $order->id) }}" target="_blank" class="btn btn-dark btn-header">
                                     <i class="fa-solid fa-print"></i> View tickets
                                 </a>
                             </div>
