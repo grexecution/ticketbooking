@@ -90,12 +90,11 @@ export default {
     <!-- Prices -->
     <div class="row mt-4">
         <div class="col-md-12 mb-4">
-            <h4>Prices</h4>
+            <h3 class="settings-title">Seaing</h3>
             <!-- First Row - Seating Options -->
             <div class="row">
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="seating">Seating</label>
                         <span v-if="bookingCount > 0" class="float-right text-muted">Price type can no longer be changed</span>
                         <div class="form-check">
                             <input v-model="seatType" class="form-check-input" type="radio" name="seat_type" id="seat_plan" value="seat_plan" checked :disabled="disabled">

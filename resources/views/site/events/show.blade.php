@@ -32,7 +32,7 @@
                                 <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-money-bill"></i> Preis ab €{{ $event->price ?? 0 }}
+                                <i class="fas fa-money-bill"></i> Preis ab €{{ number_format($event->price ?? 0, 2, ',', '') }}
                             </div>
                         </div>
                     </div>
@@ -69,47 +69,39 @@
                 ></seat-plan>
 {{--                <seat-plan :event-id="{{ $event->id }}"></seat-plan>--}}
             </div>
-        </div>
+            @php
+                $partners = $event->getMedia('partners');
+            @endphp
+
+            @if($partners->isNotEmpty())
+                <div class="container card py-1 py-md-3 px-1 mt-3">
+                    <div class="col">
+                        <h2 class="event-title text-center mb-4">Sponsoren</h2>
+                        <div class="logo-banner d-flex flex-wrap justify-content-between">
+                            @foreach($partners as $partner)
+                                <img src="{{ $partner->getUrl() }}" alt="Partner Image" style="height:150px" class="rounded partner-image">
+                            @endforeach
+                        </div>
+
+                    </div>
+                </div>
+            @endif
     </div>
 
 
-        <!-- Popup Modal -->
-    {{--    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">--}}
-    {{--        <div class="modal-dialog modal-dialog-centered" role="document">--}}
-    {{--            <div class="modal-content">--}}
-    {{--                <div class="modal-header">--}}
-    {{--                    <h5 class="modal-title" id="popupModalLabel">Your Places</h5>--}}
-    {{--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-    {{--                        <span aria-hidden="true">&times;</span>--}}
-    {{--                    </button>--}}
-    {{--                </div>--}}
-    {{--                <div class="modal-body">--}}
-    {{--                    <ul class="list-group" id="ticketList">--}}
-    {{--                        <!-- Add rows for selected tickets here -->--}}
-    {{--                        <li class="list-group-item d-flex justify-content-between align-items-center">Row 1 - Seat 1<span class="badge badge-primary badge-pill">€ 39,90</span><span class="remove-icon" onclick="removeTicket(this)">Remove</span></li>--}}
-    {{--                    </ul>--}}
-    {{--                </div>--}}
-    {{--                <div class="modal-footer">--}}
-    {{--                    <div>Total</div>--}}
-    {{--                    <div>€ 45,90</div>--}}
-    {{--                    <button type="button" class="btn btn-warning" onclick="checkout()">To the checkout</button>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 
-    {{--    <div class="card">--}}
-    {{--        <div class="card-body">--}}
-    {{--            <h5 class="card-title">{{ $event?->name ?? '' }}</h5>--}}
-    {{--            <p class="card-text">{{ $event?->description ?? '' }}</p>--}}
-    {{--            <!-- Add more details about the event -->--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 @endif
 @endsection
 
 @section('styles')
     <style>
+        .partner-image {
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .logo-banner {
+            justify-content: space-between;
+        }
         .event-banner {
             padding: 20px;
             background-color: #f8f9fa;

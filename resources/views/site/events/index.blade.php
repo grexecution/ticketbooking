@@ -55,14 +55,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <p><i class="fas fa-clock"></i> {{ $event->start_date?->format('g:i a') ?? '' }} - {{ $event->start_time?->format('g:i a') ?? '' }}</p>
+                                        <p><i class="fas fa-clock"></i> Start: {{ $event->start_time?->format('g:i a') ?? '' }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <p>
-                                            <i class="fas fa-money-bill"></i> Tickets ab €{{ $event->price ?? 0 }},-
-                                        </p>
+                                        <p><i class="fas fa-money-bill"></i> Tickets ab €{{ number_format($event->price ?? 0, 2, ',', '') }}<small> inkl. MwsT</small></p>                                        </p>
                                     </div>
                                 </div>
                             </div>
