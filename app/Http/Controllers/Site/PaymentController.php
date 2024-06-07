@@ -161,7 +161,6 @@ class PaymentController extends Controller
         if ($order) {
             $order->update([
                 'order_status' => $paymentIntent->status,
-                'is_paid' => true,
             ]);
         }
 
@@ -175,7 +174,10 @@ class PaymentController extends Controller
                         $order->event->id,
                         $t->id,
                     ]); // Example of data: 6_6_14
-                    $ticket->update(['qr_data' => $qrData]);
+                    $ticket->update([
+                        'is_paid' => true,
+                        'qr_data' => $qrData,
+                    ]);
                     $tmpFileName = $QRCodeService->createQR($qrData);
                     Mail::to($order->email)->send(new OrderInvoice($order));
                     Mail::to($order->email)->send(new OrderTickets($order));
