@@ -78,7 +78,7 @@
                                                 {{ $event->start_date?->format('l, F j, Y') ?? '' }}
                                             </div>
                                             <div>
-                                                Start: {{ $event->start_time?->format('g:i a') ?? '' }}
+                                                Start: {{ $event->start_time?->format('H:i') ?? '' }}
                                             </div>
                                         </td>
                                         <td class="col-md-1 event-body text-center">
