@@ -214,22 +214,33 @@ class EventController extends Controller
         if (! $request->categories_json) {
             return;
         }
-
-        DB::table('event_seat_plan_categories')->where('event_id', $event->id)->delete();
         $categoriesData = json_decode($request->categories_json);
 
-        collect($categoriesData->seat_plan_categories)->each(function (\stdClass $category) use ($categoriesData, $event) {
-            EventSeatPlanCategory::query()->create([
-                'seat_plan_id' => $categoriesData->id,
-                'event_id' => $event->id,
-                'name' => $category->name,
-                'price' => $category->price,
-                'places' => $category->places,
-                'rows' => $category->rows,
-                'seats' => $category->seats,
-                'aisles_after' => $category->aisles_after,
-                'description' => $category->description,
-            ]);
-        });
+        if ($event->has_bought_tickets) {
+            collect($categoriesData->seat_plan_categories)->each(function ($categoryArr) use ($request, $event) {
+                EventSeatPlanCategory::query()->find($categoryArr->id)->update([
+                    'name' => $categoryArr->name,
+                    'price' => $categoryArr->price,
+                    'description' => $categoryArr->description,
+                ]);
+            });
+
+        } else {
+            DB::table('event_seat_plan_categories')->where('event_id', $event->id)->delete();
+
+            collect($categoriesData->seat_plan_categories)->each(function (\stdClass $category) use ($categoriesData, $event) {
+                EventSeatPlanCategory::query()->create([
+                    'seat_plan_id' => $categoriesData->id,
+                    'event_id' => $event->id,
+                    'name' => $category->name,
+                    'price' => $category->price,
+                    'places' => $category->places,
+                    'rows' => $category->rows,
+                    'seats' => $category->seats,
+                    'aisles_after' => $category->aisles_after,
+                    'description' => $category->description,
+                ]);
+            });
+        }
     }
 }

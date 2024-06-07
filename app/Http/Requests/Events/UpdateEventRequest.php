@@ -58,7 +58,7 @@ class UpdateEventRequest extends FormRequest
             'start_time' => 'sometimes|nullable|string',
             'doors_open_time' => 'sometimes|nullable|string',
             'price' => 'sometimes|nullable|string',
-            'seat_type' => 'required|in:seat_plan,no_seat_plan',
+            'seat_type' => 'sometimes|nullable|in:seat_plan,no_seat_plan',
             'seat_amount' => 'sometimes|nullable|numeric',
             'logo' => 'sometimes|nullable|string',
             'logo_origin_names' => 'sometimes|nullable|array',
