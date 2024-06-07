@@ -278,7 +278,7 @@
                                                 <!-- Select input for Venue -->
                                                 <select class="form-control" id="venue" name="venue_id" {{ $isEnded ? 'disabled' : '' }}>
                                                     @foreach($venues as $venue)
-                                                        <option value="{{ $venue->id }}" {{ old('venue_id', $event->venue_id) == $event->venue_id ? 'selected' : '' }} {{ $isEnded ? 'disabled' : '' }}>{{ $venue->name }}</option>
+                                                        <option value="{{ $venue->id }}" {{ old('venue_id', $event->venue_id) == $venue->id ? 'selected' : '' }} {{ $isEnded ? 'disabled' : '' }}>{{ $venue->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('venue_id')
