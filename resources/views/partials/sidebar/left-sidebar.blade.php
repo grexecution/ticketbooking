@@ -13,9 +13,9 @@
             <div class="user-panel mt-3 pb-4 pt-4 mb-3 d-flex flex-column">
                 <div class="">
                     @if(auth()->user()?->tenant?->avatar_url)
-                        <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded w-100" alt="User Image">
+                        <img src="{{ auth()->user()->tenant->avatar_url }}" class="elevation-2 rounded w-50" alt="User Image">
                     @else
-                        <img src="{{ asset('/img/default_stage.jpg') }}" class="elevation-2 rounded w-100" alt="User Image">
+                        <img src="{{ asset('/img/default_stage.jpg') }}" class="elevation-2 rounded w-50" alt="User Image">
                     @endif
                 </div>
                 <div class="info pt-3">
