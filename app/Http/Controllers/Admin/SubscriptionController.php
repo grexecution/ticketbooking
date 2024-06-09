@@ -171,8 +171,6 @@ class SubscriptionController extends Controller
 
         $subscription->events()->sync([]);
 
-
-        $toDeleteCatIds = [];
         foreach ($eventsArr as $eventArr) {
             $subscription->events()->attach($eventArr['event_id'], [
                 'type' => $eventArr['type'],
@@ -183,13 +181,16 @@ class SubscriptionController extends Controller
             // Save subscription categories
             $event = Event::query()->find($eventArr['event_id']);
             // Delete sub categories after creating new ones
+            // Todo check if any tickets was bought or booked (create is_subscription field in tickets table)
             $toDeleteSubCatIds = $event->seatPlanCategoriesForSubscriptions->pluck('id')->toArray();
 
+            $parentId = null;
             foreach ($eventArr['category_ids'] as $categoryId) {
+                /** @var EventSeatPlanCategory $eventRelatedCategory */
                 $eventRelatedCategory = EventSeatPlanCategory::query()->find($categoryId);
-                if (! $eventRelatedCategory->subscription_id) {
+//                if (! $eventRelatedCategory->subscription_id) {
                     $parentId = $eventRelatedCategory->id;
-                }
+//                }
                 EventSeatPlanCategory::query()->create([
                     'parent_id' => $parentId,
                     'seat_plan_id' => SeatPlan::SEAT_PLAN_CUSTOM_ID,
@@ -198,9 +199,9 @@ class SubscriptionController extends Controller
                     'name' => $eventRelatedCategory->name,
                     'price' => $eventArr['sum'],
                     'places' => $eventRelatedCategory->places,
-                    'rows' => 0,
-                    'seats' => 0,
-                    'aisles_after' => 0,
+                    'rows' => $eventRelatedCategory->rows,
+                    'seats' => $eventRelatedCategory->seats,
+                    'aisles_after' => $eventRelatedCategory->aisles_after,
                     'description' => $eventRelatedCategory?->description ?? '',
                 ]);
             }

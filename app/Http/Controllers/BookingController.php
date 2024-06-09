@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Event;
 use App\Models\SeatPlan\EventSeatPlanCategory;
+use App\Services\BookingService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -120,7 +121,7 @@ class BookingController extends Controller
             for ($i = 0; $i < $ticket['count']; $i++) {
                 $booking = Booking::create([
                     'event_id' => $ticket['event_id'],
-                    'event_seat_plan_category_id' => $ticket['id'],
+                    'event_seat_plan_category_id' => $ticket['parent_id'],
                     'session_id' => $sessionId,
                     'seat' => $ticket['seat'] ?? null,
                     'row' => $ticket['row'] ?? null,
@@ -131,6 +132,23 @@ class BookingController extends Controller
         }
 
         return response()->json(['bookings' => $bookings, 'session_id' => $sessionId]);
+    }
+
+    public function checkTicketsAvailable(Request $request, BookingService $bookingService) : JsonResponse
+    {
+        $request->validate([
+            'category_id' => 'required|exists:event_seat_plan_categories,id',
+            'count' => 'required|integer|min:1',
+        ]);
+
+        /** @var EventSeatPlanCategory $category */
+        $category = EventSeatPlanCategory::query()->with(['bookings'])->find($request->category_id);
+        [$return, $nearby] = $bookingService->findAvailableTicketsByCategory($category, $request->count);
+
+        return response()->json([
+            'seats' => $return,
+            'nearby' => $nearby,
+        ]);
     }
 
     public function getBookingStartTime($sessionId) : JsonResponse

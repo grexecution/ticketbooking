@@ -30,6 +30,11 @@ class EventSeatPlanCategory extends Model
         'description',
     ];
 
+    public function parent() : BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     public function seatPlan() : BelongsTo
     {
         return $this->belongsTo(SeatPlan::class);

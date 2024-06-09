@@ -37,14 +37,17 @@ export default {
                 event.seat_plan_categories_for_subscriptions = event.seat_plan_categories_for_subscriptions.map(category => {
                     return {
                         id: category.id,
+                        parent_id: category.parent_id,
                         event_id: event.id,
                         subscription_id: this.subscriptionId,
+                        seat_type: event.seat_type,
                         categoryName: category.name,
                         price: category.price,
                         total: this.formatPrice(category.price),
                         description: category.description,
                         name: 'Subscription',
                         count: 0,
+                        seats: [],
                         eventName: event.name,
                         eventDate: this.formatDate(event.start_date),
                         eventTime: this.formatTime(event.start_time),
@@ -55,29 +58,91 @@ export default {
             });
         },
         filterTickets(events) {
-            const categories = [];
+            const tickets = [];
+            const selectedEventIds = [];
             events.forEach(event => {
                 event.seat_plan_categories_for_subscriptions.forEach(category => {
                     if (category.count > 0) {
-                        category.total = this.formatPrice(category.price * category.count);
-                        categories.push(category);
+                        if (category.seat_type === 'seat_plan') {
+                            category.seats.forEach(obj => {
+                                Object.entries(obj).forEach(([key, value]) => {
+                                    // console.log(`row: ${key}, seat: ${value}`);
+                                    const ticket = {
+                                        id: category.id,
+                                        parent_id: category.parent_id,
+                                        event_id: category.event_id,
+                                        subscription_id: category.subscription_id,
+                                        categoryName: category.categoryName,
+                                        price: category.price,
+                                        description: category.description,
+                                        name: category.name,
+                                        row: key,
+                                        seat: value,
+                                        count: 1,
+                                        total: this.formatPrice(category.price * 1),
+                                        eventName: category.eventName,
+                                        eventDate: category.eventDate,
+                                        eventTime: category.eventTime,
+                                        eventLocation: category.eventLocation
+                                    };
+                                    tickets.push(ticket);
+                                    selectedEventIds.push(category.event_id);
+                                });
+                            });
+                        } else {
+                            tickets.push({
+                                id: category.id,
+                                parent_id: category.parent_id,
+                                event_id: category.event_id,
+                                subscription_id: category.subscription_id,
+                                categoryName: category.categoryName,
+                                price: category.price,
+                                description: category.description,
+                                name: category.name,
+                                row: null,
+                                seat: null,
+                                count: category.count,
+                                total: this.formatPrice(category.price * category.count),
+                                eventName: category.eventName,
+                                eventDate: category.eventDate,
+                                eventTime: category.eventTime,
+                                eventLocation: category.eventLocation
+                            });
+                            selectedEventIds.push(category.event_id);
+                        }
                     }
                 });
             });
-            return categories;
+
+            const uniqueSelectedEventIds = selectedEventIds.reduce((accumulator, value) => {
+                if (!accumulator.includes(value)) {
+                    accumulator.push(value);
+                }
+                return accumulator;
+            }, []);
+
+            return { tickets, uniqueSelectedEventIds };
         },
         proceedToCheckout() {
-            this.errorMsg = null;
+            console.log('pol')
+            this.errorMsg = null
             if (this.isCheckoutDisabled) {
                 this.showToastMessage('Please select tickets to continue');
+                this.errorMsg = 'Please select tickets to continue';
                 return;
             }
-            if (this.subscription.used >= this.subscription.max_usage) {
+            if (this.subscription.max_usage !== 0 && this.subscription.used >= this.subscription.max_usage) {
                 this.errorMsg = 'The number of subscriptions issued reached a maximum';
                 return;
             }
 
-            const tickets = this.filterTickets(this.events);
+            const { tickets, uniqueSelectedEventIds } = this.filterTickets(this.events);
+            console.log(this.events.length, uniqueSelectedEventIds)
+            if (this.events.length !== uniqueSelectedEventIds.length) {
+                this.errorMsg = 'The number of subscriptions events does not equals to selected events';
+                return;
+            }
+            console.log(tickets)
             const total = this.calculateTotal(tickets);
 
             Cookies.set('cart_tickets', JSON.stringify(tickets));
@@ -117,6 +182,41 @@ export default {
                     this.showToastMessage('Error booking the tickets. Please try again.');
                 }
             }
+        },
+        increaseTicketCount(category) {
+            category.count++
+            // console.log('category.seat_type', category.seat_type)
+            // console.log(category.seat_type === 'seat_plan')
+            if (category.seat_type === 'seat_plan') {
+                this.handleTicketsAbility(category)
+            }
+        },
+        decreaseTicketCount(category) {
+            if (category.count > 0) {
+                category.count--
+                if (category.seat_type === 'seat_plan') {
+                    this.handleTicketsAbility(category)
+                }
+            } else {
+                category.count = 0
+                category.seats = []
+            }
+        },
+        handleTicketsAbility(category) {
+            axios.post(`/bookings/check-tickets-availability/${category.id}`, {
+                category_id: category.id,
+                count: category.count
+            }).then(response => {
+                this.errorMsg = ''
+                if (response.data.seats.length === 0) {
+                    this.errorMsg = `The seats are not found in "${category.categoryName}" of "${category.eventName}"`
+                } else if (response.data.nearby === false) {
+                    this.errorMsg = `The seats are not next to each other in "${category.categoryName}" of "${category.eventName}"`
+                }
+                category.seats = response.data.seats
+            }).catch(error => {
+                console.log(error);
+            })
         },
         convertPriceToFloat(price) {
             return parseFloat(price.replace(',', ''))
@@ -190,10 +290,15 @@ export default {
                                         <p class="category-title text-nowrap">€ {{ category.price }}</p>
                                     </div>
                                     <div class="quantity-selector">
-                                        <button @click="category.count > 0 ? category.count-- : 0" type="button" class="btn">-</button>
+                                        <button @click="decreaseTicketCount(category)" type="button" class="btn">-</button>
                                         <span class="px-3">{{ category.count }}</span>
-                                        <button @click="category.count++" type="button" class="btn">+</button>
+                                        <button @click="increaseTicketCount(category)" type="button" class="btn">+</button>
                                     </div>
+                                </div>
+                            </div>
+                            <div v-if="category.seat_type === 'seat_plan'" v-for="(seat, index) in category.seats" :key="index">
+                                <div v-for="(value, key) in seat">
+                                    Row: {{ key }}, Seat: {{ value }};
                                 </div>
                             </div>
                         </div>
@@ -202,7 +307,7 @@ export default {
             </div>
             <div class="text-right">
                 <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
-                <a @click.prevent="proceedToCheckout" :disabled="isCheckoutDisabled" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
+                <a @click.prevent="proceedToCheckout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
             </div>
         </div>
     </div>

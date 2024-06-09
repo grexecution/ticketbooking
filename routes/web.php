@@ -48,6 +48,7 @@ Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets'
 Route::post('/bookings/bookSubscriptionTickets', [BookingController::class, 'bookSubscriptionTickets']);
 Route::post('/bookings/start-time/{session_id}', [BookingController::class, 'getBookingStartTime']);
 Route::post('/bookings/expire-session/{session_id}', [BookingController::class, 'expireBookings']);
+Route::post('/bookings/check-tickets-availability/{category_id}', [BookingController::class, 'checkTicketsAvailable']);
 Route::get('/subscriptions/{id}', [App\Http\Controllers\Site\SubscriptionController::class, 'show'])->name('subscriptions.show');
 
 // Payments
