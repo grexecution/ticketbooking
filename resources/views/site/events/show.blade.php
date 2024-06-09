@@ -13,7 +13,7 @@
                     <!-- Title -->
                     <div class="row">
                         <div class="col">
-                            <h1 class="event-title">{{ $isPreview ? 'Preview: ' : '' }}{{ $event->name }}</h1>
+                            <h1 class="event-title">{{ $isPreview ? __('messages.preview') : '' }}{{ $event->name }}</h1>
                         </div>
                     </div>
                     <!-- Description -->
@@ -32,7 +32,7 @@
                                 <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}
                             </div>
                             <div class="event-detail">
-                                <i class="fas fa-money-bill"></i> Preis ab €{{ number_format($event->price ?? 0, 2, ',', '') }}
+                                <i class="fas fa-money-bill"></i> @lang('messages.price_from') €{{ number_format($event->price ?? 0, 2, ',', '') }}
                             </div>
                         </div>
                     </div>
@@ -40,8 +40,7 @@
             </div>
             <!-- Event Image -->
             <div class="col-lg-5 mb-3 mb-md-0">
-{{--                <img src="{{ asset('img/event_detail.png') }}" alt="Event Image" class="img-fluid rounded">--}}
-                <img src="{{ $event->logo_event_url }}" alt="Event Image" class="img-fluid rounded event-image w-100">
+                <img src="{{ $event->logo_event_url }}" alt="@lang('messages.event_image')" class="img-fluid rounded event-image w-100">
             </div>
         </div>
     </div>
@@ -51,7 +50,7 @@
     <div class="main-bg">
         <div class="row py-6 mb-5 container m-auto">
             <div class="col">
-                <div class="text-center mb-2 bg-white py-6">This Event is not available</div>
+                <div class="text-center mb-2 bg-white py-6">@lang('messages.event_not_available')</div>
             </div>
         </div>
     </div>
@@ -60,33 +59,33 @@
     <no-seat-plan
         event-id="{{ $event->id }}"
     ></no-seat-plan>
-@else
-    <div class="main-bg py-6">
-        <div class="row py-6 mb-5 container m-auto">
-            <div class="container card py-1 py-md-3 px-1">
-                <seat-plan
-                    event-id="{{ $event->id }}"
-                ></seat-plan>
-{{--                <seat-plan :event-id="{{ $event->id }}"></seat-plan>--}}
-            </div>
-            @php
-                $partners = $event->getMedia('partners');
-            @endphp
-
-            @if($partners->isNotEmpty())
-                <div class="container card py-1 py-md-3 px-1 mt-3">
-                    <div class="col">
-                        <h2 class="event-title text-center mb-4">Sponsoren</h2>
-                        <div class="logo-banner d-flex flex-wrap justify-content-between">
-                            @foreach($partners as $partner)
-                                <img src="{{ $partner->getUrl() }}" alt="Partner Image" style="height:150px" class="rounded partner-image">
-                            @endforeach
-                        </div>
-
-                    </div>
+    @else
+        <div class="main-bg py-6">
+            <div class="row py-6 mb-5 container m-auto">
+                <div class="container card py-1 py-md-3 px-1">
+                    <seat-plan
+                        event-id="{{ $event->id }}"
+                    ></seat-plan>
                 </div>
-            @endif
-    </div>
+                @php
+                    $partners = $event->getMedia('partners');
+                @endphp
+
+                @if($partners->isNotEmpty())
+                    <div class="container card py-1 py-md-3 px-1 mt-3">
+                        <div class="col">
+                            <h2 class="event-title text-center mb-4">@lang('messages.sponsors')</h2>
+                            <div class="logo-banner d-flex flex-wrap justify-content-between">
+                                @foreach($partners as $partner)
+                                    <img src="{{ $partner->getUrl() }}" alt="@lang('messages.partner_image')" style="height:150px" class="rounded partner-image">
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+                @endif
+            </div>
+
 
 
 
