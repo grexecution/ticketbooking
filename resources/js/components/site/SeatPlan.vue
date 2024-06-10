@@ -12,6 +12,7 @@ export default {
     },
     data() {
         return {
+            discounts: [],
             seatCategories: [],
             categories: [],
             bookings: [],
@@ -41,8 +42,19 @@ export default {
         processEventData(data) {
             this.event = data;
             this.bookings = data.bookings;
+            this.processDiscounts(data.discounts);
             this.boughtTickets = this.generateBoughtTickets(data.orders);
             this.seatCategories = this.generateSeatCategories(data.seat_plan_categories);
+        },
+        processDiscounts(discounts) {
+            this.discounts = discounts.map(discount => ({
+                id: discount.id,
+                name: discount.name,
+                type: discount.type,
+                fixed: discount.fixed,
+                percentage: discount.percentage,
+                description: discount.description
+            }));
         },
         generateBoughtTickets(orders) {
             const boughtTickets = [];
@@ -61,15 +73,37 @@ export default {
         generateSeatCategories(categories) {
             return categories.map((category, categoryIndex) => {
                 const aislesAfterArr = category.aisles_after.split(',').map(Number);
+                const discountPrices = this.calculateDiscountPrices(category);
+                const regularPrice = {
+                    name: 'Regular',
+                    price: category.price,
+                    count: 0,
+                }
+
                 return {
                     id: category.id,
                     name: category.name,
-                    price: category.price,
+                    price: category.price, // uses by default
+                    prices: [regularPrice, ...discountPrices],
                     rows: Array(category.rows)
                         .fill()
                         .map((_, rowIndex) => {
                             return this.generateRow(category.seats, aislesAfterArr, rowIndex + 1, categoryIndex + 1, category.id, category.name)
                         })
+                };
+            });
+        },
+        calculateDiscountPrices(category) {
+            return this.discounts.map(discount => {
+                const price = discount.type === 'percentage'
+                    ? category.price - (category.price * (discount.percentage / 100))
+                    : category.price - discount.fixed;
+
+                return {
+                    discount_id: discount.id,
+                    name: discount.name,
+                    price: price,
+                    count: 0
                 };
             });
         },
@@ -104,10 +138,15 @@ export default {
             return row;
         },
         selectSeat(categoryIndex, rowIndex, seatIndex) {
-            let seat = this.seatCategories[categoryIndex].rows[rowIndex][seatIndex];
+            const category = this.seatCategories[categoryIndex]
+            let seat = category.rows[rowIndex][seatIndex];
             seat.selected = !seat.selected;
             if (seat.selected) {
-                this.cart.push({ ...seat, price: this.seatCategories[categoryIndex].price });
+                this.cart.push({
+                    ...seat,
+                    price: this.seatCategories[categoryIndex].price,
+                    prices: category.prices
+                });
             } else {
                 let index = this.cart.findIndex(cartSeat => cartSeat.number === seat.number && cartSeat.rowNumber === seat.rowNumber && cartSeat.categoryIndex === seat.categoryIndex);
                 if (index !== -1) {
@@ -150,6 +189,7 @@ export default {
                     count: 1,
                     name: 'Regular',
                     price: category.price,
+                    prices: category.prices, // uses when there are some discounts
                     row: category.number,
                     seat: category.seatNumber,
                     total: this.formatPrice(category.price),
@@ -238,7 +278,13 @@ export default {
                             <p>1x {{ seat.categoryName }}</p>
                             <div class="d-flex flex-col px-0">
                                 <small>Reihe: {{ seat.number }}, Platz: {{ seat.seatNumber }}</small>
-                                <small><strong>Preis: {{ formatPrice(seat.price) }}</strong></small>
+                                <small v-if="seat.prices.length === 1"><strong>Preis: {{ formatPrice(seat.price) }}</strong></small>
+                                <div v-if="seat.prices.length > 1">
+                                    <label>Preis: </label>
+                                    <select v-model="seat.price" class="form-control">
+                                        <option v-for="(price, index) in seat.prices" :key="index" :value="price.price">{{ formatPrice(price.price) }}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <button @click="removeSeat(seat)" class="delete-button" style=""></button>
