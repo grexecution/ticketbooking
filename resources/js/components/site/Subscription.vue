@@ -25,7 +25,6 @@ export default {
             try {
                 const response = await axios.get(`/api/subscriptions/${subscriptionId}`);
                 this.subscription = response.data;
-                console.log('response.data', response.data);
                 this.processEvents(response.data.eventsLive)
             } catch (error) {
                 console.error("Error fetching subscription data:", error);
@@ -124,7 +123,6 @@ export default {
             return { tickets, uniqueSelectedEventIds };
         },
         proceedToCheckout() {
-            console.log('pol')
             this.errorMsg = null
             if (this.isCheckoutDisabled) {
                 this.showToastMessage('Please select tickets to continue');
@@ -137,12 +135,12 @@ export default {
             }
 
             const { tickets, uniqueSelectedEventIds } = this.filterTickets(this.events);
-            console.log(this.events.length, uniqueSelectedEventIds)
+
             if (this.events.length !== uniqueSelectedEventIds.length) {
                 this.errorMsg = 'The number of subscriptions events does not equals to selected events';
                 return;
             }
-            console.log(tickets)
+
             const total = this.calculateTotal(tickets);
 
             Cookies.set('cart_tickets', JSON.stringify(tickets));
@@ -185,15 +183,13 @@ export default {
         },
         increaseTicketCount(category) {
             category.count++
-            // console.log('category.seat_type', category.seat_type)
-            // console.log(category.seat_type === 'seat_plan')
             if (category.seat_type === 'seat_plan') {
                 this.handleTicketsAbility(category)
             }
         },
         decreaseTicketCount(category) {
+            category.count--
             if (category.count > 0) {
-                category.count--
                 if (category.seat_type === 'seat_plan') {
                     this.handleTicketsAbility(category)
                 }
