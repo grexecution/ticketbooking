@@ -48,10 +48,10 @@ class UpdateSubscriptionRequest extends FormRequest
             'logo' => 'sometimes|nullable|string',
             'logo_origin_names' => 'sometimes|nullable|array',
             'logo_sizes' => 'sometimes|nullable|array',
-            'event_ids' => 'required|nullable|array',
+            'event_ids' => 'sometimes|nullable|array',
             'category_ids' => 'required|nullable|array',
-            'type' => 'required|nullable|array',
-            'discount' => 'required|nullable|array',
+            'type' => 'sometimes|nullable|array',
+            'discount' => 'sometimes|nullable|array',
             'sum' => 'required|nullable|array',
         ];
     }

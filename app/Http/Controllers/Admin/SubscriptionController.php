@@ -93,7 +93,11 @@ class SubscriptionController extends Controller
     {
         abort_if(Gate::denies('subscription_access'), Response::HTTP_FORBIDDEN);
         $subscription->load(['events']);
-        $selectedEvents = $subscription->events->map(function (Event $event) {
+        $hasBoughtTickets = false;
+        $selectedEvents = $subscription->events->map(function (Event $event) use (&$hasBoughtTickets) {
+            if ($event->has_bought_tickets) {
+                $hasBoughtTickets = true;
+            }
             $event->load(['seatPlanCategories', 'seatPlanCategoriesForSubscriptions']);
             $event = $event->toArray();
 
@@ -108,7 +112,7 @@ class SubscriptionController extends Controller
            ];
         });
 
-        return view('admin.subscriptions.edit', compact('subscription', 'selectedEvents'));
+        return view('admin.subscriptions.edit', compact('subscription', 'selectedEvents', 'hasBoughtTickets'));
     }
 
     /**
@@ -126,9 +130,18 @@ class SubscriptionController extends Controller
                 MediaHelper::handleMedia($subscription, 'logo', $request->logo);
             }
 
-            $result = $this->handleSelectedEvents($request, $subscription);
-            if (! $result) {
-                return redirect()->route('subscriptions.edit', $request->id)->with('error', 'Invalid Sales volume!');
+            $hasBoughtTickets = false;
+            $subscription->events->each(function (Event $event) use (&$hasBoughtTickets) {
+                if ($event->has_bought_tickets) {
+                    $hasBoughtTickets = true;
+                }
+            });
+
+            if (! $hasBoughtTickets) {
+                $result = $this->handleSelectedEvents($request, $subscription);
+                if (! $result) {
+                    return redirect()->route('subscriptions.edit', $request->id)->with('error', 'Invalid Sales volume!');
+                }
             }
 
             $subscription->update($toUpdate);
@@ -180,8 +193,6 @@ class SubscriptionController extends Controller
 
             // Save subscription categories
             $event = Event::query()->find($eventArr['event_id']);
-            // Delete sub categories after creating new ones
-            // Todo check if any tickets was bought or booked (create is_subscription field in tickets table)
             $toDeleteSubCatIds = $event->seatPlanCategoriesForSubscriptions->pluck('id')->toArray();
 
             $parentId = null;

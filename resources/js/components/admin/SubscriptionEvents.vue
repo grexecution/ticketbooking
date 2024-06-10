@@ -10,12 +10,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="text-right" style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">Select All</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">Deselect All</span>
+                                <span v-if="!hasBoughtTickets" class="btn btn-info btn-xs select-all" style="border-radius: 0">Select All</span>
+                                <span v-if="!hasBoughtTickets" class="btn btn-info btn-xs deselect-all" style="border-radius: 0">Deselect All</span>
                             </div>
                         </div>
                         <div class="col-md-6 mb-2">
-                            <select v-model="selected" name="event_ids[]" class="form-control select2" id="selectEvent" multiple="multiple">
+                            <select v-model="selected" name="event_ids[]" class="form-control select2" id="selectEvent" multiple="multiple" :disabled="hasBoughtTickets">
                                 <option v-for="event in allEvents" :value="event.id">{{ event.name }}</option>
                             </select>
                         </div>
@@ -32,7 +32,7 @@
                             <th>Seat Category</th>
                             <th>Sales volume</th>
                             <th>
-                                <button @click="dividePrice" type="button" class="btn btn-dark">
+                                <button @click="dividePrice" type="button" class="btn btn-dark" :disabled="hasBoughtTickets">
                                     Divide aliquots
                                     <i class="fas fa-arrows-alt-h ml-auto"></i>
                                 </button>
@@ -49,9 +49,9 @@
                                     <button v-if="selectedEvent.seat_plan_categories_for_subscriptions" v-for="category in selectedEvent.seat_plan_categories_for_subscriptions" id="{{ category.id}}" type="button" class="btn btn-dark">
                                         <input type="hidden" :name="'category_ids[' + selectedEvent.id + '][]'" :value="category.id" />
                                         {{ category.name }}
-                                        <i class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
+                                        <i v-if="!hasBoughtTickets" class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
                                     </button>
-                                    <button v-if="!selectedEvent.seat_plan_categories_for_subscriptions" v-for="category in selectedEvent.seat_plan_categories" id="{{ category.id}}" type="button" class="btn btn-dark">
+                                    <button v-if="!selectedEvent.seat_plan_categories_for_subscriptions"  v-for="category in selectedEvent.seat_plan_categories" id="{{ category.id}}" type="button" class="btn btn-dark">
                                         <input type="hidden" :name="'category_ids[' + selectedEvent.id + '][]'" :value="category.id" />
                                         {{ category.name }}
                                         <i class="fas fa-times" @click="deleteEventCategory(selectedEvent.id, category.id)"></i>
@@ -66,6 +66,7 @@
                                         :name="'type[' + selectedEvent.id + ']'"
                                         @change="dividePrice"
                                         class="form-control type"
+                                        :disabled="hasBoughtTickets"
                                     >
                                         <option value="percentage">%</option>
                                         <option value="fixed">Є</option>
@@ -80,6 +81,7 @@
                                         min="0"
                                         class="form-control discount"
                                         placeholder="0"
+                                        :disabled="hasBoughtTickets"
                                     />
                                 </div>
                             </td>
@@ -89,7 +91,7 @@
                                 <input type="hidden" :name="'sum[' + selectedEvent.id + ']'" :value="selectedEvent.sum" />
                             </td>
                             <td>
-                                <a @click="deleteSelectedEvent(selectedEvent.id)" href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1">
+                                <a v-if="!hasBoughtTickets" @click="deleteSelectedEvent(selectedEvent.id)" href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
@@ -125,6 +127,7 @@ export default {
         initPrice: Number,
         initEventIds: Array,
         initSelectedEvents: Object,
+        hasBoughtTickets: Boolean,
     },
     data() {
         return {
