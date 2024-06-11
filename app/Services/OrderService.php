@@ -8,9 +8,14 @@ use App\Models\Voucher;
 
 class OrderService
 {
+    const TAX_PERCENTAGE = 13;
 
     public function createOrder(array $ticketsData, array $customerData, ? Voucher $voucher, ? float $discount) : Order
     {
+        $amount = $ticketsData['amount'];
+        $taxes = round($amount - ($amount * (self::TAX_PERCENTAGE / 100)), 2);
+        $amountWithTaxes = round($amount + $taxes, 2);
+
         /** @var Order $order */
         $order = Order::query()->create([
             'user_id' => null,
@@ -28,10 +33,10 @@ class OrderService
             'order_status' => 'new',
             'order_date' => now(),
             'payment_method' => 'card',
-            'subtotal' => $ticketsData['amount'],
+            'subtotal' => $amount,
             'discount' => $discount,
-            'vat' => null,
-            'total' => $ticketsData['amount'],
+            'vat' => $taxes,
+            'total' => $amountWithTaxes,
         ]);
 
         if ($voucher) {
