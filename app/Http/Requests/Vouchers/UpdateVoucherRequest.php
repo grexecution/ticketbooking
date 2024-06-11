@@ -35,7 +35,7 @@ class UpdateVoucherRequest extends FormRequest
     {
         return [
             'id' => 'required|integer|exists:vouchers,id',
-            'name' => 'required|string|max:255',
+            'name' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9_-]+$/'],
             'description' => 'sometimes|nullable|string|max:4096',
             'type' => 'required|in:fixed,percentage',
             'discount' => 'required|int|min:0',
@@ -43,6 +43,16 @@ class UpdateVoucherRequest extends FormRequest
             'expired_at' => 'sometimes|nullable|date',
             'event_ids' => 'sometimes|array',
             'event_except_ids' => 'sometimes|array',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'name.regex' => 'The name field must be a code containing only lowercase letters, numbers, hyphens, and underscores.',
         ];
     }
 }
