@@ -58,16 +58,12 @@ class PaymentController extends Controller
             discount:  $request->discount,
         );
 
-        if ($request->amountDiscount) {
-            $amount = (float) $request->input('amountDiscount') * 100; // Amount in cents
-        } else {
-            $amount = (float) $request->input('amount') * 100; // Amount in cents
-        }
+        $stripeAmount = $order->total * 100;
         $currency = $request->input('currency', 'eur');
 
         try {
             // Calculate 2% application fee
-            $applicationFeeAmount = round($amount * 0.02);
+            $applicationFeeAmount = round($stripeAmount * 0.02);
 
             $payload = [
                 'payment_method_types' => ['card'],
@@ -77,7 +73,7 @@ class PaymentController extends Controller
                         'product_data' => [
                             'name' => $event->name,
                         ],
-                        'unit_amount' => $amount,
+                        'unit_amount' => $stripeAmount,
                     ],
                     'quantity' => 1,
                 ]],

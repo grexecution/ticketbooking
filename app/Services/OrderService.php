@@ -12,8 +12,9 @@ class OrderService
 
     public function createOrder(array $ticketsData, array $customerData, ? Voucher $voucher, ? float $discount) : Order
     {
-        $amount = $ticketsData['amount'];
-        $taxes = round($amount - ($amount * (self::TAX_PERCENTAGE / 100)), 2);
+        $amount = $ticketsData['amountDiscount'] ?: $ticketsData['amount'];
+        $taxRate = self::TAX_PERCENTAGE / 100;
+        $taxes = round($amount * $taxRate, 2);
         $amountWithTaxes = round($amount + $taxes, 2);
 
         /** @var Order $order */
