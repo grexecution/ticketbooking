@@ -20,6 +20,7 @@ class Voucher extends Model
         'fixed',
         'max_usage',
         'expired_at',
+        'used',
     ];
 
     public function events() : BelongsToMany

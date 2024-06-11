@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\StripeCallback;
 use App\Models\Subscription;
 use App\Models\Ticket;
+use App\Models\Voucher;
 use App\Services\OrderService;
 use App\Services\QRCodeService;
 use App\Services\StripeConnectApi;
@@ -34,6 +35,9 @@ class PaymentController extends Controller
             'event_id' => 'sometimes|exists:events,id',
             'tickets' => 'required|array',
             'amount' => 'required|numeric',
+            'promoCode' => 'sometimes|nullable|exists:vouchers,name',
+            'discount' => 'sometimes|nullable',
+            'amountDiscount' => 'sometimes|nullable',
         ]);
 
         $eventId = $request->input('event_id') ?: $ticketsData['tickets'][0]['event_id']; // $ticketsData['tickets'][0]['event_id'] for subscriptions
@@ -47,9 +51,18 @@ class PaymentController extends Controller
             ], 500);
         }
 
-        $order = app(OrderService::class)->createOrder($ticketsData, Session::get('customer_data'));
+        $order = app(OrderService::class)->createOrder(
+            ticketsData: $ticketsData,
+            customerData: Session::get('customer_data'),
+            voucher: $request->promoCode ? Voucher::where('name', $request->promoCode)->first() : null,
+            discount:  $request->discount,
+        );
 
-        $amount = (float) $request->input('amount') * 100; // Amount in cents
+        if ($request->amountDiscount) {
+            $amount = (float) $request->input('amountDiscount') * 100; // Amount in cents
+        } else {
+            $amount = (float) $request->input('amount') * 100; // Amount in cents
+        }
         $currency = $request->input('currency', 'eur');
 
         try {

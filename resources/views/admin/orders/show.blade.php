@@ -91,7 +91,7 @@
                     <th># ID</th>
                     <th>Ticket</th>
                     <th>Price</th>
-                    <th>Discount</th>
+{{--                    <th>Discount</th>--}}
                     <th>Total</th>
                     <th>Actions</th>
                 </tr>
@@ -102,7 +102,7 @@
                         <td>#{{ $ticket->id }}</td>
                         <td>{{ $ticket->name }}</td>
                         <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->price) }}</td>
-                        <td>{{ $ticket->discount ?: '---' }}</td>
+{{--                        <td>{{ $ticket->discount ?: '---' }}</td>--}}
                         <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($ticket->total) }}</td>
                         <td>
                             <div class="dropdown">

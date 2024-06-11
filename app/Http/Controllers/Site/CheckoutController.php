@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\CustomerDataRequest;
+use App\Models\Event;
 use App\Models\Order;
+use App\Models\Voucher;
+use App\Services\VoucherService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -31,5 +35,45 @@ class CheckoutController extends Controller
             ->findOrFail($request->order_id);
 
         return view('site.checkout.step3', compact('order'));
+    }
+
+    public function applyPromoCode(Request $request, VoucherService $voucherService) : JsonResponse
+    {
+        $request->validate([
+            'promoCode' => 'required|exists:vouchers,name',
+            'eventIds' => 'required|array',
+            'total' => 'required|numeric|min:0',
+        ]);
+
+        /** @var Voucher $voucher */
+        $voucher = Voucher::query()->where('name', $request->promoCode)->first();
+        if ($voucher->max_usage > 0 && $voucher->used >= $voucher->max_usage) {
+            return response()->json([
+                'success' => false,
+                'message' => 'That promo code cannot be used anymore.'
+            ]);
+        }
+
+        $voucherEventIds = $voucher->events->pluck('id')->toArray();
+        $voucherExceptEventIds = $voucher->eventsExcepts->pluck('id')->toArray();
+        foreach ($request->eventIds as $eventId) {
+            if (! in_array($eventId, $voucherEventIds)
+                || ($voucherExceptEventIds && in_array($eventId, $voucherExceptEventIds))
+            ) {
+                $event = Event::find($eventId);
+                return response()->json([
+                    'success' => false,
+                    'message' => "That promo code cannot be applied to event '{$event->name}'."
+                ]);
+            }
+        }
+
+        [$newTotal, $discount] = $voucherService->applyVoucher($voucher, $request->total);
+
+        return response()->json([
+            'success' => true,
+            'newTotal' => $newTotal,
+            'discount' => $discount,
+        ]);
     }
 }

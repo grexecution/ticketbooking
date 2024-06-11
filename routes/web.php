@@ -44,6 +44,7 @@ Route::get('/events/{slug}', [\App\Http\Controllers\Site\EventController::class,
 Route::get('/checkout', [CheckoutController::class, 'showStep1']);
 Route::get('/checkout/step2', [CheckoutController::class, 'showStep2'])->name('checkout.step2');
 Route::get('/checkout/step3', [CheckoutController::class, 'showStep3'])->name('checkout.step3');
+Route::post('/checkout/apply-promo-code', [CheckoutController::class, 'applyPromoCode']);
 Route::post('/bookings/events/{event}', [BookingController::class, 'bookTickets']);
 Route::post('/bookings/bookSubscriptionTickets', [BookingController::class, 'bookSubscriptionTickets']);
 Route::post('/bookings/start-time/{session_id}', [BookingController::class, 'getBookingStartTime']);

@@ -20,6 +20,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'event_id',
+        'voucher_id',
         'first_name',
         'last_name',
         'email',

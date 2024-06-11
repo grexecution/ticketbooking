@@ -16,20 +16,31 @@
             </div>
         </div>
         <hr class="my-3">
-        <div class="d-flex flex-row justify-content-between">
-            <h5 style="font-weight:700">Total:</h5>
-            <h5 style="font-weight:700">€{{ total }}</h5>
-        </div>
-        <form v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">
-            <input type="hidden" name="event_id" :value="eventId">
-            <button type="submit" class="btn btn-continue btn-block mt-3">Buy Now</button>
-            <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
-        </form>
-        <div v-else>
-            <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Select Payment</button>
-        </div>
-        <div class="d-flex justify-content-center">
-            <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
+        <div>
+            <div class="d-flex flex-row justify-content-between">
+                <h5 style="font-weight:700">Total:</h5>
+                <h5 style="font-weight:700">€{{ totalWithDiscount || total }}</h5>
+            </div>
+            <div v-if="discount" class="d-flex flex-row justify-content-between">
+                <h5 style="font-weight:700">Discount:</h5>
+                <h5 style="font-weight:700; color: red;">-€{{ discount }}</h5>
+            </div>
+            <div v-if="isPaymentForm" class="promo-code-container">
+                <input v-model="promoCode" type="text" placeholder="Enter promo code" class="form-control" />
+                <button @click="applyPromoCode(promoCode)" class="btn btn-primary mt-2">Apply</button>
+                <div v-if="promoError" class="text-danger">{{ promoError }}</div>
+            </div>
+            <form ref="paymentForm" v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">
+                <input type="hidden" name="event_id" :value="eventId">
+                <button type="submit" class="btn btn-continue btn-block mt-3">Buy Now</button>
+                <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
+            </form>
+            <div v-else>
+                <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Select Payment</button>
+            </div>
+            <div class="d-flex justify-content-center">
+                <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
+            </div>
         </div>
     </div>
 </template>
@@ -48,10 +59,6 @@ export default {
             type: String,
             required: true
         },
-        // eventId: {
-        //     type: String,
-        //     required: true
-        // },
         isPaymentForm: {
             type: Boolean,
             required: true
@@ -68,11 +75,15 @@ export default {
         return {
             tickets: [],
             total: '0,00',
+            totalWithDiscount: null,
             event: {},
             errorMsg: '',
             time: 10 * 60, // 10 minutes in seconds
             timeIsUp: false,
             startTime: null,
+            promoCode: '',
+            promoError: '',
+            discount: 0.0,
         };
     },
     computed: {
@@ -90,7 +101,6 @@ export default {
         },
     },
     mounted() {
-        // this.fetchEvent(this.eventId);
         this.loadTicketData();
         if (this.isPaymentForm) {
             this.loadStripeScript();
@@ -152,6 +162,9 @@ export default {
             window.location.href = '/'; // Replace with your home route
         },
         sendCustomerData() {
+            if (this.totalWithDiscount) {
+                Cookies.set('cart_total', this.totalWithDiscount);
+            }
             const form = document.getElementById('customer-data-form');
             form.submit();
         },
@@ -188,6 +201,9 @@ export default {
                             event_id: this.eventId,
                             tickets: this.tickets,
                             amount: this.convertPriceToFloat(this.total),
+                            promoCode: this.promoCode,
+                            discount: this.discount > 0 ? parseFloat(this.discount.replace(',', '.')) : null,
+                            amountDiscount: this.totalWithDiscount > 0 ? parseFloat(this.totalWithDiscount.replace(',', '.')) : null,
                         });
 
                         const data = response.data;
@@ -221,6 +237,31 @@ export default {
         convertPriceToFloat(price) {
             return parseFloat(price.replace(',', ''))
         },
+        async applyPromoCode(promoCode) {
+            try {
+                const response = await axios.post('/checkout/apply-promo-code', {
+                    promoCode: promoCode,
+                    total: this.convertPriceToFloat(this.total),
+                    eventIds: this.tickets.flatMap(el => el.event_id)
+                });
+
+                if (response.data.success) {
+                    this.totalWithDiscount = this.formatPrice(response.data.newTotal);
+                    this.discount = this.formatPrice(response.data.discount);
+                    this.promoError = '';
+                } else {
+                    this.promoError = response.data.message;
+                    this.discount = 0.0;
+                }
+            } catch (error) {
+                this.promoError = 'Failed to apply promo code. Please try again.';
+                this.discount = 0.0;
+                this.totalWithDiscount = this.total
+            }
+        },
+        formatPrice(price) {
+            return price.toFixed(2).replace('.', ',');
+        }
     }
 };
 

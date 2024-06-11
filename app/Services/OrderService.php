@@ -4,16 +4,18 @@ namespace App\Services;
 
 use App\Helpers\PriceHelper;
 use App\Models\Order;
+use App\Models\Voucher;
 
 class OrderService
 {
 
-    public function createOrder(array $ticketsData, array $customerData) : Order
+    public function createOrder(array $ticketsData, array $customerData, ? Voucher $voucher, ? float $discount) : Order
     {
         /** @var Order $order */
         $order = Order::query()->create([
             'user_id' => null,
             'event_id' => $ticketsData['event_id'] ?? $ticketsData['tickets'][0]['event_id'],
+            'voucher_id' => $voucher?->id,
             'first_name' => $customerData['first_name'],
             'last_name' => $customerData['last_name'],
             'email' => $customerData['email'],
@@ -27,10 +29,14 @@ class OrderService
             'order_date' => now(),
             'payment_method' => 'card',
             'subtotal' => $ticketsData['amount'],
-            'discount' => null,
+            'discount' => $discount,
             'vat' => null,
             'total' => $ticketsData['amount'],
         ]);
+
+        if ($voucher) {
+            $voucher->increment('used', 1);
+        }
 
         foreach ($ticketsData['tickets'] as &$ticketData) {
             if (is_string($ticketData['price'])) {
