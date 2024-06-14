@@ -47,13 +47,13 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                    @can('finance_access')
-                        <li class="nav-item">
-                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'finance') ? 'active' : '' }}" href="{{ route('finance') }}">
-                                <p>Finance</p>
-                            </a>
-                        </li>
-                    @endcan
+{{--                    @can('finance_access')--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link {{ str_contains(request()->route()->getName(), 'finance') ? 'active' : '' }}" href="{{ route('finance') }}">--}}
+{{--                                <p>Finance</p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                    @endcan--}}
                     @can('tenant_access')
                         <li class="nav-item">
                             <a class="nav-link {{ str_contains(request()->route()->getName(), 'tenants') ? 'active' : '' }}" href="{{ route('tenants.index') }}">

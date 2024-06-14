@@ -100,7 +100,7 @@ Route::get('admin/discounts/delete/{venueId}', [DiscountController::class, 'dest
 Route::resource('admin/vouchers', VoucherController::class)->except('show', 'destroy');
 Route::get('admin/vouchers/delete/{voucherId}', [VoucherController::class, 'destroy'])->name('vouchers.destroy');
 
-Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
+//Route::get('admin/finance', [FinanceController::class, 'index'])->name('finance');
 
 // Settings
 Route::get('admin/settings', [SettingsController::class, 'index'])->name('settings');
