@@ -200,15 +200,15 @@
             },
             acceptedFiles: ".jpeg,.jpg,.png,.gif",
             success: function (file, response) {
-                $('#create_venue').append('<input type="hidden" name="logo" value="' + response.name + '">')
-                $('#create_venue').append('<input type="hidden" name="logo_origin_names[' + response.name + ']" value="' + response.original_name + '">')
-                $('#create_venue').append('<input type="hidden" name="logo_sizes[' + response.name + ']" value="' + response.size + '">')
+                $('#create_venue').append('<input type="hidden" name="logo" value="' + response.name + '">');
+                $('#create_venue').append('<input type="hidden" name="logo_origin_names[' + response.name + ']" value="' + response.original_name + '">');
+                $('#create_venue').append('<input type="hidden" name="logo_sizes[' + response.name + ']" value="' + response.size + '">');
             },
             removedfile: function (file) {
-                file.previewElement.remove()
+                file.previewElement.remove();
                 if (file.status !== 'error') {
-                    $('#create_venue').find('input[name="logo"]').remove()
-                    this.options.maxFiles = this.options.maxFiles + 1
+                    $('#create_venue').find('input[name="logo"]').remove();
+                    this.options.maxFiles = 1;
                 }
             },
             init: function () {
@@ -217,30 +217,22 @@
                 @endphp
 
                 @if($media)
-                let file = {!! json_encode($media) !!}
-                this.options.addedfile.call(this, file)
-                this.options.thumbnail.call(this, file, '{{ $venue->logo_thumb_edit_url }}')
-                file.previewElement.classList.add('dz-complete')
+                let file = {!! json_encode($media) !!};
+                this.options.addedfile.call(this, file);
+                this.options.thumbnail.call(this, file, '{{ $venue->logo_thumb_edit_url }}');
+                file.previewElement.classList.add('dz-complete');
                 $(file.previewElement.querySelector('[class="dz-filename"]')).find('span').text('{{ $media->filename }}');
-                $('#create_venue').append('<input type="hidden" name="logo" value="' + file.name + '">')
-                this.options.maxFiles = this.options.maxFiles - 1
+                $('#create_venue').append('<input type="hidden" name="logo" value="' + file.name + '">');
+                this.options.maxFiles = 0; // Prevent additional file uploads
                 @endif
             },
             error: function (file, response) {
-                if ($.type(response) === 'string') {
-                    let message = response // dropzone sends it's own error messages in string
-                } else {
-                    let message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
+                let message = $.type(response) === 'string' ? response : response.errors.file;
+                file.previewElement.classList.add('dz-error');
+                let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+                _ref.forEach(node => {
+                    node.textContent = message;
+                });
             }
         });
     </script>

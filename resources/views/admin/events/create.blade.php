@@ -316,7 +316,7 @@
                     file.previewElement.remove()
                     if (file.status !== 'error') {
                         $('#create_event').find('input[name="partners[]"]').remove()
-                        this.options.maxFiles = this.options.maxFiles + 1
+                        this.options.maxFiles = 20
                     }
                 },
                 init: function () {
@@ -326,20 +326,12 @@
                     }, 5000);
                 },
                 error: function (file, response) {
-                    if ($.type(response) === 'string') {
-                        let message = response // dropzone sends it's own error messages in string
-                    } else {
-                        let message = response.errors.file
-                    }
-                    file.previewElement.classList.add('dz-error')
-                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                    _results = []
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        node = _ref[_i]
-                        _results.push(node.textContent = message)
-                    }
-
-                    return _results
+                    let message = $.type(response) === 'string' ? response : response.errors.file;
+                    file.previewElement.classList.add('dz-error');
+                    let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+                    _ref.forEach(node => {
+                        node.textContent = message;
+                    });
                 }
             });
 
@@ -364,7 +356,7 @@
                     file.previewElement.remove()
                     if (file.status !== 'error') {
                         $('#create_event').find('input[name="logo"]').remove()
-                        this.options.maxFiles = this.options.maxFiles + 1
+                        this.options.maxFiles = 1
                     }
                 },
                 init: function () {
@@ -374,20 +366,12 @@
                     }, 5000);
                 },
                 error: function (file, response) {
-                    if ($.type(response) === 'string') {
-                        let message = response // dropzone sends it's own error messages in string
-                    } else {
-                        let message = response.errors.file
-                    }
-                    file.previewElement.classList.add('dz-error')
-                    _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                    _results = []
-                    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                        node = _ref[_i]
-                        _results.push(node.textContent = message)
-                    }
-
-                    return _results
+                    let message = $.type(response) === 'string' ? response : response.errors.file;
+                    file.previewElement.classList.add('dz-error');
+                    let _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]');
+                    _ref.forEach(node => {
+                        node.textContent = message;
+                    });
                 }
             });
 
