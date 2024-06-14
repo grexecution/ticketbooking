@@ -218,10 +218,10 @@ export default {
             return parseFloat(price.replace(',', ''))
         },
         formatDate(date) {
-            return date ? new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : '';
+            return date ? new Date(date).toLocaleDateString('de', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }) : '';
         },
         formatTime(time) {
-            return time ? new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' }) : '';
+            return time ? new Date(time).toLocaleTimeString('de', { hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }) : '';
         },
         showToastMessage(message) {
             if (this.isCheckoutDisabled) {
