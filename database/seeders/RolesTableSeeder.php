@@ -45,6 +45,11 @@ class RolesTableSeeder extends Seeder
                 'finance_access',
                 'setting_access',
                 'tenant_access',
+                'event_access',
+                'venue_access',
+                'subscription_access',
+                'discount_access',
+                'voucher_access',
             ],
             RoleService::ROLE_LABEL_ADMIN => [
                 'event_access',
