@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -56,6 +57,7 @@ class OrderController extends Controller
     public function showTickets(string $orderId) : View
     {
         $order = Order::query()->with(['tickets', 'event.venue'])->findOrFail($orderId);
+        abort_if($order->order_status !== 'succeeded', 403);
 
         return  view('admin.orders.tickets', compact('order'));
     }
