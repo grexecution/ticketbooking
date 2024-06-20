@@ -24,16 +24,18 @@
             <p>@lang('site.total'): €{{ $order->total }}</p>
             <p>@lang('site.number_of_tickets'): {{ $order->tickets->count() }}</p>
             <p>@lang('site.email'): @lang('site.delivered')</p>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showTickets', $order->id) }}', '_blank')">
-                    <i class="fa-solid fa-ticket"></i>
-                    @lang('site.view_tickets')
-                </button>
-                <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showInvoice', $order->id) }}', '_blank')">
-                    <i class="fa-solid fa-ticket"></i>
-                    @lang('site.view_invoice')
-                </button>
-            </div>
+            @if($order->status === 'succeeded')
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showTickets', $order->id) }}', '_blank')">
+                        <i class="fa-solid fa-ticket"></i>
+                        @lang('site.view_tickets')
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showInvoice', $order->id) }}', '_blank')">
+                        <i class="fa-solid fa-ticket"></i>
+                        @lang('site.view_invoice')
+                    </button>
+                </div>
+            @endif
             <a href="{{ route('site.event', $order->event->id) }}" type="button" class="btn btn-dark btn-continue">@lang('site.back_to_event')</a>
         </div>
     </div>
