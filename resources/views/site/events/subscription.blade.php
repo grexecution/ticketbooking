@@ -27,13 +27,13 @@
                             <div class="row">
                                 <div class="col d-flex gap-6">
                                     <div class="event-detail">
-                                        <i class="fa fa-calendar-days"></i> {{ count($subscription->events) }} @lang('site.events')
+                                        <i class="fa fa-calendar-days"></i> {{ count($subscription->events) }} @lang('messages.events')
                                     </div>
                                     <div class="event-detail">
-                                        <i class="fa fa-map-marker-alt"></i> {{ $subscription->events->pluck('venue')->unique()->count() }} @lang('site.event_locations')
+                                        <i class="fa fa-map-marker-alt"></i> {{ $subscription->events->pluck('venue')->unique()->count() }} @lang('messages.event_locations')
                                     </div>
                                     <div class="event-detail">
-                                        <i class="fas fa-money-bill"></i> @lang('site.price_from') €{{ $subscription->price ?? 0 }}
+                                        <i class="fas fa-money-bill"></i> @lang('messages.price_from') €{{ $subscription->price ?? 0 }}
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                     </div>
                     <!-- Subscription Image -->
                     <div class="col-lg-4">
-                        <img src="{{ $subscription->logo_sub_url }}" alt="@lang('site.subscription_image')" class="img-fluid rounded event-image">
+                        <img src="{{ $subscription->logo_sub_url }}" alt="@lang('messages.subscription_image')" class="img-fluid rounded event-image">
                     </div>
                 </div>
             </div>
