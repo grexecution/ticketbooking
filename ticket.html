@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketmaster Ticket Scanner</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .ticket-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .ticket-container img {
+            max-width: 100%;
+        }
+        .valid-ticket {
+            color: green;
+        }
+        .details {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="ticket-container">
+    <h1 class="mb-4">Ticketmaster Ticket Scanner</h1>
+    <img src="path/to/your/qr-code-image.png" alt="QR Code" class="img-fluid mb-3">
+    <div class="valid-ticket">
+        <h2 class="mb-3">Ticket gültig</h2>
+        <div class="details">
+            <h3>Flo & Wisch - Gefühlsecht</h3>
+            <p>24.03.2024 - 14:00</p>
+            <p>Kategorie A<br>Reihe: 9<br>Sitz: 14</p>
+            <p>Checkins: 19/100</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EventResource;
+use App\Models\Checkin;
 use App\Models\Event;
+use App\Models\Ticket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class EventController extends Controller
 {
@@ -28,4 +28,34 @@ class EventController extends Controller
 
         return response()->json($events);
     }
+
+    public function checkIn(Request $request, int $id, int $ticketId): JsonResponse
+    {
+        /** @var Event $event */
+        $event = Event::with(['venue', 'seatPlanCategories'])->findOrFail($id);
+        $ticket = Ticket::findOrFail($ticketId);
+
+        try {
+            $checkin = Checkin::create([
+                'event_id' => $event->id,
+                'ticket_id' => $ticket->id,
+                'event_seat_plan_category_id' => $ticket->event_seat_plan_category_id,
+                'category' => $ticket->eventSeatPlanCategory->name,
+                'seat' => $ticket->seat,
+                'row' => $ticket->row,
+            ]);
+
+            return response()->json([
+                'data' => $checkin,
+                'event' => $event,
+                'venue' => $event->venue,
+                'checkins' => $event->refresh()->checkins->count(),
+                'places' => $event->seatPlanCategories->sum('places'),
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Error while checkin ticket!']);
+        }
+    }
+
 }

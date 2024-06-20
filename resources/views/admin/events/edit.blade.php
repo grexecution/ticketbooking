@@ -92,7 +92,7 @@
                         <img src="{{ asset('img/checkin.png') }}" alt="Check-ins Image" width="91" height="70">
                         <div class="d-flex flex-col">
                             <div class="font-weight-bold">Check-ins</div>
-                            <div>0 / 200</div>
+                            <div>{{ $event->checkins->count() }} / {{ $event->seatPlanCategories->sum('places') }}</div>
                         </div>
 
                         <div class="text-right text-secondary absolute right-5 top-5">

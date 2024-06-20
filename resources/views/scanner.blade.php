@@ -9,6 +9,25 @@
     <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/normalize.css@8.0.0/normalize.css">
     <link rel="stylesheet" rel="preload" as="style" onload="this.rel='stylesheet';this.onload=null" href="https://unpkg.com/milligram@1.3.0/dist/milligram.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        .ticket-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .ticket-container img {
+            max-width: 100%;
+        }
+        .valid-ticket {
+            color: green;
+        }
+        .details {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,16 +69,11 @@
         </div>
 
         <label>Result:</label>
-        <pre><code id="result"></code></pre>
-
-{{--        <p>See the <a href="https://github.com/zxing-js/library/tree/master/docs/examples/qr-camera/">source code</a> for--}}
-{{--            this example.</p>--}}
+        <div id="result">---</div>
     </section>
 
     <footer class="footer">
         <section class="container">
-{{--            <p>ZXing TypeScript Demo. Licensed under the <a target="_blank"--}}
-{{--                                                            href="https://github.com/zxing-js/library#license" title="MIT">MIT</a>.</p>--}}
         </section>
     </footer>
 
@@ -69,8 +83,43 @@
 <script type="text/javascript">
     function decodeOnce(codeReader, selectedDeviceId) {
         codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
-            console.log(result)
-            document.getElementById('result').textContent = result.text
+            // console.log(result.text)
+            // Example: 22_9_63
+            // 22 - order_id
+            // 9 - event_id
+            // 63 - ticket_id
+            const arr = result.text.split('_');
+            fetch(`/api/events/${arr[1]}/check-in/${arr[2]}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('json', data)
+                    document.getElementById('result').innerHTML = `
+                        <div class="ticket-container">
+                            <h1 class="mb-4">Success</h1>
+                            <div class="valid-ticket">
+                                <h2 class="mb-3">Ticket is valid</h2>
+                                <div class="details">
+                                    <h3>${data.event.name}</h3>
+                                    <p>${moment(data.event.start_date).format('DD.MM.YYYY')} - ${moment(data.event.start_time).format('HH:mm')}</p>
+                                    <p>${data.data.category}<br>
+                                        ${data.data.row ? 'Row: ' + data.data.row + '<br>' : ''}
+                                        ${data.data.seat ? 'Seat: ' + data.data.seat + '<br>' : ''}
+                                    <p>Checkins: ${data.checkins}/${data.places}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }).catch(error => {
+                document.getElementById('result').innerHTML = `
+                        <div class="ticket-container">
+                            <h1 class="mb-4" style="color: red;">Error</h1>
+                            <div class="valid-ticket">
+                                <h2 class="mb-3" style="color: red;">Ticket is not valid</h2>
+                            </div>
+                        </div>
+                    `
+                })
+
         }).catch((err) => {
             console.error(err)
             document.getElementById('result').textContent = err
