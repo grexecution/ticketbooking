@@ -169,10 +169,11 @@
                             @foreach($order->tickets as $ticket)
                                 <tr>
                                     <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
-                                        {{ $ticket->category_name }}
+                                        {{ $ticket->eventSeatPlanCategory->event->name }} |
+                                        {{ $ticket->category_name }} |
                                         {{ $ticket->name }}
-                                        @if($ticket->row) Row: {{ $ticket->row }} @endif
-                                        @if($ticket->seat) Seat: {{ $ticket->seat }} @endif
+                                        @if($ticket->row) | Row {{ $ticket->row }} @endif
+                                        @if($ticket->seat) | Seat: {{ $ticket->seat }} @endif
                                     </td>
 {{--                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small>MH792AM/A</small></td>--}}
                                     <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">1</td>

@@ -320,7 +320,7 @@
                     <div class="ticket-qr" style="display: flex; flex-direction: column">
                         <img src="{{ $ticket->qr_url }}"/>
                         <div class="info-row">
-                            <div class="info-data">{{ $ticket->name }} | {{ $ticket->row ? "Row: {$ticket->row}," : '' }} {{ $ticket->seat ? "Seat: {$ticket->seat}," : '' }}</div>
+                            <div class="info-data">{{ $ticket->name }}{{ $ticket->row ? " | Row {$ticket->row}" : '' }}{{ $ticket->seat ? " | Seat {$ticket->seat}" : '' }}</div>
                         </div>
                     </div>
                 </div>

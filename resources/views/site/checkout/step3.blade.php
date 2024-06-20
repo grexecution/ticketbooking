@@ -24,7 +24,7 @@
             <p>@lang('messages.total'): €{{ $order->total }}</p>
             <p>@lang('messages.number_of_tickets'): {{ $order->tickets->count() }}</p>
             <p>@lang('messages.email'): @lang('messages.delivered')</p>
-            @if($order->status === 'succeeded')
+            @if($order->order_status === 'succeeded')
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" onclick="window.open('{{ route('showTickets', $order->id) }}', '_blank')">
                         <i class="fa-solid fa-ticket"></i>
