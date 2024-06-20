@@ -65,7 +65,7 @@ class OrderService
                     'price' => $ticket['price'],
                     'row' => $ticket['row'] ?? null,
                     'seat' => $ticket['seat'] ?? null,
-                    'total' => $ticket['total'],
+                    'total' => round($ticket['total'] / $ticket['count'], 2),
                 ]);
             }
         }

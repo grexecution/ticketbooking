@@ -58,25 +58,33 @@ class PaymentController extends Controller
             discount:  $request->discount,
         );
 
-        $stripeAmount = $order->total * 100;
+        $orderAmount = $order->total * 100;
+        $tenantFee = $event->user->tenant->stripe_fee
+            ? $event->user->tenant->stripe_fee / 100
+            : 0.02;
         $currency = $request->input('currency', 'eur');
 
-        try {
-            // Calculate 2% application fee
-            $applicationFeeAmount = round($stripeAmount * 0.02);
+        $lineItems = [];
+        $order->tickets->each(function (Ticket $ticket) use (&$lineItems, $currency, $tenantFee) {
+            $seat = $ticket->seat ? " | Seat " . $ticket->seat : '';
+            $row = $ticket->row ? " | Row " . $ticket->row : '';
+            $ticketTotal = $ticket->total * 100;
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => $currency,
+                    'product_data' => [
+                        'name' => trim($ticket->eventSeatPlanCategory->event->name . " | {$ticket->category_name} $seat $row"),
+                    ],
+                    'unit_amount' => round($ticketTotal + ($ticketTotal * $tenantFee), 2),
+                ],
+                'quantity' => 1,
+            ];
+        });
 
+        try {
             $payload = [
                 'payment_method_types' => ['card'],
-                'line_items' => [[
-                    'price_data' => [
-                        'currency' => $currency,
-                        'product_data' => [
-                            'name' => $event->name,
-                        ],
-                        'unit_amount' => $stripeAmount,
-                    ],
-                    'quantity' => 1,
-                ]],
+                'line_items' => $lineItems,
                 'metadata' => [
                     'event_id' => $event->id,
                     'order_id' => $order->id,
@@ -85,7 +93,7 @@ class PaymentController extends Controller
                 'success_url' => route('checkout.step3') . '?successfully=1&order_id=' . $order->id,
                 'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $order->id,
                 'payment_intent_data' => [
-                    'application_fee_amount' => $applicationFeeAmount,
+                    'application_fee_amount' => round($orderAmount * $tenantFee, 2),
                     'transfer_data' => [
                         'destination' => $accountId,
                     ],
