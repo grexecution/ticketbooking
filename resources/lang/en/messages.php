@@ -3,7 +3,7 @@
 return [
     'event_list' => 'Event List',
     'ticketwilli' => 'Ticketwilli',
-    'online_pudl' => 'Die Online-Pudl für Events in 🇦🇹',
+    'online_pudl' => 'Die offizielle Vorverkaufsstelle von Kabarett am See 2024',
     'search_events' => 'Search Events, Categories, Location,...',
     'event_image' => 'Event Image',
     'kabarett' => 'Kabarett',

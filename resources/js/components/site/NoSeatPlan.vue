@@ -196,7 +196,7 @@ export default {
     <div class="container">
         <div class="px-6 py-2 card">
             <div class="col-12 pb-3">
-                <h3 class="pt-4 pb-3 question-styling">Bitte wählen Sie eine Kategorie:</h3>
+                <h3 class="pt-4 pb-3 question-styling">Bitte wählen Sie Ihre Tickets:</h3>
 
                 <div v-for="category in categories" class="category-card mb-3 d-flex flex-col flex-md-row justify-content-between">
                     <div class="col-md-3 d-flex flex-row align-items-center">
@@ -243,7 +243,7 @@ export default {
                     <a @click.prevent="proceedToCheckout"
                        :disabled="isCheckoutDisabled"
                        type="button"
-                       class="btn-orange checkout-btn">Weiter zum Checkout</a>
+                       class="btn-orange checkout-btn">Weiter zur Kassa</a>
                 </div>
             </div>
         </div>

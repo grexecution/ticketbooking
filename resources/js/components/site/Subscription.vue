@@ -303,7 +303,7 @@ export default {
             </div>
             <div class="text-right">
                 <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
-                <a @click.prevent="proceedToCheckout" type="button" class="btn-orange checkout-btn">Weiter zum Checkout</a>
+                <a @click.prevent="proceedToCheckout" type="button" class="btn-orange checkout-btn">Weiter zur Kassa</a>
             </div>
         </div>
     </div>

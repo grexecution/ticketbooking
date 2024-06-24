@@ -14,9 +14,9 @@
     @stack('styles')
 </head>
 <body>
-<nav class="navbar py-3 navbar-expand-lg navbar-dark bg-black shadow">
+<nav class="navbar py-3 navbar-expand-lg navbar-dark bg-black shadow" style="background-color: #000c3b!important">
     <div class="container">
-        <a class="navbar-brand col-1 col-md-3 px-0" href="/">
+        <a class="navbar-brand col-9 col-md-3 px-0" href="/">
             <img src="{{ asset('img/logo.png') }}" alt="@lang('messages.ticket_icon')" class="ticket-icon">
             <div class="d-flex flex-col gap-0">
                 <p style="font-size:20px; font-weight:700;letter-spacing: -0.4px;">@lang('messages.ticketwilli')</p>
@@ -28,8 +28,8 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="@lang('messages.search_events')" aria-label="Search">
             </form>
         </div>
-        <div class="nav-menu">
-            <ul class="navbar-nav d-flex flex-row flex-md-col gap-4">
+        <div class="nav-menu col-3">
+            <ul class="navbar-nav d-flex flex-row justify-content-end flex-md-col gap-4">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('site.events') }}">@lang('messages.events')</a>
                 </li>

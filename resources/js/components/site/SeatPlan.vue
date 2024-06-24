@@ -297,7 +297,7 @@ export default {
                     :disabled="cart.length === 0"
                     type="button"
                     class="btn btn-orange checkout-btn w-100 mt-2"
-            ><i class="fas fa-money-bill mr-2"></i>Weiter zum Checkout</button>
+            ><i class="fas fa-money-bill mr-2"></i>Weiter zur Kassa</button>
         </div>
     </div>
 </template>

@@ -29,7 +29,7 @@
                         </div>
                         <div class="payment-box disabled">
                             <h5>@lang('messages.cash_payment')</h5>
-                            <p>@lang('messages.tickets_paid_on_site')</p>
+                            <p>@lang('messages.not_available')</p>
                         </div>
                         <div class="payment-box disabled">
                             <h5>@lang('messages.bankomat')</h5>

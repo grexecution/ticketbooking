@@ -32,11 +32,11 @@
             </div>
             <form v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">
                 <input type="hidden" name="event_id" :value="eventId">
-                <button type="submit" class="btn btn-continue btn-block mt-3">Buy Now</button>
+                <button type="submit" class="btn btn-continue btn-block mt-3">Weiter zur Zahlung</button>
                 <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
             </form>
             <div v-else>
-                <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Zahlung auswählen</button>
+                <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Weiter zur Kassa</button>
             </div>
             <div class="d-flex justify-content-center">
                 <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>

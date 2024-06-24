@@ -8,7 +8,7 @@
     <div class="container">
         <div class="d-flex flex-col-reverse flex-md-row my-3">
             <!-- Event Banner -->
-            <div class="col-lg-7 px-0">
+            <div class="col-lg-7 px-0 px-md-3">
                 <div class="event-banner">
                     <!-- Title -->
                     <div class="row">
@@ -16,15 +16,9 @@
                             <h1 class="event-title">{{ $isPreview ? __('messages.preview') : '' }}{{ $event->name }}</h1>
                         </div>
                     </div>
-                    <!-- Description -->
-                    <div class="row">
-                        <div class="col">
-                            <p>{!! $event->description !!}</p>
-                        </div>
-                    </div>
                     <!-- Event Details -->
                     <div class="col m-0">
-                        <div class="row flex-col flex-md-row w-100 justify-content-between">
+                        <div class="row flex-col flex-md-row w-100 justify-content-start gap-3">
                             <div class="event-detail">
                                 <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('H:i') ?? '' }}
                             </div>
@@ -36,10 +30,17 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Description -->
+                    <div class="row">
+                        <div class="col">
+                            <p>{!! $event->description !!}</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <!-- Event Image -->
-            <div class="col-lg-5 mb-3 mb-md-0 px-0">
+            <div class="col-lg-5 mb-3 mb-md-0 px-0 px-md-3">
                 <img src="{{ $event->logo_event_url }}" alt="@lang('messages.event_image')" class="img-fluid rounded event-image w-100">
             </div>
         </div>
