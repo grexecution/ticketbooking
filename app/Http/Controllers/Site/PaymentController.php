@@ -68,14 +68,13 @@ class PaymentController extends Controller
         $order->tickets->each(function (Ticket $ticket) use (&$lineItems, $currency, $tenantFee) {
             $seat = $ticket->seat ? " | Seat " . $ticket->seat : '';
             $row = $ticket->row ? " | Row " . $ticket->row : '';
-            $ticketTotal = $ticket->total * 100;
             $lineItems[] = [
                 'price_data' => [
                     'currency' => $currency,
                     'product_data' => [
                         'name' => trim($ticket->eventSeatPlanCategory->event->name . " | {$ticket->category_name} $seat $row"),
                     ],
-                    'unit_amount' => round($ticketTotal + ($ticketTotal * $tenantFee)),
+                    'unit_amount' => (int) $ticket->total * 100
                 ],
                 'quantity' => 1,
             ];
@@ -94,7 +93,7 @@ class PaymentController extends Controller
                 'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $order->id,
                 'locale' => 'de',
                 'payment_intent_data' => [
-                    'application_fee_amount' => round($orderAmount * $tenantFee),
+                    'application_fee_amount' => (int) round($orderAmount * $tenantFee),
                     'transfer_data' => [
                         'destination' => $accountId,
                     ],

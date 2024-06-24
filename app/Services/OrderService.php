@@ -37,7 +37,7 @@ class OrderService
             'subtotal' => $amount,
             'discount' => $discount,
             'vat' => $taxes,
-            'total' => $amountWithTaxes,
+            'total' => $amount,
         ]);
 
         if ($voucher) {
