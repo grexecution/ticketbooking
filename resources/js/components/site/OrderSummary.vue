@@ -1,8 +1,8 @@
 <template>
     <div class="order-summary">
         <!-- Checkout Timer-->
-        <div v-if="!isCartEmpty" class="ticket-warning">Tickets are reserved for: {{ minutes }}:{{ secondsFormatted }} Min</div>
-        <div v-else class="ticket-warning">Your cart is empty. Please add something.</div>
+        <div v-if="!isCartEmpty" class="ticket-warning">Tickets sind reserviert für: {{ minutes }}:{{ secondsFormatted }} Min</div>
+        <div v-else class="ticket-warning">Der Warenkorb ist leer.</div>
         <time-up-modal v-if="timeIsUp" @close="goHome"></time-up-modal>
         <div class="mt-3" v-for="(item, index) in tickets" :key="index">
             <div class="d-flex flex-row justify-content-between">
@@ -18,16 +18,16 @@
         <hr class="my-3">
         <div>
             <div class="d-flex flex-row justify-content-between">
-                <h5 style="font-weight:700">Total:</h5>
+                <h5 style="font-weight:700">Gesamt:</h5>
                 <h5 style="font-weight:700">€{{ totalWithDiscount || total }}</h5>
             </div>
             <div v-if="discount" class="d-flex flex-row justify-content-between">
-                <h5 style="font-weight:700">Discount:</h5>
+                <h5 style="font-weight:700">Gutschein:</h5>
                 <h5 style="font-weight:700; color: red;">-€{{ discount }}</h5>
             </div>
             <div v-if="isPaymentForm" class="promo-code-container">
-                <input v-model="promoCode" type="text" placeholder="Enter promo code" class="form-control" />
-                <button @click="applyPromoCode(promoCode)" class="btn btn-primary mt-2">Apply</button>
+                <input v-model="promoCode" type="text" placeholder="Gutscheincode eingeben" class="form-control" />
+                <button @click="applyPromoCode(promoCode)" class="btn btn-primary mt-2">Anwenden</button>
                 <div v-if="promoError" class="text-danger">{{ promoError }}</div>
             </div>
             <form v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">
@@ -36,7 +36,7 @@
                 <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
             </form>
             <div v-else>
-                <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Select Payment</button>
+                <button @click="sendCustomerData" type="button" class="btn btn-continue btn-block mt-3">Zahlung auswählen</button>
             </div>
             <div class="d-flex justify-content-center">
                 <small class="text-secondary">Ticketpreise enthalten 13% Umsatzsteuer</small>
@@ -209,11 +209,11 @@ export default {
                             stripe.redirectToCheckout({ sessionId: data.sessionId });
                         } else {
                             console.error('Payment failed:', data.message);
-                            this.errorMsg = 'Something went wrong. Please try again.'
+                            this.errorMsg = 'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.'
                         }
                     } catch (error) {
                         console.error('Error during payment:', error);
-                        this.errorMsg = 'Something went wrong. Please try again.'
+                        this.errorMsg = 'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.'
                     }
                 });
             }
@@ -251,7 +251,7 @@ export default {
                     this.discount = 0.0;
                 }
             } catch (error) {
-                this.promoError = 'Failed to apply promo code. Please try again.';
+                this.promoError = 'Fehlgeschlagen. Bitte versuchen Sie es erneut.';
                 this.discount = 0.0;
                 this.totalWithDiscount = this.total
             }

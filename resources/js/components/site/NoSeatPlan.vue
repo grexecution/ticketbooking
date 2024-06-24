@@ -196,7 +196,7 @@ export default {
     <div class="container">
         <div class="px-6 py-2 card">
             <div class="col-12 pb-3">
-                <h3 class="pt-4 pb-3 question-styling">Please choose seating category:</h3>
+                <h3 class="pt-4 pb-3 question-styling">Bitte wählen Sie eine Kategorie:</h3>
 
                 <div v-for="category in categories" class="category-card mb-3 d-flex flex-col flex-md-row justify-content-between">
                     <div class="col-md-3 d-flex flex-row align-items-center">
@@ -208,8 +208,8 @@ export default {
                     <div class="col-md-9 d-flex flex-col gap-4">
                         <div class="d-flex flex-col flex-md-row w-100 align-items-start align-items-md-center">
                             <div class="d-flex flex-col w-100">
-                                <p>Regular Price</p>
-                                <small v-if="! category.showMore && category.discountPrices.length > 0" @click="category.showMore = true" class="show-more-options" style="color:#ffc107; text-decoration: underline;">Show more price options</small>
+                                <p>Standardpreis</p>
+                                <small v-if="! category.showMore && category.discountPrices.length > 0" @click="category.showMore = true" class="show-more-options" style="color:#ffc107; text-decoration: underline;">Mehr Preisoptionen anzeigen</small>
                             </div>
                             <div class="price text-right d-flex">
                                 <p class="category-title text-nowrap">€ {{ category.regularPrice.price }}</p>

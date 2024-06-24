@@ -8,7 +8,7 @@
     <div class="container">
         <div class="d-flex flex-col-reverse flex-md-row my-3">
             <!-- Event Banner -->
-            <div class="col-lg-7">
+            <div class="col-lg-7 px-0">
                 <div class="event-banner">
                     <!-- Title -->
                     <div class="row">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <!-- Event Image -->
-            <div class="col-lg-5 mb-3 mb-md-0">
+            <div class="col-lg-5 mb-3 mb-md-0 px-0">
                 <img src="{{ $event->logo_event_url }}" alt="@lang('messages.event_image')" class="img-fluid rounded event-image w-100">
             </div>
         </div>

@@ -438,7 +438,8 @@ export default {
         overflow: visible;
     }
     .seatmap {
-        overflow: scroll
+        overflow: scroll;
+        align-items: baseline;
     }
 }
 </style>
