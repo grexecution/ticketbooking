@@ -63,7 +63,7 @@
     @else
         <div class="main-bg py-6">
             <div class="row py-6 mb-5 container m-auto">
-                <div class="container card py-1 py-md-3 px-1">
+                <div class="container card py-1 py-md-3 px-1" style="background-color: #fff7e161;">
                     <seat-plan
                         event-id="{{ $event->id }}"
                     ></seat-plan>

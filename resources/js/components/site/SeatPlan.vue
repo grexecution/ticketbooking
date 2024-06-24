@@ -360,7 +360,7 @@ export default {
 }
 
 .seat.aisle {
-    background-color: white;
+    background-color: unset;
     border: none;
     cursor: default;
 }
@@ -474,6 +474,10 @@ export default {
     .seatmap {
         overflow: scroll;
         align-items: baseline;
+    }
+    .selected-box {
+        position: relative;
+        right: 0;
     }
 }
 </style>
