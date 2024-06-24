@@ -116,7 +116,6 @@
 }
 .event-image {
     height: 100%!important;
-    max-height: 300px!important;
     object-fit: cover!important;;
 }
 .main-bg {
