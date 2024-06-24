@@ -172,6 +172,13 @@
     border-radius: 10px;
 }
 
+.promo-code-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 #seats_container {
     position: relative;
     border-radius: 0 !important;

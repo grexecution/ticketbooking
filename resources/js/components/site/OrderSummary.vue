@@ -27,7 +27,7 @@
             </div>
             <div v-if="isPaymentForm" class="promo-code-container">
                 <input v-model="promoCode" type="text" placeholder="Gutscheincode eingeben" class="form-control" />
-                <button @click="applyPromoCode(promoCode)" class="btn btn-primary mt-2">Anwenden</button>
+                <button @click="applyPromoCode(promoCode)" class="btn bg-black text-white">Anwenden</button>
                 <div v-if="promoError" class="text-danger">{{ promoError }}</div>
             </div>
             <form v-if="isPaymentForm" :action="actionUrl" class="stripe-payment-form" method="get">

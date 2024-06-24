@@ -26,7 +26,7 @@
                 <p>@lang('messages.total'): €{{ number_format($order->total ?? 0, 2, ',', '') }}<small> inkl. MwsT</small></p>
                 <p>@lang('messages.number_of_tickets'): {{ $order->tickets->count() }}</p>
                 <p>@lang('messages.email'): @lang('messages.delivered')</p>
-            <div>
+            </div>
 
             @if($order->order_status === 'succeeded')
                 <div class="btn-group">
