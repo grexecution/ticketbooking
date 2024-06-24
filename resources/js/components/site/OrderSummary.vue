@@ -206,10 +206,7 @@ export default {
                         const data = response.data;
                         if (data.status === 'success') {
                             this.clearCookies();
-                            stripe.redirectToCheckout({
-                                sessionId: data.sessionId,
-                                locale: 'de'
-                            });
+                            stripe.redirectToCheckout({ sessionId: data.sessionId });
                         } else {
                             console.error('Payment failed:', data.message);
                             this.errorMsg = 'Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.'
