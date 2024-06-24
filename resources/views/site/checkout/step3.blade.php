@@ -22,7 +22,6 @@
                 <p>@lang('messages.program'): {{ $order->event->name }}</p>
                 <p>@lang('messages.venue'): {{ $order->event->venue->address }}</p>
                 <p>@lang('messages.date'): {{ \Carbon\Carbon::parse($order->event->start_date)->format('F jS, Y') }} @lang('messages.at') {{ \Carbon\Carbon::parse($order->event->start_time)->format('g:i a') }}</p>
-                <p>@lang('messages.total'): €{{ $order->total }}</p>
                 <p>@lang('messages.total'): €{{ number_format($order->total ?? 0, 2, ',', '') }}<small> inkl. MwsT</small></p>
                 <p>@lang('messages.number_of_tickets'): {{ $order->tickets->count() }}</p>
                 <p>@lang('messages.email'): @lang('messages.delivered')</p>

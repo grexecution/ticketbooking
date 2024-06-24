@@ -250,6 +250,7 @@ export default {
 <template>
     <div class="seatmap">
         <div v-for="(category, categoryIndex) in seatCategories" :key="categoryIndex" class="category">
+            <div v-if="categoryIndex === 0" class="bg-black text-white py-6 mb-3 category-name w-100 w-md-50 text-center"><p>BÜHNE</p></div>
             <div class="category-name px-3 py-2 mb-2" style="background-color: #ffc107; color: black; font-size:18px;font-weight:600; border-radius: 10px">{{ category.name }}</div>
             <div class="category-seats px-3">
                 <div v-for="(row, rowIndex) in category.rows" :key="rowIndex" class="row seat-overflow">
@@ -263,7 +264,8 @@ export default {
                      }"
                     >
                         <span v-if="seat.selected">✓</span>
-                        <span v-else-if="!seat.aisle">×</span>
+                        <span v-if="seat.booked">x</span>
+                        <span v-else-if="!seat.aisle"> </span>
                     </div>
                 </div>
             </div>
