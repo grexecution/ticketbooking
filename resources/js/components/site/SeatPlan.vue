@@ -270,37 +270,50 @@ export default {
                 </div>
             </div>
         </div>
-        <div v-if="cart.length" class="selected-seats">
-            <h2 class="cart-heading">Warenkorb</h2>
-            <hr>
-            <ul class="seat-list pb-2">
-                <li v-for="(seat, index) in selectedSeats" :key="index">
-                    <div class="d-flex col px-0 py-2 gap-2 justify-content-between">
-                        <div>
-                            <p>1x {{ seat.categoryName }}</p>
-                            <div class="d-flex flex-col px-0">
-                                <small>Reihe: {{ seat.number }}, Platz: {{ seat.seatNumber }}</small>
-                                <small v-if="seat.prices.length === 1"><strong>Preis: {{ formatPrice(seat.price) }}</strong></small>
-                                <div v-if="seat.prices.length > 1">
-                                    <label>Preis: </label>
-                                    <select v-model="seat.price" class="form-control">
-                                        <option v-for="(price, index) in seat.prices" :key="index" :value="price.price">{{ formatPrice(price.price) }}</option>
-                                    </select>
+        <div class="selected-box">
+            <div class="selected-cats">
+                <h2 class="cart-heading">Kategorien</h2>
+                <hr>
+                <div class="d-flex flex-col pt-2 gap-2">
+                    <div v-for="(category, categoryIndex) in seatCategories" :key="categoryIndex" class="category d-flex flex-row gap-2 justify-content-between">
+                        <div class="" >{{ category.name }}</div>
+                        <div class="" >€{{ formatPrice(category.price) }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="selected-seats">
+                <h2 class="cart-heading">Warenkorb</h2>
+                <hr>
+                <ul class="seat-list pb-2">
+                    <li v-for="(seat, index) in selectedSeats" :key="index">
+                        <div class="d-flex col px-0 py-2 gap-2 justify-content-between">
+                            <div>
+                                <p>1x {{ seat.categoryName }}</p>
+                                <div class="d-flex flex-col px-0">
+                                    <small>Reihe: {{ seat.number }}, Platz: {{ seat.seatNumber }}</small>
+                                    <small v-if="seat.prices.length === 1"><strong>Preis: {{ formatPrice(seat.price) }}</strong></small>
+                                    <div v-if="seat.prices.length > 1">
+                                        <label>Preis: </label>
+                                        <select v-model="seat.price" class="form-control">
+                                            <option v-for="(price, index) in seat.prices" :key="index" :value="price.price">€{{ formatPrice(price.price) }}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
+                            <button @click="removeSeat(seat)" class="delete-button" style=""></button>
                         </div>
-                        <button @click="removeSeat(seat)" class="delete-button" style=""></button>
-                    </div>
-                    <hr>
-                </li>
-            </ul>
-            <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
-            <button @click.prevent="proceedToCheckout"
-                    :disabled="cart.length === 0"
-                    type="button"
-                    class="btn btn-orange checkout-btn w-100 mt-2"
-            ><i class="fas fa-money-bill mr-2"></i>Weiter zur Kassa</button>
+                        <hr>
+                    </li>
+                </ul>
+                <div v-if="errorMsg" class="text-danger" style="text-align: center; padding: 10px 0 5px 0;">{{ errorMsg }}</div>
+                <button @click.prevent="proceedToCheckout"
+                        :disabled="cart.length === 0"
+                        type="button"
+                        class="btn btn-orange checkout-btn w-100 mt-2"
+                ><i class="fas fa-money-bill mr-2"></i>Weiter zur Kassa</button>
+            </div>
         </div>
+
     </div>
 </template>
 
@@ -364,9 +377,28 @@ export default {
 }
 
 .selected-seats {
+    position: relative;
+    width: 300px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-height: 550px;
+    overflow: scroll;
+}
+
+.selected-box {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
     top: 0;
-    right: 0;
+    right: 10px;
+}
+
+.selected-cats {
     width: 300px;
     background-color: white;
     border: 1px solid #ddd;

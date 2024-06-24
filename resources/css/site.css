@@ -123,7 +123,8 @@
 }
 
 .event-detail {
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     background: #0014611a;
     padding: 10px 12px;
     border-radius: 10px;
@@ -365,6 +366,10 @@ label {
     }
     .ticket-text {
         max-width: 160px;
+    }
+    .event-detail {
+        padding: 10px 10px;
+        font-size: 14px;
     }
 }
 
