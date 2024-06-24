@@ -18,13 +18,14 @@
                     <div class="d-flex payment-method gap-2">
                         <div class="payment-box selected d-flex flex-col justify-content-center align-items-center gap-1">
                             <img class="w-10 w-md-25" src="/img/cc-icon.png"/>
-                            <h5 class="text-white">@lang('messages.credit_card')</h5>
+                            <h5 class="text-white">@lang('messages.online_payment')</h5>
+                            <!-- Step 2: Pay
                             <div class="d-flex flex-row justify-content-center">
                                 <img src="https://img.icons8.com/color/48/000000/visa.png"/>
                                 <img src="https://img.icons8.com/color/48/000000/mastercard.png"/>
                                 <img src="https://img.icons8.com/color/48/000000/discover.png"/>
                             </div>
-
+                            -->
                             <p style="font-size: 14px; line-height: 14px; color: white">@lang('messages.pay_via_stripe')</p>
                         </div>
                         <div class="payment-box disabled">
