@@ -75,7 +75,7 @@ class PaymentController extends Controller
                     'product_data' => [
                         'name' => trim($ticket->eventSeatPlanCategory->event->name . " | {$ticket->category_name} $seat $row"),
                     ],
-                    'unit_amount' => round($ticketTotal + ($ticketTotal * $tenantFee), 2),
+                    'unit_amount' => round($ticketTotal + ($ticketTotal * $tenantFee)),
                 ],
                 'quantity' => 1,
             ];
@@ -92,8 +92,9 @@ class PaymentController extends Controller
                 'mode' => 'payment',
                 'success_url' => route('checkout.step3') . '?successfully=1&order_id=' . $order->id,
                 'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $order->id,
+                'locale' => 'de',
                 'payment_intent_data' => [
-                    'application_fee_amount' => round($orderAmount * $tenantFee, 2),
+                    'application_fee_amount' => round($orderAmount * $tenantFee),
                     'transfer_data' => [
                         'destination' => $accountId,
                     ],
