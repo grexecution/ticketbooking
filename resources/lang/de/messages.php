@@ -58,7 +58,7 @@ return [
     'total' => 'Gesamt',
     'number_of_tickets' => 'Anzahl der Tickets',
     'email' => 'Email',
-    'delivered' => 'delivered',
+    'delivered' => 'Erfolgreich versendet',
     'view_tickets' => 'Tickets anzeigen',
     'view_invoice' => 'Rechnung anzeigen',
     'back_to_event' => '← Zurück zum Event',
