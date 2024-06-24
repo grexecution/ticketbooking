@@ -20,7 +20,7 @@
                     <div class="col m-0">
                         <div class="row flex-col flex-md-row d-flex flex-row w-md-100 justify-content-start gap-3">
                             <div class="event-detail">
-                                <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->format('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('H:i') ?? '' }}
+                                <i class="fas fa-calendar-alt"></i> {{ $event->start_date?->translatedFormat('l, d.m.Y') ?? '' }} | {{ $event->start_time?->format('H:i') ?? '' }}
                             </div>
                             <div class="event-detail">
                                 <i class="fas fa-map-marker-alt"></i> {{ $event->venue?->name ?? '' }}

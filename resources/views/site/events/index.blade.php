@@ -27,7 +27,7 @@
                             </a>
                             <div class="event-label">
                                 <i class="fas fa-calendar mr-2"></i>
-                                <strong>{{ $event->start_date?->format('d') ?? '' }}</strong>.<strong>{{ strtoupper($event->start_date?->format('M') ?? '') }}</strong>
+                                <strong>{{ $event->start_date?->translatedFormat('d') ?? '' }}</strong>.<strong>{{ strtoupper($event->start_date?->translatedFormat('M') ?? '') }}</strong>
                             </div>
                             <div class="category-label text-black">@lang('messages.kabarett')</div>
                         </div>
