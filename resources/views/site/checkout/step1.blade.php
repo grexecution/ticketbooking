@@ -31,14 +31,14 @@
                         <input type="hidden" name="event_id" value="{{ request()->get('event_id') }}">
                         @csrf
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-6 col-md-6">
                                 <label for="firstName">@lang('messages.first_name')</label>
                                 <input type="text" class="form-control" id="firstName" name="first_name" value="{{ old('first_name') }}" placeholder="@lang('messages.first_name')">
                                 @error('first_name')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-6 col-md-6">
                                 <label for="lastName">@lang('messages.last_name')</label>
                                 <input type="text" class="form-control" id="lastName" name="last_name" value="{{ old('last_name') }}" placeholder="@lang('messages.last_name')">
                                 @error('last_name')
@@ -54,14 +54,14 @@
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-6 col-md-2">
                                 <label for="zip_code">@lang('messages.zip_code')</label>
                                 <input type="text" class="form-control" id="zip_code" name="zip_code" value="{{ old('zip_code') }}" placeholder="@lang('messages.zip_code')">
                                 @error('zip_code')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-6 col-md-4">
                                 <label for="city">@lang('messages.city')</label>
                                 <input type="text" class="form-control" id="city" name="city" value="{{ old('city') }}" placeholder="@lang('messages.city')">
                                 @error('city')

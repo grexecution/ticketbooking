@@ -20,7 +20,7 @@
         <div class="row row-cols-1 row-cols-md-2 g-5">
             @foreach($events as $event)
                 <div class="col mb-4">
-                    <div class="p-4 rounded-xl" style="background-color:#F1F5F8">
+                    <div class="p-3 p-md-4 rounded-xl" style="background-color:#F1F5F8">
                         <div class="event-item">
                             <a href="{{ url('events/' . $event->slug) }}">
                                 <img class="img-fluid object-fit-cover mh-100" src="{{ $event->logo_event_url }}" alt="@lang('messages.event_image')">

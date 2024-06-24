@@ -329,5 +329,22 @@ label {
     .hero-container {
         height: 200px;
     }
+    .payment-method {
+        margin-top: 05px;
+    }
+    .event-item img {
+        height: 250px;
+    }
+    .step-indicator {
+        margin-bottom: 10px;
+    }
+    .step-indicator div {
+        padding: 18px 10px;
+        font-size: 14px;
+    }
+    .payment-method {
+        margin-top: 05px;
+        flex-direction: column;
+    }
 }
 

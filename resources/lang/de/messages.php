@@ -19,7 +19,7 @@ return [
     'information' => 'Information',
     'payment' => 'Zahlung',
     'confirmation' => 'Bestätigung',
-    'ticket_type' => 'Ticket Art',
+    'ticket_type' => 'Ticket',
     'digital_ticket' => 'Digitales Ticket',
     'presentation_via_smartphone' => 'Vorweisen via Smartphone or Ausdruck',
     'customer_data' => 'Kundendaten',

@@ -17,7 +17,7 @@
         </div>
         <hr class="my-3">
         <div>
-            <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row justify-content-between pb-3">
                 <h5 style="font-weight:700">Gesamt:</h5>
                 <h5 style="font-weight:700">€{{ totalWithDiscount || total }}</h5>
             </div>

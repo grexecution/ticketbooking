@@ -17,7 +17,7 @@
                     <h4 class="checkout-subtitle">@lang('messages.payment_method')</h4>
                     <div class="d-flex payment-method gap-2">
                         <div class="payment-box selected d-flex flex-col justify-content-center align-items-center gap-1">
-                            <img class="w-25" src="/img/cc-icon.png"/>
+                            <img class="w-10 w-md-25" src="/img/cc-icon.png"/>
                             <h5 class="text-white">@lang('messages.credit_card')</h5>
                             <div class="d-flex flex-row justify-content-center">
                                 <img src="https://img.icons8.com/color/48/000000/visa.png"/>
