@@ -19,8 +19,8 @@
     <div class="container">
         <a class="navbar-brand col-9 col-md-3 px-0" href="/">
             <img src="{{ asset('img/logo.png') }}" alt="@lang('messages.ticket_icon')" class="ticket-icon">
-            <div class="d-flex flex-col gap-0">
-                <p style="font-size:20px; font-weight:700;letter-spacing: -0.4px;">@lang('messages.ticketwilli')</p>
+            <div class="d-flex flex-col gap-1">
+                <img src="{{ asset('img/ticketwilli_text.png') }}" alt="@lang('messages.ticket_icon')" class="w-75" style="">
                 <span class="ticket-text">@lang('messages.online_pudl')</span>
             </div>
         </a>

@@ -3,18 +3,26 @@
 @section('title', __('messages.event_list'))
 
 @section('content')
-    <div class="container-fluid hero-container">
-        <div class="text-center">
-            <h1 class="font-weight-bold banner-title">@lang('messages.ticketwilli')</h1>
-            <h4 class="font-weight-bold banner-desc">@lang('messages.online_pudl')</h4>
-            <!--<div class="input-group mt-4">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+    <header>
+
+        <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
+        <div class="overlay"></div>
+
+        <!-- The HTML5 video element that will create the background video on the header -->
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src="https://kabarett-am-see.at/wp-content/uploads/2024/06/2890196-hd_1280_720_30fps.mp4" type="video/mp4">
+        </video>
+
+        <!-- The header content -->
+        <div class="container h-100">
+            <div class="d-flex h-100 text-center align-items-center">
+                <div class="w-100 text-white mx-auto d-flex flex-column align-items-center gap-2">
+                    <img src="{{ asset('img/ticketwilli_text.png') }}" alt="@lang('messages.ticket_icon')" class="" style="width: 300px">
+                    <h4 class="font-weight-bold banner-desc">@lang('messages.online_pudl')</h4>
                 </div>
-                <input type="text" class="form-control search-input" placeholder="@lang('messages.search_events')">
-            </div>-->
+            </div>
         </div>
-    </div>
+    </header>
 
     <div class="container mt-5">
         <div class="row row-cols-1 row-cols-md-2 g-5">
