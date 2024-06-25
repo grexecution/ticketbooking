@@ -366,6 +366,8 @@ label {
     }
     .ticket-text {
         max-width: 160px;
+        line-height: normal;
+        font-size: 10px;
     }
     .event-detail {
         padding: 10px 10px;

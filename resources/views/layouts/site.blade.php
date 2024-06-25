@@ -12,6 +12,7 @@
     <link href="https://use.fontawesome.com/releases/v6.4.2/css/all.css" rel="stylesheet"/>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     @stack('styles')
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}">
 </head>
 <body>
 <nav class="navbar py-3 navbar-expand-lg navbar-dark bg-black shadow" style="background-color: #000c3b!important">
