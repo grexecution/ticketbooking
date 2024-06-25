@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -39,6 +40,10 @@ class Order extends Model
         'total',
     ];
 
+    protected $appends = [
+        'wait_to_payment'
+    ];
+
     public function scopeSucceeded($query)
     {
         return $query->where('order_status', 'succeeded');
@@ -58,4 +63,13 @@ class Order extends Model
     {
         return $this->hasMany(Ticket::class);
     }
+    public function getWaitToPaymentAttribute() : bool
+    {
+        $orderMoment = Carbon::createFromFormat('Y-m-d H:i:s', $this->order_date);
+        $now = Carbon::now();
+        $differenceInMinutes = $now->diffInMinutes($orderMoment);
+
+        return $differenceInMinutes < 10;
+    }
+
 }
