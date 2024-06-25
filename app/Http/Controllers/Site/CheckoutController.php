@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\CustomerDataRequest;
+use App\Models\Booking;
 use App\Models\Event;
 use App\Models\Order;
+use App\Models\Ticket;
 use App\Models\Voucher;
 use App\Services\VoucherService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -33,6 +36,12 @@ class CheckoutController extends Controller
         $order = Order::query()
             ->with(['event.venue', 'tickets'])
             ->findOrFail($request->order_id);
+
+        if ($request->canceled) {
+            $order->update(['order_status' => 'cancelled']);
+            $sessionId = Session::getId();
+            Booking::query()->where('session_id', $sessionId)->delete();
+        }
 
         return view('site.checkout.step3', compact('order'));
     }

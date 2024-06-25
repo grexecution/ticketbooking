@@ -24,7 +24,9 @@
                 <p>@lang('messages.date'): {{ \Carbon\Carbon::parse($order->event->start_date)->format('F jS, Y') }} @lang('messages.at') {{ \Carbon\Carbon::parse($order->event->start_time)->format('g:i a') }}</p>
                 <p>@lang('messages.total'): €{{ number_format($order->total ?? 0, 2, ',', '') }}<small> inkl. MwsT</small></p>
                 <p>@lang('messages.number_of_tickets'): {{ $order->tickets->count() }}</p>
-                <p>@lang('messages.email'): @lang('messages.delivered')</p>
+                @if(request()->get('canceled') !== "1")
+                    <p>@lang('messages.email'): @lang('messages.delivered')</p>
+                @endif
             </div>
 
             @if($order->order_status === 'succeeded')

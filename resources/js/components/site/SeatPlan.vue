@@ -59,14 +59,16 @@ export default {
         generateBoughtTickets(orders) {
             const boughtTickets = [];
             orders.forEach(order => {
-                const tickets = order.tickets.map(ticket => ({
-                    ticketId: ticket.id,
-                    categoryId: ticket.event_seat_plan_category_id,
-                    categoryName: ticket.category_name,
-                    row: ticket.row,
-                    seat: ticket.seat,
-                }));
-                boughtTickets.push(...tickets);
+                if (order.order_status === 'succeeded' || (order.order_status === 'new' && order.wait_to_payment)) {
+                    const tickets = order.tickets.map(ticket => ({
+                        ticketId: ticket.id,
+                        categoryId: ticket.event_seat_plan_category_id,
+                        categoryName: ticket.category_name,
+                        row: ticket.row,
+                        seat: ticket.seat,
+                    }));
+                    boughtTickets.push(...tickets);
+                }
             });
             return boughtTickets;
         },
