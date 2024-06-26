@@ -55,7 +55,7 @@ class OrderService
 
         $ticketDiscount = 0;
         if ($discount) {
-            $ticketDiscount = round($discount / $order->tickets->count(), 2);
+            $ticketDiscount = round($discount / count($ticketsData['tickets']), 2);
         }
 
         foreach ($ticketsData['tickets'] as $ticket) {
