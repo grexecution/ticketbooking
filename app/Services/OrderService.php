@@ -53,6 +53,11 @@ class OrderService
             }
         }
 
+        $ticketDiscount = 0;
+        if ($discount) {
+            $ticketDiscount = round($discount / $order->tickets->count(), 2);
+        }
+
         foreach ($ticketsData['tickets'] as $ticket) {
             for ($i = 0; $i < (int) $ticket['count']; $i++) {
                 $order->tickets()->create([
@@ -62,7 +67,7 @@ class OrderService
                     'voucher_name' => null,
                     'name' => $ticket['name'],
                     'discount' => null,
-                    'price' => $ticket['price'],
+                    'price' => max(0.1, round($ticket['price'] - $ticketDiscount, 2)),
                     'row' => $ticket['row'] ?? null,
                     'seat' => $ticket['seat'] ?? null,
                     'total' => round($ticket['total'] / $ticket['count'], 2),

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Site;
 
 use App\Helpers\MediaHelper;
-use App\Helpers\PriceHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderInvoice;
 use App\Mail\OrderTickets;
