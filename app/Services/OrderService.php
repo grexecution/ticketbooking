@@ -46,10 +46,10 @@ class OrderService
 
         foreach ($ticketsData['tickets'] as &$ticketData) {
             if (is_string($ticketData['price'])) {
-                $ticketData['price'] = PriceHelper::fromFrontStrToFloat($ticketData['price']);
+                $ticketData['price'] = PriceHelper::fromStrToFloat($ticketData['price']);
             }
             if (is_string($ticketData['total'])) {
-                $ticketData['total'] = PriceHelper::fromFrontStrToFloat($ticketData['total']);
+                $ticketData['total'] = PriceHelper::fromStrToFloat($ticketData['total']);
             }
         }
 

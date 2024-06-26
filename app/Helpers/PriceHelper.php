@@ -4,11 +4,6 @@ namespace App\Helpers;
 
 class PriceHelper
 {
-    public static function fromFrontStrToFloat(string $priceStr) : float
-    {
-        $numericString = preg_replace("/[^0-9.]/", "", $priceStr);
-        return (float) $numericString;
-    }
 
     public static function fromStrToFloat(string $priceStr) : float
     {
