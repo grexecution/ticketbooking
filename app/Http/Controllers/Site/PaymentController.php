@@ -133,6 +133,13 @@ class PaymentController extends Controller
         }
     }
 
+    private function convertPriceToFloat($price) {
+        if (strpos($price, ',') !== false) {
+            $price = str_replace(',', '.', $price);
+        }
+        return floatval($price);
+    }
+
     public function handleWebhook(Request $request) : JsonResponse
     {
         $payload = $request->getContent();
@@ -167,13 +174,6 @@ class PaymentController extends Controller
             StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
-    }
-
-    private function convertPriceToFloat($price) {
-        if (strpos($price, ',') !== false) {
-            $price = str_replace(',', '.', $price);
-        }
-        return floatval($price);
     }
 
     protected function handlePaymentIntentSucceeded($paymentIntent) : void
