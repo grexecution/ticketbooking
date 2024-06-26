@@ -74,7 +74,7 @@ class PaymentController extends Controller
                     'product_data' => [
                         'name' => trim($ticket->eventSeatPlanCategory->event->name . " | {$ticket->category_name} $seat $row"),
                     ],
-                    'unit_amount' => (int) ($ticket->total * 100)
+                    'unit_amount' => $ticket->total * 100
                 ],
                 'quantity' => 1,
             ];
