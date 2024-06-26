@@ -55,7 +55,7 @@ class OrderService
 
         $ticketDiscount = 0;
         if ($discount) {
-            $ticketDiscount = round($discount / count($ticketsData['tickets']), 2);
+            $ticketDiscount = max(0, round($discount / count($ticketsData['tickets']), 2));
         }
 
         foreach ($ticketsData['tickets'] as $ticket) {
@@ -66,11 +66,11 @@ class OrderService
                     'category_name' => $ticket['categoryName'],
                     'voucher_name' => null,
                     'name' => $ticket['name'],
-                    'discount' => null,
-                    'price' => max(0.1, round($ticket['price'] - $ticketDiscount, 2)),
+                    'discount' => $ticketDiscount,
+                    'price' => $price = max(0.1, round($ticket['price'] - $ticketDiscount, 2)),
                     'row' => $ticket['row'] ?? null,
                     'seat' => $ticket['seat'] ?? null,
-                    'total' => round($ticket['total'] / $ticket['count'], 2),
+                    'total' => $price,
                 ]);
             }
         }
