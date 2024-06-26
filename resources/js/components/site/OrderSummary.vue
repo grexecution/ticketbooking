@@ -257,7 +257,7 @@ export default {
             }
         },
         formatPrice(price) {
-            return price.toFixed(2).replace('.', ',');
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
         }
     }
 };

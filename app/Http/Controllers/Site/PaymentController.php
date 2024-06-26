@@ -134,9 +134,7 @@ class PaymentController extends Controller
     }
 
     private function convertPriceToFloat($price) {
-        if (strpos($price, ',') !== false) {
-            $price = str_replace(',', '.', $price);
-        }
+        $price = str_replace(',', '.', $price);
         return floatval($price);
     }
 
