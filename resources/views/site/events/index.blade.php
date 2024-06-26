@@ -66,7 +66,10 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-orange checkout-btn w-100 mt-2">Tickets kaufen</button>
+                        <a href="{{ url('events/' . $event->slug) }}">
+                            <button type="button" class="btn btn-orange checkout-btn w-100 mt-2">Tickets kaufen</button>
+                        </a>
+
                     </div>
 
                 </div>

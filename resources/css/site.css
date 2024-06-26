@@ -218,6 +218,12 @@ header .overlay {
     font-weight: 700;
 }
 
+.btn-orange:hover {
+    background-color: #ffcd38;
+    border-color: #ffcd38;
+    box-shadow: 0px 2px 10px 0px rgba(250,180,0,0.5);
+}
+
 .seatplan-container {
     margin: auto;
     width: max-content;
