@@ -103,6 +103,12 @@ class PaymentController extends Controller
                 ],
             ];
 
+            info(json_encode([
+                'input' => $request->all(),
+                'payload' => $payload,
+                'order' => $order->toArray(),
+            ]));
+
             // Create a Checkout Session
             $session = $this->api->getStripeClient()->checkout->sessions->create($payload);
 
