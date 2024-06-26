@@ -65,7 +65,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <!-- Delete Voucher Button -->
-                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="1" data-toggle="modal" data-target="#confirmModal">
+                                            <a href="#" class="btn btn-danger mx-2 delete-record" data-record-id="{{ $voucher->id }}" data-toggle="modal" data-target="#confirmModal">
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
