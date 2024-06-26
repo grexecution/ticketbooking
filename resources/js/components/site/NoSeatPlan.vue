@@ -141,9 +141,7 @@ export default {
             return this.formatPrice(amount)
         },
         convertPriceToFloat(price) {
-            // Check if the price uses a comma as a decimal separator
             if (price.includes(',')) {
-                // Replace the comma with a dot
                 price = price.replace(',', '.');
             }
             return parseFloat(price);

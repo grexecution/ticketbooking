@@ -58,7 +58,7 @@ class PaymentController extends Controller
             discount:  $request->discount,
         );
 
-        $orderAmount = $order->total * 100;
+        $orderAmount = $this->convertPriceToFloat($order->total) * 100;
         $tenantFee = $event->user->tenant->stripe_fee
             ? $event->user->tenant->stripe_fee / 100
             : 0.02;
@@ -167,6 +167,13 @@ class PaymentController extends Controller
             StripeCallback::query()->create(['endpoint' => 'webhook', 'payload' => ['input' => $request->all(), 'event' => $event ?? null], 'response' => ['error' => 'Invalid signature']]);
             return response()->json(['error' => 'Invalid signature'], 400);
         }
+    }
+
+    private function convertPriceToFloat($price) {
+        if (strpos($price, ',') !== false) {
+            $price = str_replace(',', '.', $price);
+        }
+        return floatval($price);
     }
 
     protected function handlePaymentIntentSucceeded($paymentIntent) : void
