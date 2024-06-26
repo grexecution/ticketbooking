@@ -30,7 +30,7 @@ class OrderTickets extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Tickets',
+            subject: 'Deine Tickets für ' . $this->order->event->name,
         );
     }
 

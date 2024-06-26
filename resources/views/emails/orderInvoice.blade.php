@@ -76,8 +76,8 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
-                                                Hello, {{ $order->first_name }} {{ $order->last_name }}.
-                                                <br> Thank you for shopping from our store and for your order.
+                                                Hallo, {{ $order->first_name }} {{ $order->last_name }}.
+                                                <br> Vielen lieben Dank für deine Bestellung!
                                             </td>
                                         </tr>
                                         </tbody>
@@ -91,8 +91,8 @@
                                             <td height="5"></td>
                                         </tr>
                                         <tr>
-                                            <td style="font-size: 21px; color: #ff0000; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
-                                                Invoice
+                                            <td style="font-size: 21px; color: #ffc107; letter-spacing: -1px; font-family: 'Open Sans', sans-serif; line-height: 1; vertical-align: top; text-align: right;">
+                                                Rechnung
                                             </td>
                                         </tr>
                                         <tr>
@@ -106,9 +106,9 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: right;">
-                                                <small>ORDER</small> #{{ $order->id }}<br />
+                                                <small>BUCHUNG</small> #{{ $order->id }}<br />
                                                 @if(! in_array($order->order_status, ['new', 'succeeded']))
-                                                    <small style="color: red;">Status: Cancelled</small><br />
+                                                    <small style="color: red;">Status: Abgebrochen</small><br />
                                                 @endif
                                                 <small>{{ \Carbon\Carbon::parse($order->order_date)->format('F jS Y') }}</small>
                                             </td>
@@ -148,16 +148,16 @@
                             <tbody>
                             <tr>
                                 <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
-                                    Item
+                                    Event
                                 </th>
                                 {{--                                <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">--}}
                                 {{--                                    <small>SKU</small>--}}
                                 {{--                                </th>--}}
                                 <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
-                                    Quantity
+                                    Menge
                                 </th>
                                 <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
-                                    Subtotal
+                                    Zwischensumme
                                 </th>
                             </tr>
                             <tr>
@@ -168,11 +168,11 @@
                             </tr>
                             @foreach($order->tickets as $ticket)
                                 <tr>
-                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ff0000;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #ffc107;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
                                         {{ $ticket->category_name }}
                                         {{ $ticket->name }}
-                                        @if($ticket->row) Row: {{ $ticket->row }} @endif
-                                        @if($ticket->seat) Seat: {{ $ticket->seat }} @endif
+                                        @if($ticket->row) Reihe: {{ $ticket->row }} @endif
+                                        @if($ticket->seat) Sitzplatz: {{ $ticket->seat }} @endif
                                     </td>
                                     {{--                                    <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"><small>MH792AM/A</small></td>--}}
                                     <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">1</td>
@@ -211,7 +211,7 @@
                             <tbody>
                             <tr>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
-                                    Subtotal
+                                    Zwischensumme
                                 </td>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
                                     {{ \App\Helpers\PriceHelper::fromFloatToStr($order->subtotal) }}
@@ -219,7 +219,7 @@
                             </tr>
                             <tr>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
-                                    Shipping &amp; Handling
+                                    Versand
                                 </td>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
                                     {{ \App\Helpers\PriceHelper::fromFloatToStr(0.0) }}
@@ -227,14 +227,14 @@
                             </tr>
                             <tr>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
-                                    <strong>Grand Total (Incl.Tax)</strong>
+                                    <strong> Summe (Inkl MwSt)</strong>
                                 </td>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
                                     <strong>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</strong>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>TAX</small></td>
+                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>MwSt.</small></td>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">
                                     <small>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->vat) }}</small>
                                 </td>
@@ -279,7 +279,7 @@
                                         <tbody>
                                         <tr>
                                             <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                                                <strong>BILLING INFORMATION</strong>
+                                                <strong>RECHNUNGSADRESSE</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -301,7 +301,7 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                                                <strong>PAYMENT METHOD</strong>
+                                                <strong>ZAHLUNGSART</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -309,10 +309,7 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
-                                                Credit Card<br>
-                                                Credit Card Type: Visa<br>
-                                                {{--                                                Worldpay Transaction ID: <a href="#" style="color: #ff0000; text-decoration:underline;">4185939336</a><br>--}}
-                                                {{--                                                <a href="#" style="color:#b0b0b0;">Right of Withdrawal</a>--}}
+                                                Stripe<br>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -323,75 +320,6 @@
                         </table>
                     </td>
                 </tr>
-                {{--                <tr>--}}
-                {{--                    <td>--}}
-                {{--                        <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">--}}
-                {{--                            <tbody>--}}
-                {{--                            <tr>--}}
-                {{--                                <td>--}}
-                {{--                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">--}}
-                {{--                                        <tbody>--}}
-                <!--
-                                        <tr class="hiddenMobile">
-                                            <td height="35"></td>
-                                        </tr>
-                                        -->
-                {{--                                        <tr class="visibleMobile">--}}
-                {{--                                            <td height="20"></td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">--}}
-                {{--                                                <strong>SHIPPING INFORMATION</strong>--}}
-                {{--                                            </td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td width="100%" height="10"></td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 20px; vertical-align: top; ">--}}
-                {{--                                                Sup Inc<br> Another Place, Somewhere<br> New York NY<br> 4468, United States<br> T: 202-555-0171--}}
-                {{--                                            </td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        </tbody>--}}
-                {{--                                    </table>--}}
-
-
-                {{--                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">--}}
-                {{--                                        <tbody>--}}
-                <!--
-                                        <tr class="hiddenMobile">
-                                            <td height="35"></td>
-                                        </tr>
-                                        -->
-                {{--                                        <tr class="visibleMobile">--}}
-                {{--                                            <td height="20"></td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">--}}
-                {{--                                                <strong>SHIPPING METHOD</strong>--}}
-                {{--                                            </td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td width="100%" height="10"></td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        <tr>--}}
-                {{--                                            <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 20px; vertical-align: top; ">--}}
-                {{--                                                UPS: U.S. Shipping Services--}}
-                {{--                                            </td>--}}
-                {{--                                        </tr>--}}
-                {{--                                        </tbody>--}}
-                {{--                                    </table>--}}
-                {{--                                </td>--}}
-                {{--                            </tr>--}}
-                {{--                            </tbody>--}}
-                {{--                        </table>--}}
-                {{--                    </td>--}}
-                {{--                </tr>--}}
-                <!--
-                <tr class="hiddenMobile">
-                    <td height="60"></td>
-                </tr>
-                -->
                 <tr class="visibleMobile">
                     <td height="30"></td>
                 </tr>
@@ -402,32 +330,5 @@
     </tbody>
 </table>
 <!-- /Information -->
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="white">
-    <tr>
-        <td>
-            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
-                <tr>
-                    <td>
-                        <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
-                            <tbody>
-                            <tr>
-                                <td style="font-size: 12px; color: #5b5b5b; font-family: 'Open Sans', sans-serif; line-height: 18px; vertical-align: top; text-align: left;">
-                                    Have a nice day.
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr class="spacer">
-                    <td height="50"></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td height="20"></td>
-    </tr>
-</table>
 </body>
 </html>
