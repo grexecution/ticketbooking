@@ -209,6 +209,15 @@ header .overlay {
     cursor: pointer;
 }
 
+.btn-orange {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    -webkit-box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
+    box-shadow: 0px 4px 10px 0px rgba(250,180,0,0.3);
+    height: calc(2.75rem + 2px);
+    font-weight: 700;
+}
+
 .seatplan-container {
     margin: auto;
     width: max-content;

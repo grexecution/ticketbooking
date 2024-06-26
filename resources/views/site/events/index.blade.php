@@ -25,7 +25,7 @@
     </header>
 
     <div class="container mt-5">
-        <div class="row row-cols-1 row-cols-md-2 g-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 mb-4">
             @foreach($events as $event)
                 <div class="col mb-4">
                     <div class="p-3 p-md-4 rounded-xl" style="background-color:#F1F5F8">
@@ -66,6 +66,7 @@
                                 </div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-orange checkout-btn w-100 mt-2">Tickets kaufen</button>
                     </div>
 
                 </div>
