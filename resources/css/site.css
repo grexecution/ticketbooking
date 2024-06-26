@@ -386,6 +386,10 @@ label {
         height: 35vh;
         min-height: 22rem;
     }
+    header video {
+        max-width: unset;
+        width: 660px;
+    }
     .navbar-dark .navbar-nav .nav-link {
         font-size: 16px;
     }
