@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Site;
 
 use App\Helpers\MediaHelper;
+use App\Helpers\PriceHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderInvoice;
 use App\Mail\OrderTickets;
@@ -74,7 +75,7 @@ class PaymentController extends Controller
                     'product_data' => [
                         'name' => trim($ticket->eventSeatPlanCategory->event->name . " | {$ticket->category_name} $seat $row"),
                     ],
-                    'unit_amount' => (int) $ticket->total * 100
+                    'unit_amount' => (int) (PriceHelper::fromStrToFloat($ticket->total) * 100)
                 ],
                 'quantity' => 1,
             ];
