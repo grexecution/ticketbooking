@@ -311,7 +311,6 @@
             <div class="ticket-card">
                 <div class="ticket-header">
                     <h1>{{ $order->event->name }}</h1>
-                    {{--                <h4>Humorwürmer</h4>--}}
                 </div>
                 <div class="ticket-qr-section">
                     <div class="redeem-stamp">

@@ -30,7 +30,7 @@ class OrderInvoice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Invoice',
+            subject: 'Danke für deine Bestellung!',
         );
     }
 
