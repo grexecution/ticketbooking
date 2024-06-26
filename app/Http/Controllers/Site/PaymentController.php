@@ -58,7 +58,7 @@ class PaymentController extends Controller
             discount:  $request->discount,
         );
 
-        $orderAmount = $this->convertPriceToFloat($order->total) * 100;
+        $orderAmount = $order->total * 100;
         $tenantFee = $event->user->tenant->stripe_fee
             ? $event->user->tenant->stripe_fee / 100
             : 0.02;
@@ -137,11 +137,6 @@ class PaymentController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-    }
-
-    private function convertPriceToFloat($price) {
-        $price = str_replace(',', '.', $price);
-        return floatval($price);
     }
 
     public function handleWebhook(Request $request) : JsonResponse

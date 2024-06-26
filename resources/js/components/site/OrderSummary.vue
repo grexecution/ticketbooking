@@ -232,7 +232,10 @@ export default {
             return moment(date).format('HH:mm');
         },
         convertPriceToFloat(price) {
-            return parseFloat(price.replace(',', ''))
+            if (price.includes(',')) {
+                price = price.replace(',', '.');
+            }
+            return parseFloat(price);
         },
         async applyPromoCode(promoCode) {
             try {
