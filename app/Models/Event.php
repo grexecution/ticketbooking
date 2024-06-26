@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\SeatPlan\EventSeatPlanCategory;
 use App\Models\SeatPlan\SeatPlan;
 use App\Models\User\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -53,6 +54,7 @@ class Event extends Model implements HasMedia
         'start_date' => 'datetime',
         'start_time' => 'datetime',
         'doors_open_time' => 'datetime',
+        'carbon_start_time' => 'string',
     ];
 
     protected $appends = [
@@ -64,6 +66,7 @@ class Event extends Model implements HasMedia
         'active_bookings',
         'total_tickets',
         'has_bought_tickets',
+        'carbon_start_time',
     ];
 
     protected static function boot()
@@ -264,5 +267,10 @@ class Event extends Model implements HasMedia
     public function getSlugAttribute(): string
     {
         return Str::slug($this->artist . ' ' . $this->name);
+    }
+
+    public function getCarbonStartTimeAttribute() : string
+    {
+        return Carbon::parse($this->start_time)->format('H:i');
     }
 }

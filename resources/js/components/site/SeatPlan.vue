@@ -199,7 +199,7 @@ export default {
                     categoryName: category.categoryName,
                     eventName: this.event.name,
                     eventDate: this.formatDate(this.event.start_date),
-                    eventTime: this.formatTime(this.event.start_time),
+                    eventTime: this.event.carbon_start_time,
                     eventLocation: `${this.event.venue.city}, ${this.event.venue.country}`,
                 };
             });
