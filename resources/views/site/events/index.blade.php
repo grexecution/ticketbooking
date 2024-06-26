@@ -10,8 +10,9 @@
 
         <!-- The HTML5 video element that will create the background video on the header -->
         <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
-            <source src="https://kabarett-am-see.at/wp-content/uploads/2024/06/2890196-hd_1280_720_30fps.mp4" type="video/mp4">
+            <source src="https://player.vimeo.com/progressive_redirect/playback/969180664/rendition/720p/file.mp4?loc=external&log_user=0&signature=d86d7f6e384797160903f81be3c61a0abced9d12b6298c58b76b455694e8b205" type="video/mp4">
         </video>
+
 
         <!-- The header content -->
         <div class="container h-100">
@@ -25,7 +26,7 @@
     </header>
 
     <div class="container mt-5">
-        <div class="row row-cols-1 row-cols-md-2 g-5">
+        <div class="row row-cols-1 row-cols-md-2 g-5 mb-4">
             @foreach($events as $event)
                 <div class="col mb-4">
                     <div class="p-3 p-md-4 rounded-xl" style="background-color:#F1F5F8">
@@ -66,6 +67,10 @@
                                 </div>
                             </div>
                         </div>
+                        <a href="{{ url('events/' . $event->slug) }}">
+                            <button type="button" class="btn btn-orange checkout-btn w-100 mt-2">Tickets kaufen</button>
+                        </a>
+
                     </div>
 
                 </div>
