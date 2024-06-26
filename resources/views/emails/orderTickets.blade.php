@@ -351,12 +351,11 @@
                 </div>
                 <p class="ticket-code">#{{ $ticket->id }}</p>
                 <div class="logo-box">
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
-                    <img class="logo-img" src="https://kabarett-am-see.at/wp-content/uploads/elementor/thumbs/KABARETT-AM-SEE_LOGO-PLAIN_WHITE_BACKGROUND-1-q6sf21nxfuvkwlukympf037j6375osq7s54czbna1c.png"/>
+                    @if($ticket->order->event->getMedia('partners')->isNotEmpty())
+                        @foreach($ticket->order->event->getMedia('partners') as $partner)
+                            <img class="logo-img" src="{{ $partner->getUrl() }}" />
+                        @endforeach
+                    @endif
                 </div>
             </div>
         @endforeach
