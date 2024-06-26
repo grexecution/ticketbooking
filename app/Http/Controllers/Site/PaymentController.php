@@ -82,7 +82,6 @@ class PaymentController extends Controller
 
         try {
             $payload = [
-                'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'metadata' => [
                     'event_id' => $event->id,
