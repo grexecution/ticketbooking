@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Helpers\HashIdHelper;
 use App\Helpers\MediaHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderInvoice;
@@ -81,6 +82,7 @@ class PaymentController extends Controller
         });
 
         try {
+            $orderIdHash = HashIdHelper::encodeId($order->id);
             $payload = [
                 'line_items' => $lineItems,
                 'metadata' => [
@@ -88,8 +90,8 @@ class PaymentController extends Controller
                     'order_id' => $order->id,
                 ],
                 'mode' => 'payment',
-                'success_url' => route('checkout.step3') . '?successfully=1&order_id=' . $order->id,
-                'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $order->id,
+                'success_url' => route('checkout.step3') . '?successfully=1&order_id=' . $orderIdHash,
+                'cancel_url' => route('checkout.step3') . '?canceled=1&order_id=' . $orderIdHash,
                 'locale' => 'de',
                 'payment_intent_data' => [
                     'application_fee_amount' => (int) round($orderAmount * $tenantFee),

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Helpers\HashIdHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Site\CustomerDataRequest;
 use App\Models\Booking;
@@ -33,9 +34,11 @@ class CheckoutController extends Controller
 
     public function showStep3(Request $request) : View
     {
+        $orderId = HashIdHelper::decodeId($request->order_id);
+
         $order = Order::query()
             ->with(['event.venue', 'tickets'])
-            ->findOrFail($request->order_id);
+            ->findOrFail($orderId);
 
         if ($request->canceled) {
             $order->update(['order_status' => 'cancelled']);
