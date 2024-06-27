@@ -36,7 +36,7 @@
 {{--                            <p class="text-wrap">Stripe link:</p>--}}
                         </div>
                         <div class="col-6">
-                            <p class="text-wrap"><strong>{{ $order->address }}, {{ $order->zip_code }} {{ $order->city }}</strong></p>
+                            <p class="text-wrap"><strong>{{ ($order->address || $order->zip_code || $order->city) ? rtrim(implode(', ', [$order->address, $order->zip_code, $order->city]), ', ') : '---' }}</strong></p>
                             <p class="text-wrap"><strong>{{ ucfirst($order->order_type) }} order</strong></p>
                             <p class="text-wrap"><strong>{{ ucfirst($order->payment_method) }}</strong></p>
 {{--                            <p class="text-wrap"><a href="https://stripe.com/booking...">https://stripe.com/booking...</a></p>--}}
