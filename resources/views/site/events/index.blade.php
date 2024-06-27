@@ -3,6 +3,10 @@
 @section('title', __('messages.event_list'))
 
 @section('content')
+    <head><meta name="title" content="Ticketwilli - Die offizielle Vorverkaufsstelle von Kabarett am See 2024">
+        <meta name="description" content="Die österreichische Online-Pudl für Eventveranstaltungen wo Künstler fair bezahlt werden.">
+        <meta name="keywords" content="Kabarett, Event, Veranstaltung, Ticketbuchung">
+    </head>
     <header>
 
         <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->

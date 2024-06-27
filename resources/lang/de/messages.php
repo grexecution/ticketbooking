@@ -9,7 +9,7 @@ return [
     'kabarett' => 'Kabarett',
     'start' => 'Start',
     'tickets_from' => 'Tickets ab',
-    'show_event' => 'Show Event',
+    'show_event' => 'Event',
     'preview' => 'Vorschau: ',
     'price_from' => 'Preis ab',
     'event_not_available' => 'Dieses Event it nicht verfügbar',
