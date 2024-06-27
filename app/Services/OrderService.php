@@ -54,8 +54,9 @@ class OrderService
         }
 
         $ticketDiscount = 0;
+        $countTickets = array_sum(array_column($ticketsData['tickets'], 'count'));
         if ($discount) {
-            $ticketDiscount = max(0, round($discount / count($ticketsData['tickets']), 2));
+            $ticketDiscount = max(0, round($discount / $countTickets, 2));
         }
 
         foreach ($ticketsData['tickets'] as $ticket) {
