@@ -40,7 +40,7 @@ class OrderInvoice extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.orderInvoice',
+            view: 'emails.orderInvoice2',
             with: [
                 'order' => $this->order,
             ]

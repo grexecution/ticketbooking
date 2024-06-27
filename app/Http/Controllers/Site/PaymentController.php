@@ -180,6 +180,7 @@ class PaymentController extends Controller
     protected function handlePaymentIntentSucceeded($paymentIntent) : void
     {
         $orderId = $paymentIntent->metadata?->order_id;
+        /** @var Order $order */
         $order = Order::query()->with(['tickets', 'event.venue'])->find($orderId);
 
         if ($order) {
@@ -203,11 +204,10 @@ class PaymentController extends Controller
                         'qr_data' => $qrData,
                     ]);
                     $tmpFileName = $QRCodeService->createQR($qrData);
-                    Mail::to($order->email)->send(new OrderInvoice($order));
-                    Mail::to($order->email)->send(new OrderTickets($order));
                     MediaHelper::handleMedia($t, 'qr', $tmpFileName);
                     info("QR created: {$t->qr_url}");
                 }
+                Mail::to($order->email)->send(new OrderInvoice($order));
 
             } catch (\Exception $e) {
                 \Log::error("Error create a QR to ticket#{$ticket->id}: " . $e->getMessage());
