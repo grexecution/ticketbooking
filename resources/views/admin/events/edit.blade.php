@@ -113,9 +113,11 @@
                 <li class="nav-item">
                     <a class="nav-link px-20 tab-text active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Event</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link px-20 tab-text" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="false">Seating Plan</a>
-                </li>
+                @if($event->seat_type === 'seat_plan')
+                    <li class="nav-item">
+                        <a class="nav-link px-20 tab-text" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="false">Seating Plan</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link px-20 tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
                 </li>
@@ -126,13 +128,17 @@
 
             <!-- Tab content -->
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
-                    <div class="card seats-plan">
-                        <div class="card-body">
-                            <h2>COMING SOON</h2>
+                @if($event->seat_type === 'seat_plan')
+                    <div class="tab-pane fade bg-white rounded" id="seating" role="tabpanel" aria-labelledby="seating-tab">
+                        <div class="card seats-plan">
+                            <div class="card-body">
+                                <seat-plan-book
+                                    event-id="{{ $event->id }}"
+                                ></seat-plan-book>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 <div class="tab-pane fade bg-white rounded" id="bookings" role="tabpanel" aria-labelledby="bookings-tab">
                     <!-- Bookings content -->

@@ -190,28 +190,26 @@ class PaymentController extends Controller
         }
 
         $QRCodeService = app(QRCodeService::class);
-        foreach ($order->tickets as $ticket) {
-            try {
-                /** @var Ticket $ticket */
-                foreach ($order->tickets as $t) {
-                    $qrData = implode('_', [
-                        $order->id,
-                        $order->event->id,
-                        $t->id,
-                    ]); // Example of data: 6_6_14
-                    $ticket->update([
-                        'is_paid' => true,
-                        'qr_data' => $qrData,
-                    ]);
-                    $tmpFileName = $QRCodeService->createQR($qrData);
-                    MediaHelper::handleMedia($t, 'qr', $tmpFileName);
-                    info("QR created: {$t->qr_url}");
-                }
-                Mail::to($order->email)->send(new OrderInvoice($order));
-
-            } catch (\Exception $e) {
-                \Log::error("Error create a QR to ticket#{$ticket->id}: " . $e->getMessage());
+        try {
+            /** @var Ticket $ticket */
+            foreach ($order->tickets as $ticket) {
+                $qrData = implode('_', [
+                    $order->id,
+                    $order->event->id,
+                    $ticket->id,
+                ]); // Example of data: 6_6_14
+                $ticket->update([
+                    'is_paid' => true,
+                    'qr_data' => $qrData,
+                ]);
+                $tmpFileName = $QRCodeService->createQR($qrData);
+                MediaHelper::handleMedia($ticket, 'qr', $tmpFileName);
+                info("QR created: {$ticket->qr_url}");
             }
+            Mail::to($order->email)->send(new OrderInvoice($order));
+
+        } catch (\Exception $e) {
+            \Log::error("Error create a QR to ticket#{$ticket->id}: " . $e->getMessage());
         }
 
         info('Payment intent succeeded for order: ' . ($order ? $order->id : 'Order not found'));

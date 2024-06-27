@@ -8,12 +8,10 @@ use App\Http\Requests\Site\CustomerDataRequest;
 use App\Models\Booking;
 use App\Models\Event;
 use App\Models\Order;
-use App\Models\Ticket;
 use App\Models\Voucher;
 use App\Services\VoucherService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 

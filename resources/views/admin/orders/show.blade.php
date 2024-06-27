@@ -20,8 +20,8 @@
                         </div>
                         <div class="col-6">
                             <p class="text-wrap"><strong>{{ $order->first_name }} {{ $order->last_name }}</strong></p>
-                            <p class="text-wrap"><strong>{{ $order->email }}</strong></p>
-                            <p class="text-wrap"><strong>{{ \Carbon\Carbon::parse($order->order_date)->format('m/d/Y') }} | {{ \Carbon\Carbon::parse($order->order_date)->format('H:iß') }}</strong></p>
+                            <p class="text-wrap"><strong>{{ $order->email ?: '---' }}</strong></p>
+                            <p class="text-wrap"><strong>{{ \Carbon\Carbon::parse($order->order_date)->format('m/d/Y') }} | {{ \Carbon\Carbon::parse($order->order_date)->format('H:i') }}</strong></p>
                             <p class="text-wrap"><strong class="text-success">{{ ucfirst($order->order_status) }}</strong></p>
                         </div>
                     </div>
@@ -33,12 +33,12 @@
                             <p class="text-wrap">Address:</p>
                             <p class="text-wrap">Order type:</p>
                             <p class="text-wrap">Payment method:</p>
-                            <p class="text-wrap">Stripe link:</p>
+{{--                            <p class="text-wrap">Stripe link:</p>--}}
                         </div>
                         <div class="col-6">
                             <p class="text-wrap"><strong>{{ $order->address }}, {{ $order->zip_code }} {{ $order->city }}</strong></p>
                             <p class="text-wrap"><strong>{{ ucfirst($order->order_type) }} order</strong></p>
-                            <p class="text-wrap"><strong>Credit card</strong></p>
+                            <p class="text-wrap"><strong>{{ ucfirst($order->payment_method) }}</strong></p>
 {{--                            <p class="text-wrap"><a href="https://stripe.com/booking...">https://stripe.com/booking...</a></p>--}}
                         </div>
                     </div>

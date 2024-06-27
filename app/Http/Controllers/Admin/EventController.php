@@ -8,13 +8,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Events\IndexEventRequest;
 use App\Http\Requests\Events\StoreEventRequest;
 use App\Http\Requests\Events\UpdateEventRequest;
+use App\Mail\OrderInvoice;
 use App\Models\Artist;
 use App\Models\Discount;
 use App\Models\Event;
+use App\Models\Order;
 use App\Models\Program;
 use App\Models\SeatPlan\EventSeatPlanCategory;
 use App\Models\SeatPlan\SeatPlan;
+use App\Models\Ticket;
 use App\Models\Venue;
+use App\Services\OrderService;
+use App\Services\QRCodeService;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Contracts\Support\Renderable;
@@ -23,6 +28,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class EventController extends Controller
@@ -241,6 +247,45 @@ class EventController extends Controller
                     'description' => $category->description,
                 ]);
             });
+        }
+    }
+
+    public function bookTickets(Request $request, string $id) : JsonResponse
+    {
+        Event::query()->findOrFail($id);
+
+        try {
+            $order = app(OrderService::class)->createOrder(
+                ticketsData: $request->tickets_data,
+                customerData: $request->customer_data,
+                orderType: Order::ORDER_TYPE_ADMIN,
+            );
+
+            $QRCodeService = app(QRCodeService::class);
+            /** @var Ticket $ticket */
+            foreach ($order->tickets as $ticket) {
+                $qrData = implode('_', [
+                    $order->id,
+                    $order->event->id,
+                    $ticket->id,
+                ]); // Example of data: 6_6_14
+                $ticket->update([
+                    'is_paid' => true,
+                    'qr_data' => $qrData,
+                ]);
+                $tmpFileName = $QRCodeService->createQR($qrData);
+                MediaHelper::handleMedia($ticket, 'qr', $tmpFileName);
+                info("QR created: {$ticket->qr_url}");
+            }
+
+            if ($order->email) {
+                Mail::to($order->email)->send(new OrderInvoice($order));
+            }
+
+            return response()->json(['order' => $order]);
+
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

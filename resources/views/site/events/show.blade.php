@@ -60,36 +60,32 @@
     <no-seat-plan
         event-id="{{ $event->id }}"
     ></no-seat-plan>
-    @else
-        <div class="main-bg py-6">
-            <div class="row py-6 mb-5 container m-auto">
-                <div class="container card py-1 py-md-3 px-1" style="background-color: #fff7e161;">
-                    <seat-plan
-                        event-id="{{ $event->id }}"
-                    ></seat-plan>
-                </div>
-                @php
-                    $partners = $event->getMedia('partners');
-                @endphp
-
-                @if($partners->isNotEmpty())
-                    <div class="container card py-1 py-md-3 px-1 mt-3">
-                        <div class="col">
-                            <h2 class="event-title text-center mb-4">@lang('messages.sponsors')</h2>
-                            <div class="logo-banner d-flex flex-wrap justify-content-between">
-                                @foreach($partners as $partner)
-                                    <img src="{{ $partner->getUrl() }}" alt="@lang('messages.partner_image')" style="height:150px" class="rounded partner-image">
-                                @endforeach
-                            </div>
-
-                        </div>
-                    </div>
-                @endif
+@else
+    <div class="main-bg py-6">
+        <div class="row py-6 mb-5 container m-auto">
+            <div class="container card py-1 py-md-3 px-1" style="background-color: #fff7e161;">
+                <seat-plan
+                    event-id="{{ $event->id }}"
+                ></seat-plan>
             </div>
+            @php
+                $partners = $event->getMedia('partners');
+            @endphp
 
+            @if($partners->isNotEmpty())
+                <div class="container card py-1 py-md-3 px-1 mt-3">
+                    <div class="col">
+                        <h2 class="event-title text-center mb-4">@lang('messages.sponsors')</h2>
+                        <div class="logo-banner d-flex flex-wrap justify-content-between">
+                            @foreach($partners as $partner)
+                                <img src="{{ $partner->getUrl() }}" alt="@lang('messages.partner_image')" style="height:150px" class="rounded partner-image">
+                            @endforeach
+                        </div>
 
-
-
+                    </div>
+                </div>
+            @endif
+        </div>
 @endif
 @endsection
 

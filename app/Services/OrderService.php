@@ -10,9 +10,9 @@ class OrderService
 {
     const TAX_PERCENTAGE = 13;
 
-    public function createOrder(array $ticketsData, array $customerData, ? Voucher $voucher, ? float $discount) : Order
+    public function createOrder(array $ticketsData, array $customerData, ? Voucher $voucher = null, ? float $discount = null, ?string $orderType = null) : Order
     {
-        $amount = $ticketsData['amountDiscount'] ?: $ticketsData['amount'];
+        $amount = $ticketsData['amountDiscount'] ?? false ?: $ticketsData['amount'];
         $taxRate = self::TAX_PERCENTAGE / 100;
         $taxes = round($amount * $taxRate, 2);
         $amountWithTaxes = round($amount + $taxes, 2);
@@ -30,10 +30,10 @@ class OrderService
             'zip_code' => $customerData['zip_code'],
             'city' => $customerData['city'],
             'is_subscribed' => (bool) ($customerData['is_subscribed'] ?? false == 'on'),
-            'order_type' => Order::ORDER_TYPE_CUSTOMER,
-            'order_status' => 'new',
+            'order_type' => $orderType ?: Order::ORDER_TYPE_CUSTOMER,
+            'order_status' => $orderType === Order::ORDER_TYPE_ADMIN ? 'succeeded' : 'new',
             'order_date' => now(),
-            'payment_method' => 'card',
+            'payment_method' => $orderType === Order::ORDER_TYPE_ADMIN ? 'Offline' : 'Credit Card',
             'subtotal' => $amount,
             'discount' => $discount,
             'vat' => $taxes,

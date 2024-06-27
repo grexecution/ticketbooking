@@ -2,6 +2,7 @@ import './bootstrap';
 import { createApp } from "vue";
 import SubscriptionEvents from "./components/admin/SubscriptionEvents";
 import SeatPlan from "./components/admin/SeatPlan.vue";
+import SeatPlanBook from "./components/admin/SeatPlanBook.vue";
 import SeatPlanSite from "./components/site/SeatPlan.vue";
 import NoSeatPlan from "./components/site/NoSeatPlan.vue";
 import OrderSummary from "./components/site/OrderSummary.vue";
@@ -12,6 +13,7 @@ import SeatMap from "./components/SeatMap.vue";
 const adminApp = createApp({})
 adminApp.component('subscription-events', SubscriptionEvents)
 adminApp.component('seat-plan', SeatPlan)
+adminApp.component('seat-plan-book', SeatPlanBook)
 adminApp.mount('#app')
 
 // Site components
