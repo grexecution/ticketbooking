@@ -67,9 +67,22 @@
         </div>
         <div class="card seats-plan">
             <div class="card-body">
+                <div class="d-flex justify-content-between">
                     <h3 class="card-title">
                         Newest Orders
                     </h3>
+                    <form method="GET" action="{{ route('dashboard') }}">
+                        <select name="event_id" onchange="this.form.submit()">
+                            <option value="">Select an event</option>
+                            @foreach($events as $event)
+                                <option value="{{ $event->id }}" {{ request('event_id') == $event->id ? 'selected' : '' }}>
+                                    {{ $event->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+
                 <div class="row mt-5">
                     <div class="col">
                         <table class="table table-full-width">
