@@ -20,10 +20,12 @@ class StripeConnectController extends Controller
 
     public function connectAccount(Request $request) : RedirectResponse
     {
+        if (! $request->input('tenant_id')) {
+            return redirect()->back()->with('error', 'Invalid tenant!');
+        }
+
         /** @var User $user */
-        $user = $request->input('tenant_id')
-            ? User::query()->where('tenant_id', $request->input('tenant_id'))->firstOrFail()
-            : auth()->user();
+        $user = User::query()->where('tenant_id', $request->input('tenant_id'))->firstOrFail();
 
         $accountId = $user->tenants?->stripe_account_id ?: $this->api->createAccount($user);
         $url = $this->api->createAccountLink($accountId, $request->input('tenant_id') ? $user->tenant : null);

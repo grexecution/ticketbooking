@@ -211,7 +211,7 @@
                                         @endif
                                         @else
                                             <div class="form-group">
-                                                <a href="{{ route('stripe.connect.connectAccount') }}" class="btn btn-dark">
+                                                <a href="{{ route('stripe.connect.connectAccount') }}?tenant_id={{ auth()->user()->tenant?->id }}" class="btn btn-dark">
                                                     <i class="fas fa-plug ml-2"></i>
                                                     Connect
                                                 </a>
