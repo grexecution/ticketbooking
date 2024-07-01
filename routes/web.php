@@ -80,7 +80,6 @@ Route::resource('admin/events', EventController::class)->except('show', 'destroy
 Route::get('admin/orders/{orderId}/invoice', [OrderController::class, 'showInvoice'])->name('showInvoice');
 Route::get('admin/orders/{orderId}/tickets', [OrderController::class, 'showTickets'])->name('showTickets');
 Route::resource('admin/orders', OrderController::class)->only('show');
-Route::post('/admin/test-order-email', [App\Http\Controllers\Admin\SettingsController::class, 'testOrderEmail']);
 
 // Users
 Route::resource('admin/users', UserController::class)->except('show', 'destroy');
