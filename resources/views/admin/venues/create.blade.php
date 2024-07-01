@@ -179,7 +179,10 @@
 
     <script>
         $(document).ready(function() {
-            CKEDITOR.replace('description');
+            CKEDITOR.replace('description', {
+                basicEntities: false,
+                entities_additional: 'lt,gt,amp,apos,quot'
+            });
         });
 
         Dropzone.autoDiscover = false; // Prevent Dropzone from automatically attaching to all elements with the class "dropzone"

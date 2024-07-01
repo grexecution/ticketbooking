@@ -261,22 +261,7 @@ class EventController extends Controller
                 orderType: Order::ORDER_TYPE_ADMIN,
             );
 
-            $QRCodeService = app(QRCodeService::class);
-            /** @var Ticket $ticket */
-            foreach ($order->tickets as $ticket) {
-                $qrData = implode('_', [
-                    $order->id,
-                    $order->event->id,
-                    $ticket->id,
-                ]); // Example of data: 6_6_14
-                $ticket->update([
-                    'is_paid' => true,
-                    'qr_data' => $qrData,
-                ]);
-                $tmpFileName = $QRCodeService->createQR($qrData);
-                MediaHelper::handleMedia($ticket, 'qr', $tmpFileName);
-                info("QR created: {$ticket->qr_url}");
-            }
+            app(OrderService::class)->generateOrderTickets($order);
 
             if ($order->email) {
                 Mail::to($order->email)->send(new OrderInvoice($order));
