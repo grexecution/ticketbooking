@@ -71,16 +71,12 @@
                     <h3 class="card-title">
                         Newest Orders
                     </h3>
-                    <form method="GET" action="{{ route('dashboard') }}">
-                        <select name="event_id" onchange="this.form.submit()">
-                            <option value="">Select an event</option>
-                            @foreach($events as $event)
-                                <option value="{{ $event->id }}" {{ request('event_id') == $event->id ? 'selected' : '' }}>
-                                    {{ $event->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </form>
+                    <select id="eventFilter" class="form-control w-50">
+                        <option value="">All Events</option>
+                        @foreach($events as $event)
+                            <option value="{{ $event->id }}">{{ $event->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="row mt-5">
@@ -90,6 +86,7 @@
                             <tr class="d-table-row">
                                 <th>Id</th>
                                 <th>Customer</th>
+                                <th>Event</th>
                                 <th>Seats</th>
                                 <th>Date</th>
                                 <th>Total</th>
@@ -99,7 +96,7 @@
                             </thead>
                             <tbody>
                             @foreach($orders->sortByDesc('created_at') as $order)
-                                <tr class="">
+                                <tr class="" data-event-id="{{ $order->event_id }}">
                                     <td>
                                         <span>#{{ $order->id }}</span>
                                     </td>
@@ -110,6 +107,12 @@
                                             </div>
                                             <small>{{ $order->email }}</small>
                                         </div>
+                                    </td>
+                                    <td>
+
+                                        <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{ $order->event->name }}">
+                                            {{ $order->event->id }} <i class="fas fa-circle-info"></i>
+                                        </button>
                                     </td>
                                     <td>
                                         <div>
@@ -133,7 +136,6 @@
                                     <td class="text-right">
                                         <a href="{{ route('orders.show', $order->id) }}" class="btn btn-warning mx-0">
                                             <i class="fas fa-ellipsis-v"></i>
-                                            More
                                         </a>
                                     </td>
                                 </tr>
@@ -152,5 +154,21 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        document.getElementById('eventFilter').addEventListener('change', function() {
+            var selectedEventId = this.value;
+            var orders = document.querySelectorAll('tr[data-event-id]');
+
+            orders.forEach(function(order) {
+                if (selectedEventId === '' || order.getAttribute('data-event-id') === selectedEventId) {
+                    order.style.display = '';
+                } else {
+                    order.style.display = 'none';
+                }
+            });
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 @stop
