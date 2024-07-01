@@ -49,7 +49,7 @@ export default {
                         seats: [],
                         eventName: event.name,
                         eventDate: this.formatDate(event.start_date),
-                        eventTime: this.formatTime(event.start_time),
+                        eventTime: this.event.carbon_start_time,
                         eventLocation: `${event.venue.city}, ${event.venue.country}`,
                     };
                 });
