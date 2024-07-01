@@ -185,8 +185,14 @@ export default {
                 }
             }
         },
-        formatDate(date) {
+        /*formatDate(date) {
             return date ? new Date(date).toLocaleDateString('de', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' } ) : '';
+        },*/
+        formatDate(date) {
+            if (!date) return '';
+            let localDate = new Date(date);
+            localDate.setUTCHours(0,0,0,0);
+            return localDate.toLocaleDateString('de', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
         },
         formatTime(time) {
             return time ? new Date(time).toLocaleTimeString('de', { hour: 'numeric', minute: 'numeric', timeZone: 'UTC' }) : '';
