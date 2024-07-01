@@ -225,11 +225,8 @@ export default {
             Cookies.remove('cart_total');
             Cookies.remove('start_time');
         },
-        /*formatDate(date) {
-            return moment(date).format('DD.MM.YYYY');
-        },*/
         formatDate(date) {
-            return date ? new Date(date).toISOString().split('T')[0] : '';
+            return moment(date).format('DD.MM.YYYY');
         },
         formatTime(date) {
             return moment(date).format('HH:mm');
