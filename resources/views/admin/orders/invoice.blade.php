@@ -153,7 +153,7 @@
                                         <tbody>
                                         <tr>
                                             <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                                                <strong>BILLING INFORMATION</strong>
+                                                <strong>RECHNUNGSADRESSE</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -175,7 +175,7 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 11px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 1; vertical-align: top; ">
-                                                <strong>PAYMENT METHOD</strong>
+                                                <strong>ZAHLUNGSART</strong>
                                             </td>
                                         </tr>
                                         <tr>
@@ -183,8 +183,7 @@
                                         </tr>
                                         <tr>
                                             <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
-                                                Credit Card<br>
-                                                Credit Card Type: Visa<br>
+                                                Zahlungsart: Unbekannt<br>
                                                 {{--                                                Worldpay Transaction ID: <a href="#" style="color: #e2a900; text-decoration:underline;">4185939336</a><br>--}}
                                                 {{--                                                <a href="#" style="color:#b0b0b0;">Right of Withdrawal</a>--}}
                                             </td>
@@ -377,7 +376,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>MwSt.</small></td>
+                                <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>13% MwSt.</small></td>
                                 <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">
                                     <small>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->vat) }}</small>
                                 </td>
