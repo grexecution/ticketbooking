@@ -1,7 +1,7 @@
 @media (min-width: 768px) {
     body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
         transition: margin-left .3s ease-in-out;
-        margin-left: 300px;
+        margin-left: 250px;
         min-height: 110px;
     }
     .navbar-expand .navbar-nav {
@@ -11,7 +11,7 @@
 
 .main-sidebar, .main-sidebar::before {
     transition: margin-left .3s ease-in-out,width .3s ease-in-out;
-    width: 300px;
+    width: 250px;
 }
 
 .sidebar {
@@ -75,12 +75,13 @@ img, video {
 }
 
 .nav-link {
-    font-size: 18px!important;
+    font-size: 16px!important;
+    width: calc(220px - .5rem* 2)!important;
 }
 
 .nav-tabs .nav-link {
-    border-top-left-radius: .5rem;
-    border-top-right-radius: .5rem;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
 }
 
 .sidebar-help {
@@ -103,7 +104,7 @@ img, video {
         width: 250px;
     }
     .sidebar-open .main-sidebar, .sidebar-open .main-sidebar::before {
-        width: 300px;
+        width: 250px;
     }
 }
 

@@ -9,12 +9,12 @@
 
         <!-- Search and Add Event Section -->
         <div class="container-fluid card bg-white py-3">
-            <div class="row my-2 mx-3">
+            <div class="row my-2 mx-3 d-flex justify-content-between">
                 <div class="col-md-9">
                     <form action="{{ route('events.index') }}" method="GET">
                         @csrf
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <input type="text" name="search" class="form-control bg-light" placeholder="Event name" value="{{ request()->get('search') }}">
                             </div>
                             <div class="col-md-3">
@@ -26,7 +26,7 @@
                                     <option value="preview" {{ old('status', request()->get('status')) == "preview" ? 'selected' : '' }}>Preview</option>
                                 </select>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <!-- Search button -->
                                 <button class="btn btn-orange text-white btn-block" type="submit">Search</button>
                             </div>
@@ -37,8 +37,7 @@
                     </form>
 
                 </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-2 text-right">
+                <div class="col-md-3 text-right">
                     <a href="{{ route('events.create') }}" class="btn btn-blackish btn-dark"><i class="fas fa-plus"></i> New Event</a>
                 </div>
             </div>
@@ -62,24 +61,23 @@
                             @if($events->count())
                                 @foreach($events as $event)
                                     <tr class="">
-                                        <td style="border-top: 1px solid #dee2e6;">
+                                        <td style="border-top: 1px solid #dee2e6;" class="event-body">
                                             <div class="d-flex align-items-center">
                                                 @if($event->logo_thumb_index_url)
                                                     <img class="h-100 img-fluid img-thumbnail" src="{{ asset($event->logo_thumb_index_url) }}" alt="Tenant img" />
                                                 @endif
-                                                <div class="d-flex flex-col ml-2 align-items-start">
+                                                <div class="d-flex flex-col ml-2 align-items-start" style="line-height:initial">
                                                     <p class="font-weight-bold">{{ $event->name }}</p>
-                                                    <span>{{ $event->short_desc }}</span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="col-md-2 event-body">
-                                            <div>
+                                            <div style="line-height: 16px; font-size: 15px !important;">
                                                 {{ $event->start_date?->format('l, F j, Y') ?? '' }}
                                             </div>
-                                            <div>
+                                            <small>
                                                 Start: {{ $event->start_time?->format('H:i') ?? '' }}
-                                            </div>
+                                            </small>
                                         </td>
                                         <td class="col-md-1 event-body text-center">
                                             <?php
