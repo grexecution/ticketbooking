@@ -91,7 +91,7 @@
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Status</th>
-                                <th class="text-right">Actions</th>
+                                <th class="text-right">Details</th>
                             </tr>
                             </thead>
                             <tbody>

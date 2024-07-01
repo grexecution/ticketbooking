@@ -23,7 +23,9 @@
                     @if(!auth()->user()->isSuperUser())
                         <a class="nav-link" id="v-pills-finances-tab" data-toggle="pill" href="#v-pills-finances" role="tab" aria-controls="v-pills-finances" aria-selected="false">Finances</a>
                     @endif
-                    <button class="btn btn-light btn-block mt-3" style="color: red; border: 1px solid red;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
+                        <a class="nav-link" id="v-pills-testing-tab" data-toggle="pill" href="#v-pills-testing" role="tab" aria-controls="v-pills-testing" aria-selected="false">Testing</a>
+
+                        <button class="btn btn-light btn-block mt-3" style="color: red; border: 1px solid red;" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
                 </div>
             </div>
 
@@ -245,10 +247,15 @@
                             </div>
                         </div>
                     @endif
+                    <!-- Tab Content for testing -->
+                        <div class="tab-pane fade" id="v-pills-testing" role="tabpanel" aria-labelledby="v-pills-testing-tab">
+                            <button id="testOrderEmail" class="btn btn-primary">Test Order Email</button>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Modal for Changing Password -->
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
@@ -393,6 +400,17 @@
                     });
                 }
             });
+        });
+        document.getElementById('testOrderEmail').addEventListener('click', function() {
+            axios.post('/admin/test-order-email')
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
         });
     </script>
 @stop
