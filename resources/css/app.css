@@ -24,6 +24,14 @@
     font-weight: 600
 }
 
+.bg-red {
+    background-color: red !important;
+}
+
+.bg-green {
+    background-color: green !important;
+}
+
 .user-panel img {
     height: auto;
     width: 4.5rem;
