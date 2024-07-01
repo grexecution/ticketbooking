@@ -79,6 +79,8 @@ Route::resource('admin/events', EventController::class)->except('show', 'destroy
 // Orders
 Route::get('admin/orders/{orderId}/invoice', [OrderController::class, 'showInvoice'])->name('showInvoice');
 Route::get('admin/orders/{orderId}/tickets', [OrderController::class, 'showTickets'])->name('showTickets');
+Route::get('admin/orders/{ticketId}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+Route::get('admin/orders/{orderId}/cancelAndRefund', [OrderController::class, 'cancelAndRefund'])->name('cancelAndRefund');
 Route::resource('admin/orders', OrderController::class)->only('show');
 
 // Users

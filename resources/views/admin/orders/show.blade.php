@@ -110,10 +110,12 @@
                                     ...
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="cancelDropdown">
-                                    <button class="dropdown-item" type="button">Cancel with refund</button>
-                                    <button class="dropdown-item" type="button">Cancel without refund</button>
+{{--                                    <button class="dropdown-item" type="button">Cancel with refund</button>--}}
+                                    <a href="{{ route('cancel', $ticket->id) }}" class="dropdown-item" type="button">Cancel without refund</a>
                                 </div>
                             </div>
+                            @if($ticket->is_cancelled) <span style="color: red;">(Cancelled)</span> @endif
+                            @if($ticket->is_refunded) <span style="color: red;">(Refunded)</span> @endif
                         </td>
                     </tr>
                 @endforeach
@@ -129,9 +131,9 @@
                 </div>
             </div>
 
-            <button class="btn btn-dark">
+            <a href="{{ route('cancelAndRefund', $order->id) }}" class="btn btn-dark" style="color: white !important;">
                 <i class="fas fa-arrow-left"></i> Cancel & Refund Order
-            </button>
+            </a>
         </div>
     </div>
 @stop

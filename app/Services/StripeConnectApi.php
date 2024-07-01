@@ -123,4 +123,26 @@ class StripeConnectApi
 //        return $this->stripe->paymentIntents->retrieve($paymentIntent->id);
     }
 
+    /**
+     * @throws \Exception
+     */
+    public function refundPayment(string $paymentIntentId): \Stripe\Refund
+    {
+        try {
+            $refund = $this->stripe->refunds->create([
+                'payment_intent' => $paymentIntentId,
+            ]);
+
+            StripeCallback::query()->create([
+                'user_id' => auth()?->id(),
+                'endpoint' => '/v1/refunds',
+                'payload' => ['payment_intent' => $paymentIntentId],
+                'response' => $refund,
+            ]);
+
+            return $refund;
+        } catch (\Exception $e) {
+            throw new \Exception('Refund failed: ' . $e->getMessage());
+        }
+    }
 }

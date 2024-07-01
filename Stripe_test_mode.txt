@@ -1,0 +1,18 @@
+Testing data (Connecting test accounts)
+
+Probably need to login in real account (didn't find way without it)
+SMS code - 000-000 (or login into a real account)
+DoB - 1901-01-01
+Address - any valid address
+IBAN - AT611904300234573201 (for Austria)
+Phone number - need to fill a real phone number
+
+
+Testing data (Success Payment)
+
+SMS code - 000-000 (if needed)
+Card Number: 4242 4242 4242 4242
+Expiration Date: Any future date, e.g., 12/34
+CVC Code: Any 3-digit number, e.g., 123
+ZIP Code: Any 5-digit number, e.g., 12345
+Email: Any valid email format, e.g., test@example.com

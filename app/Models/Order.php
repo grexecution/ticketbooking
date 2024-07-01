@@ -34,6 +34,7 @@ class Order extends Model
         'order_status',
         'order_date',
         'payment_method',
+        'payment_intent_id',
         'subtotal',
         'discount',
         'vat',

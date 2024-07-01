@@ -180,11 +180,10 @@ class PaymentController extends Controller
         /** @var Order $order */
         $order = Order::query()->with(['tickets', 'event.venue'])->find($orderId);
 
-        if ($order) {
-            $order->update([
-                'order_status' => $paymentIntent->status,
-            ]);
-        }
+        $order?->update([
+            'order_status' => $paymentIntent->status,
+            'payment_intent_id' => $paymentIntent->id,
+        ]);
 
         try {
             app(OrderService::class)->generateOrderTickets($order);
