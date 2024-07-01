@@ -111,18 +111,18 @@
             <!-- Horizontal tabs -->
             <ul class="nav nav-tabs mt-3 border-0" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link px-20 tab-text active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Event</a>
+                    <a class="nav-link px-5 tab-text active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true">Event</a>
                 </li>
                 @if($event->seat_type === 'seat_plan')
                     <li class="nav-item">
-                        <a class="nav-link px-20 tab-text" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="false">Seating Plan</a>
+                        <a class="nav-link px-5 tab-text" id="seating-tab" data-toggle="tab" href="#seating" role="tab" aria-controls="seating" aria-selected="false">Seating Plan</a>
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link px-20 tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
+                    <a class="nav-link px-5 tab-text" id="bookings-tab" data-toggle="tab" href="#bookings" role="tab" aria-controls="bookings" aria-selected="false">Bookings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-20 tab-text" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
+                    <a class="nav-link px-5 tab-text" id="invoice-tab" data-toggle="tab" href="#invoice" role="tab" aria-controls="invoice" aria-selected="false">Invoice</a>
                 </li>
             </ul>
 
