@@ -549,7 +549,10 @@
         }
 
         $(document).ready(function() {
-            const editor = CKEDITOR.replace('description');
+            const editor = CKEDITOR.replace('description', {
+                basicEntities: false,
+                entities_additional: 'lt,gt,amp,apos,quot'
+            });
             @if($isEnded)
                 // Set CKEditor to read-only mode
                 editor.on('instanceReady', function() {
