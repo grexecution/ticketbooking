@@ -92,7 +92,7 @@
                         <img src="{{ asset('img/checkin.png') }}" alt="Check-ins Image" width="91" height="70">
                         <div class="d-flex flex-col">
                             <div class="font-weight-bold">Check-ins</div>
-                            <div>{{ $event->checkins->count() }} / {{ $event->seatPlanCategories->sum('places') }}</div>
+                            <div>{{ $event->checkins->count() }} / {{ $event->total_tickets }}</div>
                         </div>
 
                         <div class="text-right text-secondary absolute right-5 top-5">
@@ -201,7 +201,7 @@
                                                 </td>
                                                 <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-dark mx-0">
+                                                    <a href="" style=" pointer-events: none" class="btn mx-0 {{ $order->order_status === 'cancelled' ? 'bg-red' : ($order->order_status === 'succeeded' ? 'bg-green' : '') }}">
                                                         {{ ucfirst($order->order_status) }}
                                                     </a>
                                                 </td>

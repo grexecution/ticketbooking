@@ -129,7 +129,7 @@
                                     </td>
                                     <td>{{ \App\Helpers\PriceHelper::fromFloatToStr($order->total) }}</td>
                                     <td>
-                                        <a href="#" class="btn mx-0 {{ $order->order_status === 'cancelled' ? 'bg-red' : ($order->order_status === 'succeeded' ? 'bg-green' : '') }}">
+                                        <a href="" style=" pointer-events: none" class="btn mx-0 {{ $order->order_status === 'cancelled' ? 'bg-red' : ($order->order_status === 'succeeded' ? 'bg-green' : '') }}">
                                             {{ ucfirst($order->order_status) }}
                                         </a>
                                     </td>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @mixin IdeHelperBooking
+ * @mixin IdeHelperCheckin
  */
 class Checkin extends Model
 {

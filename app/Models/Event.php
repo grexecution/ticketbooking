@@ -158,7 +158,16 @@ class Event extends Model implements HasMedia
 
     public function getTotalTicketsAttribute()
     {
-        return $this->seatPlanCategories->sum('places');
+        if ($this->events.$this->seat_type === 'seat_plan'){
+            // If the event has a seat plan, calculate total_tickets based on the seat plan
+            return $this->seatPlanCategories->sum(function ($category) {
+                // Assuming each category has 'rows' and 'seats' attributes
+                return $category->rows * $category->seats;
+            });
+        } else {
+            // If the event does not have a seat plan, calculate total_tickets as before
+            return $this->seatPlanCategories->sum('places');
+        }
     }
 
     public function getHasBoughtTicketsAttribute() : bool
